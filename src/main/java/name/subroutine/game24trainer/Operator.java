@@ -2,21 +2,28 @@ package name.subroutine.game24trainer;
 
 public class Operator extends Symbol
 {
-    public static Operator ADD = new Operator( '+' );
-    public static Operator SUB = new Operator( '-' );
-    public static Operator MUL = new Operator( '*' );
-    public static Operator DIV = new Operator( '/' );
+    public static Operator ADD = new Operator( '+', 0 );
+    public static Operator SUB = new Operator( '-', 0 );
+    public static Operator MUL = new Operator( '*', 1 );
+    public static Operator DIV = new Operator( '/', 1 );
 
     private char value;
+    private int prec;
 
-    public Operator( char value )
+    public Operator( char value, int prec )
     {
         this.value = value;
+        this.prec = prec;
     }
 
     public char getValue()
     {
-        return value;
+        return this.value;
+    }
+
+    public int getPrec()
+    {
+        return this.prec;
     }
 
     public boolean equals( Object o )
@@ -31,7 +38,7 @@ public class Operator extends Symbol
         }
         else if( o instanceof Character ) {
             Character c = (Character)o;
-            return this.getValue() == c.charValue();
+            return this.getValue() == c;
         }
         else {
             return false;

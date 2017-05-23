@@ -1,13 +1,32 @@
 package name.subroutine.game24trainer;
 
+import org.assertj.core.util.Lists;
+
 /**
  * List of different types of puzzles
  */
 public class Game24Puzzles
 {
-    // 7 8 8 10
-    // 7 * 8 + 8 * 10      is the only solution
+    /**
+     * simple example
+     */
+    public static Puzzle simple = new Puzzle(
+        Lists.newArrayList( 1, 2, 3, 4 )
+    );
 
-    // 5 6 12 13
-    // can be solved with only + and -
+    /**
+     * 7 * 8 + 8 * 10      is the only solution
+     */
+    public static Puzzle twoByTwo = new Puzzle(
+        Lists.newArrayList( 7, 8, 8, 10 )
+    );
+
+
+    /**
+     * can be solved with only + and -
+     */
+    public static Puzzle addSub = new Puzzle(
+        Lists.newArrayList( 5, 6, 12, 13 )
+    );
+
 }

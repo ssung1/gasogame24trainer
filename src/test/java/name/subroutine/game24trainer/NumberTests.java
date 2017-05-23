@@ -65,7 +65,7 @@ public class NumberTests
     public void testEqualityFalse002()
     {
         Number a = new Number( 10 );
-        Operator b = new Operator( '+' );
+        Operator b = new Operator( '+', 0 );
 
         assertFalse( a.equals( b ) );
     }

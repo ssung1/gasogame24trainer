@@ -13,6 +13,7 @@ import static org.junit.Assert.assertThat;
 
 public class Game24SolverImplRosettaTests
 {
+    Symbol s = new Symbol();
     Game24SolverImplRosetta sut = new Game24SolverImplRosetta();
 
     @Before
@@ -145,11 +146,7 @@ public class Game24SolverImplRosettaTests
         throws Exception
     {
         // 1 * 2 * 3 * 4 = 24
-        boolean result = sut.equals24( new Symbol[]{
-            new Number( 1 ), new Number( 2 ), Operator.MUL,
-            new Number( 3 ), Operator.MUL,
-            new Number( 4 ), Operator.MUL
-        } );
+        boolean result = sut.equals24( s.parse( "1 2 * 3 * 4 *" ) );
         assertThat( result, is( true ) );
     }
 
@@ -158,12 +155,33 @@ public class Game24SolverImplRosettaTests
         throws Exception
     {
         // 1 + 2 + 3 + 4 != 24
-        boolean result = sut.equals24( new Symbol[]{
-            new Number( 1 ), new Number( 2 ), Operator.ADD,
-            new Number( 3 ), Operator.ADD,
-            new Number( 4 ), Operator.ADD
-        } );
+        boolean result = sut.equals24( s.parse( "1 2 + 3 + 4 +" ) );
         assertThat( result, is( false ) );
     }
 
+    @Test
+    public void testPostfixToInfix000()
+    {
+        String result = sut.postfixToInfix( s.parse( "1 2 + 3 * 4 *" ) );
+
+        System.out.println( result );
+    }
+
+    @Test
+    public void testSolveSimple()
+    {
+        sut.isSolvable( Game24Puzzles.simple );
+    }
+
+    @Test
+    public void testSolveTwoByTwo()
+    {
+        sut.isSolvable( Game24Puzzles.twoByTwo );
+    }
+
+    @Test
+    public void testSolveAddSub()
+    {
+        sut.isSolvable( Game24Puzzles.addSub );
+    }
 }

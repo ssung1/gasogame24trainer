@@ -26,15 +26,15 @@ public class Number extends Symbol
         }
         else if( o instanceof Integer ) {
             Integer i = (Integer)o;
-            return this.getValue() == i.intValue();
+            return this.getValue() == i;
         }
         else if( o instanceof Float ) {
             Float f = (Float)o;
-            return this.getValue() == f.floatValue();
+            return this.getValue() == f;
         }
         else if( o instanceof Double ) {
             Double d = (Double)o;
-            return this.getValue() == d.doubleValue();
+            return this.getValue() == d;
         }
         else {
             return false;

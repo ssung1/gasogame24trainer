@@ -29,4 +29,10 @@ public class Game24Puzzles
         Lists.newArrayList( 5, 6, 12, 13 )
     );
 
+    /**
+     * requires fraction as an intermediate
+     */
+    public static Puzzle fraction = new Puzzle(
+        Lists.newArrayList( 5, 5, 5, 1 )
+    );
 }

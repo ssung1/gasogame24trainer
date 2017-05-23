@@ -65,27 +65,26 @@ public class Game24SolverImplRosetta
         }
     }
 
-    boolean isSolvable( Puzzle puzzle )
+    public boolean solve( Puzzle puzzle )
     {
         List<Integer> numbers = puzzle.getNumbers();
         Operator[] ops = {
             Operator.ADD, Operator.SUB, Operator.MUL, Operator.DIV
         };
-        List<List<Integer>> dPerms = new ArrayList<>(4 * 3 * 2);
-        permute(numbers, dPerms, 0);
+        List<List<Integer>> dPerms = new ArrayList<>( 4 * 3 * 2 );
+        permute( numbers, dPerms, 0 );
 
         int total = 4 * 4 * 4;
-        List<List<Integer>> oPerms = new ArrayList<>(total);
-        permuteOperators(oPerms, 4);
-
-        ArrayList<Symbol> sb = new ArrayList<>( 4 + 3 );
+        List<List<Integer>> oPerms = new ArrayList<>( total );
+        permuteOperators( oPerms, 4 );
 
         for( String pattern : patterns ){
+            // "nnonnoo" is the two-by-two pattern
             char[] patternChars = pattern.toCharArray();
 
             for( List<Integer> dig : dPerms ){
                 for( List<Integer> opr : oPerms ){
-
+                    ArrayList<Symbol> sb = new ArrayList<>( 4 + 3 );
                     int i = 0, j = 0;
                     for( char c : patternChars ){
                         if( c == 'n' ) {
@@ -100,12 +99,11 @@ public class Game24SolverImplRosetta
                     try {
                         if( equals24( candidate ) ){
                             String solution = postfixToInfix( candidate );
-                            System.out.print( solution );
-                            return true;
+                            System.out.println( solution );
+                            //return true;
                         }
                     } catch (Exception ignored) {
                     }
-                    sb.clear();
                 }
             }
         }

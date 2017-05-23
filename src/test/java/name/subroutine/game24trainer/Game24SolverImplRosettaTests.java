@@ -170,18 +170,24 @@ public class Game24SolverImplRosettaTests
     @Test
     public void testSolveSimple()
     {
-        sut.isSolvable( Game24Puzzles.simple );
+        sut.solve( Game24Puzzles.simple );
     }
 
     @Test
     public void testSolveTwoByTwo()
     {
-        sut.isSolvable( Game24Puzzles.twoByTwo );
+        sut.solve( Game24Puzzles.twoByTwo );
     }
 
     @Test
     public void testSolveAddSub()
     {
-        sut.isSolvable( Game24Puzzles.addSub );
+        sut.solve( Game24Puzzles.addSub );
+    }
+
+    @Test
+    public void testSolveFraction()
+    {
+        sut.solve( Game24Puzzles.fraction );
     }
 }

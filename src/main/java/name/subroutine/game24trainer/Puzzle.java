@@ -9,6 +9,31 @@ public class Puzzle
     public static int UNKNOWN = 0;
     public static int NO = -1;
 
+    /**
+     * one dot puzzle
+     */
+    public static int ONE = 1;
+
+    /**
+     * two dot puzzle
+     */
+    public static int TWO = 2;
+
+    /**
+     * three dot puzzle
+     */
+    public static int THREE = 3;
+
+    /**
+     * single digit
+     */
+    public static int SINGLE = 1;
+
+    /**
+     * double digit
+     */
+    public static int DOUBLE = 2;
+
     private List<Integer> numbers;
     public Puzzle( List<Integer> numbers )
     {

@@ -21,7 +21,6 @@ public class Game24Puzzles
         Lists.newArrayList( 7, 8, 8, 10 )
     );
 
-
     /**
      * can be solved with only + and -
      */

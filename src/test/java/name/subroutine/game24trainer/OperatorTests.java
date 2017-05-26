@@ -13,8 +13,8 @@ public class OperatorTests
     @Test
     public void testEqualityTrue000()
     {
-        Operator a = new Operator( '+', 0 );
-        Operator b = new Operator( '+', 0 );
+        Operator a = new Operator( '+', 0, true );
+        Operator b = new Operator( '+', 0, true );
 
         assertThat( a, is( b ) );
     }
@@ -22,7 +22,7 @@ public class OperatorTests
     @Test
     public void testEqualityTrue001()
     {
-        Operator a = new Operator( '+', 0 );
+        Operator a = new Operator( '+', 0, true );
 
         assertThat( a, is( Operator.ADD ) );
     }
@@ -30,7 +30,7 @@ public class OperatorTests
     @Test
     public void testEqualityTrue002()
     {
-        Operator a = new Operator( '+', 0 );
+        Operator a = new Operator( '+', 0, true );
 
         assertTrue( a.equals( '+' ) );
     }
@@ -38,7 +38,7 @@ public class OperatorTests
     @Test
     public void testEqualityFalse000()
     {
-        Operator a = new Operator( '+', 0 );
+        Operator a = new Operator( '+', 0, true );
 
         assertFalse( a.equals( null ) );
     }
@@ -46,8 +46,8 @@ public class OperatorTests
     @Test
     public void testEqualityFalse001()
     {
-        Operator a = new Operator( '+', 0 );
-        Operator b = new Operator( '-', 0 );
+        Operator a = new Operator( '+', 0, true );
+        Operator b = new Operator( '-', 0, true );
 
         assertFalse( a.equals( b ) );
     }
@@ -55,7 +55,7 @@ public class OperatorTests
     @Test
     public void testEqualityFalse002()
     {
-        Operator a = new Operator( '+', 0 );
+        Operator a = new Operator( '+', 0, true );
         Number b = new Number( 1 );
 
         assertFalse( a.equals( b ) );

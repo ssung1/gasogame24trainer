@@ -34,4 +34,11 @@ public class Game24Puzzles
     public static Puzzle fraction = new Puzzle(
         Lists.newArrayList( 5, 5, 5, 1 )
     );
+
+    /**
+     * requires division as the last operation
+     */
+    public static Puzzle lastOpDiv = new Puzzle(
+        Lists.newArrayList( 16, 9, 10, 4 )
+    );
 }

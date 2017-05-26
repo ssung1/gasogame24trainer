@@ -146,7 +146,7 @@ public class Game24SolverImplRosettaTests
         throws Exception
     {
         // 1 * 2 * 3 * 4 = 24
-        boolean result = sut.equals24( s.parse( "1 2 * 3 * 4 *" ) );
+        boolean result = sut.evaluate( s.parse( "1 2 * 3 * 4 *" ) ).is24;
         assertThat( result, is( true ) );
     }
 
@@ -155,16 +155,8 @@ public class Game24SolverImplRosettaTests
         throws Exception
     {
         // 1 + 2 + 3 + 4 != 24
-        boolean result = sut.equals24( s.parse( "1 2 + 3 + 4 +" ) );
+        boolean result = sut.evaluate( s.parse( "1 2 + 3 + 4 +" ) ).is24;
         assertThat( result, is( false ) );
-    }
-
-    @Test
-    public void testPostfixToInfix000()
-    {
-        String result = sut.postfixToInfix( s.parse( "1 2 + 3 * 4 *" ) );
-
-        System.out.println( result );
     }
 
     @Test
@@ -189,5 +181,11 @@ public class Game24SolverImplRosettaTests
     public void testSolveFraction()
     {
         sut.solve( Game24Puzzles.fraction );
+    }
+
+    @Test
+    public void testSolveLastOpDiv()
+    {
+        sut.solve( Game24Puzzles.lastOpDiv );
     }
 }

@@ -10,6 +10,12 @@ public class Game24SolverImplRosetta
     final String[] patterns = { "nnonnoo", "nnonono", "nnnoono", "nnnonoo",
         "nnnnooo" };
 
+    class EvalResult
+    {
+        public boolean is24;
+        public boolean hasFraction;
+    }
+
     public void permute( List<Integer> lst, List<List<Integer>> res, int k )
     {
         for( int i = k; i < lst.size(); i++ ) {
@@ -30,7 +36,8 @@ public class Game24SolverImplRosetta
         }
     }
 
-    boolean equals24( Symbol[] line ) throws Exception {
+    EvalResult evaluate( Symbol[] line ) throws Exception {
+        EvalResult result = new EvalResult();
         Stack<Float> s = new Stack<>();
         try {
             for( Symbol sym : line ){
@@ -40,13 +47,21 @@ public class Game24SolverImplRosetta
                 }
                 else{
                     Operator op = (Operator)sym;
-                    s.push( applyOperator( s.pop(), s.pop(), op.getValue() ) );
+                    float ans = applyOperator( s.pop(), s.pop(),
+                        op.getValue() );
+
+                    if( Math.round( ans ) - ans > .001f ) {
+                        result.hasFraction = true;
+                    }
+
+                    s.push( ans );
                 }
             }
         } catch (EmptyStackException e) {
             throw new Exception("Invalid entry.");
         }
-        return (Math.abs(24 - s.peek()) < 0.001F);
+        result.is24 = (Math.abs(24 - s.peek()) < 0.001f);
+        return result;
     }
 
     public float applyOperator( float a, float b, char c )
@@ -78,6 +93,7 @@ public class Game24SolverImplRosetta
         List<List<Integer>> oPerms = new ArrayList<>( total );
         permuteOperators( oPerms, 4 );
 
+        int cost = 0;
         for( String pattern : patterns ){
             // "nnonnoo" is the two-by-two pattern
             char[] patternChars = pattern.toCharArray();
@@ -97,9 +113,29 @@ public class Game24SolverImplRosetta
 
                     Symbol[] candidate = sb.toArray( new Symbol[sb.size()] );
                     try {
-                        if( equals24( candidate ) ){
-                            String solution = postfixToInfix( candidate );
-                            System.out.println( solution );
+                        EvalResult retval = evaluate( candidate );
+                        // 3 arithmetic operations, although some are more
+                        // costly than others
+                        cost += 3;
+                        if( retval.is24 ){
+                            Solution solution = new Solution();
+                            solution.cost = cost;
+                            solution.algorithm = "Rosetta: brute force";
+                            solution.expression = candidate;
+                            if( retval.hasFraction ) {
+                                solution.fraction = Puzzle.YES;
+                            }
+                            else {
+                                solution.fraction = Puzzle.NO;
+                            }
+                            System.out.println( solution.toInfixString() );
+                            System.out.println( "cost: " + String.valueOf( solution.cost ) );
+                            //System.out.println( solution.toPostfixString() );
+                            System.out.println( solution.isTwoByTwo() );
+                            System.out.println( Puzzle.flagToString( solution.hasFraction() ) );
+                            System.out.println( solution.isLastOpDiv() );
+
+                            System.out.println();
                             //return true;
                         }
                     } catch (Exception ignored) {
@@ -108,55 +144,5 @@ public class Game24SolverImplRosetta
             }
         }
         return false;
-    }
-
-    public String postfixToInfix( Symbol[] symbolList )
-    {
-        class Expression {
-            Operator op;
-            String ex;
-            int prec = 3;
-
-            Expression( String e )
-            {
-                ex = e;
-            }
-
-            Expression( String e1, String e2, Operator o )
-            {
-                String opVal = String.valueOf( o.getValue() );
-                ex = String.format( "%s %s %s", e1, opVal, e2 );
-                op = o;
-                prec = o.getPrec();
-            }
-        }
-
-        Stack<Expression> expr = new Stack<>();
-
-        for (Symbol s : symbolList) {
-            if( s instanceof Operator ){
-                Operator op = (Operator)s;
-
-                Expression r = expr.pop();
-                Expression l = expr.pop();
-
-                int opPrec = op.getPrec();
-
-                if( l.prec < opPrec ){
-                    l.ex = '(' + l.ex + ')';
-                }
-
-                if( r.prec <= opPrec ) {
-                    r.ex = '(' + r.ex + ')';
-                }
-
-                expr.push( new Expression( l.ex, r.ex, op ) );
-            } else {
-                Number n = (Number)s;
-                String nVal = String.valueOf( Math.round( n.getValue() ) );
-                expr.push( new Expression( nVal ) );
-            }
-        }
-        return expr.peek().ex;
     }
 }

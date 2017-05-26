@@ -2,18 +2,20 @@ package name.subroutine.game24trainer;
 
 public class Operator extends Symbol
 {
-    public static Operator ADD = new Operator( '+', 0 );
-    public static Operator SUB = new Operator( '-', 0 );
-    public static Operator MUL = new Operator( '*', 1 );
-    public static Operator DIV = new Operator( '/', 1 );
+    public static Operator ADD = new Operator( '+', 0, true );
+    public static Operator SUB = new Operator( '-', 0, false );
+    public static Operator MUL = new Operator( '*', 1, true );
+    public static Operator DIV = new Operator( '/', 1, false );
 
     private char value;
     private int prec;
+    private boolean commutative;
 
-    public Operator( char value, int prec )
+    public Operator( char value, int prec, boolean commutative )
     {
         this.value = value;
         this.prec = prec;
+        this.commutative = commutative;
     }
 
     public char getValue()

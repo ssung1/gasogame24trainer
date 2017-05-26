@@ -9,6 +9,19 @@ public class Puzzle
     public static int UNKNOWN = 0;
     public static int NO = -1;
 
+    public static String flagToString( int flag )
+    {
+        if( flag == YES ) {
+            return "true";
+        }
+        else if( flag == NO ) {
+            return "false";
+        }
+        else {
+            return "unknown";
+        }
+    }
+
     /**
      * one dot puzzle
      */

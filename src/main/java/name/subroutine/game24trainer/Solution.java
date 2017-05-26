@@ -9,7 +9,7 @@ public class Solution
      */
     public Symbol[] expression;
 
-    public Operator getLastOp()
+    public Operator getFinalOp()
     {
         return (Operator)expression[expression.length - 1];
     }
@@ -116,17 +116,27 @@ public class Solution
     /**
      * the last operation is division
      */
-    public boolean isLastOpDiv()
+    public boolean isFinalDiv()
     {
-        return getLastOp().equals( '/' );
+        return getFinalOp().equals( Operator.DIV );
     }
 
     /**
      * the last operation is multiplication
      */
-    public boolean isLastOpMul()
+    public boolean isFinalMul()
     {
-        return getLastOp().equals( '*' );
+        return getFinalOp().equals( Operator.MUL );
+    }
+
+    /**
+     * final operation is addition or subtraction
+     * @return
+     */
+    public boolean isFinalAdd()
+    {
+        return getFinalOp().equals( Operator.ADD )
+            || getFinalOp().equals( Operator.SUB );
     }
 
     public int hasFraction()

@@ -158,42 +158,27 @@ public class SolutionSetTests
     }
 
     @Test
-    public void testHasLastOpDiv000()
+    public void testHasFinalDiv000()
     {
         SolutionSet sut = new SolutionSet();
 
-        assertFalse( sut.hasLastOpDiv() );
+        assertFalse( sut.hasFinalDiv() );
     }
 
     @Test
-    public void testHasLastOpDiv001()
+    public void testHasFinalDiv001()
     {
         SolutionSet sut = new SolutionSet();
         Solution s1 = mock( Solution.class );
         sut.add( s1 );
 
-        when( s1.isLastOpDiv() ).thenReturn( true );
+        when( s1.isFinalDiv() ).thenReturn( true );
 
-        assertTrue( sut.hasLastOpDiv() );
+        assertTrue( sut.hasFinalDiv() );
     }
 
     @Test
-    public void testHasLastOpDiv002()
-    {
-        SolutionSet sut = new SolutionSet();
-        Solution s1 = mock( Solution.class );
-        Solution s2 = mock( Solution.class );
-        sut.add( s1 );
-        sut.add( s2 );
-
-        when( s1.isLastOpDiv() ).thenReturn( true );
-        when( s2.isLastOpDiv() ).thenReturn( true );
-
-        assertTrue( sut.hasLastOpDiv() );
-    }
-
-    @Test
-    public void testHasLastOpDiv003()
+    public void testHasFinalDiv002()
     {
         SolutionSet sut = new SolutionSet();
         Solution s1 = mock( Solution.class );
@@ -201,14 +186,14 @@ public class SolutionSetTests
         sut.add( s1 );
         sut.add( s2 );
 
-        when( s1.isLastOpDiv() ).thenReturn( false );
-        when( s2.isLastOpDiv() ).thenReturn( true );
+        when( s1.isFinalDiv() ).thenReturn( true );
+        when( s2.isFinalDiv() ).thenReturn( true );
 
-        assertTrue( sut.hasLastOpDiv() );
+        assertTrue( sut.hasFinalDiv() );
     }
 
     @Test
-    public void testHasLastOpDiv004()
+    public void testHasFinalDiv003()
     {
         SolutionSet sut = new SolutionSet();
         Solution s1 = mock( Solution.class );
@@ -216,14 +201,14 @@ public class SolutionSetTests
         sut.add( s1 );
         sut.add( s2 );
 
-        when( s1.isLastOpDiv() ).thenReturn( true );
-        when( s2.isLastOpDiv() ).thenReturn( false );
+        when( s1.isFinalDiv() ).thenReturn( false );
+        when( s2.isFinalDiv() ).thenReturn( true );
 
-        assertTrue( sut.hasLastOpDiv() );
+        assertTrue( sut.hasFinalDiv() );
     }
 
     @Test
-    public void testHasLastOpDiv005()
+    public void testHasFinalDiv004()
     {
         SolutionSet sut = new SolutionSet();
         Solution s1 = mock( Solution.class );
@@ -231,34 +216,14 @@ public class SolutionSetTests
         sut.add( s1 );
         sut.add( s2 );
 
-        when( s1.isLastOpDiv() ).thenReturn( false );
-        when( s2.isLastOpDiv() ).thenReturn( false );
+        when( s1.isFinalDiv() ).thenReturn( true );
+        when( s2.isFinalDiv() ).thenReturn( false );
 
-        assertFalse( sut.hasLastOpDiv() );
+        assertTrue( sut.hasFinalDiv() );
     }
 
     @Test
-    public void testHasLastOpMul000()
-    {
-        SolutionSet sut = new SolutionSet();
-
-        assertFalse( sut.hasLastOpMul() );
-    }
-
-    @Test
-    public void testHasLastOpMul001()
-    {
-        SolutionSet sut = new SolutionSet();
-        Solution s1 = mock( Solution.class );
-        sut.add( s1 );
-
-        when( s1.isLastOpMul() ).thenReturn( true );
-
-        assertTrue( sut.hasLastOpMul() );
-    }
-
-    @Test
-    public void testHasLastOpMul002()
+    public void testHasFinalDiv005()
     {
         SolutionSet sut = new SolutionSet();
         Solution s1 = mock( Solution.class );
@@ -266,14 +231,34 @@ public class SolutionSetTests
         sut.add( s1 );
         sut.add( s2 );
 
-        when( s1.isLastOpMul() ).thenReturn( true );
-        when( s2.isLastOpMul() ).thenReturn( true );
+        when( s1.isFinalDiv() ).thenReturn( false );
+        when( s2.isFinalDiv() ).thenReturn( false );
 
-        assertTrue( sut.hasLastOpMul() );
+        assertFalse( sut.hasFinalDiv() );
     }
 
     @Test
-    public void testHasLastOpMul003()
+    public void testHasFinalMul000()
+    {
+        SolutionSet sut = new SolutionSet();
+
+        assertFalse( sut.hasFinalMul() );
+    }
+
+    @Test
+    public void testHasFinalMul001()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        sut.add( s1 );
+
+        when( s1.isFinalMul() ).thenReturn( true );
+
+        assertTrue( sut.hasFinalMul() );
+    }
+
+    @Test
+    public void testHasFinalMul002()
     {
         SolutionSet sut = new SolutionSet();
         Solution s1 = mock( Solution.class );
@@ -281,14 +266,14 @@ public class SolutionSetTests
         sut.add( s1 );
         sut.add( s2 );
 
-        when( s1.isLastOpMul() ).thenReturn( false );
-        when( s2.isLastOpMul() ).thenReturn( true );
+        when( s1.isFinalMul() ).thenReturn( true );
+        when( s2.isFinalMul() ).thenReturn( true );
 
-        assertTrue( sut.hasLastOpMul() );
+        assertTrue( sut.hasFinalMul() );
     }
 
     @Test
-    public void testHasLastOpMul004()
+    public void testHasFinalMul003()
     {
         SolutionSet sut = new SolutionSet();
         Solution s1 = mock( Solution.class );
@@ -296,14 +281,14 @@ public class SolutionSetTests
         sut.add( s1 );
         sut.add( s2 );
 
-        when( s1.isLastOpMul() ).thenReturn( true );
-        when( s2.isLastOpMul() ).thenReturn( false );
+        when( s1.isFinalMul() ).thenReturn( false );
+        when( s2.isFinalMul() ).thenReturn( true );
 
-        assertTrue( sut.hasLastOpMul() );
+        assertTrue( sut.hasFinalMul() );
     }
 
     @Test
-    public void testHasLastOpMul005()
+    public void testHasFinalMul004()
     {
         SolutionSet sut = new SolutionSet();
         Solution s1 = mock( Solution.class );
@@ -311,10 +296,105 @@ public class SolutionSetTests
         sut.add( s1 );
         sut.add( s2 );
 
-        when( s1.isLastOpMul() ).thenReturn( false );
-        when( s2.isLastOpMul() ).thenReturn( false );
+        when( s1.isFinalMul() ).thenReturn( true );
+        when( s2.isFinalMul() ).thenReturn( false );
 
-        assertFalse( sut.hasLastOpMul() );
+        assertTrue( sut.hasFinalMul() );
+    }
+
+    @Test
+    public void testHasFinalMul005()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isFinalMul() ).thenReturn( false );
+        when( s2.isFinalMul() ).thenReturn( false );
+
+        assertFalse( sut.hasFinalMul() );
+    }
+
+    @Test
+    public void testHasFinalAdd000()
+    {
+        SolutionSet sut = new SolutionSet();
+
+        assertFalse( sut.hasFinalAdd() );
+    }
+
+    @Test
+    public void testHasFinalAdd001()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        sut.add( s1 );
+
+        when( s1.isFinalAdd() ).thenReturn( true );
+
+        assertTrue( sut.hasFinalAdd() );
+    }
+
+    @Test
+    public void testHasFinalAdd002()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isFinalAdd() ).thenReturn( true );
+        when( s2.isFinalAdd() ).thenReturn( true );
+
+        assertTrue( sut.hasFinalAdd() );
+    }
+
+    @Test
+    public void testHasFinalAdd003()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isFinalAdd() ).thenReturn( false );
+        when( s2.isFinalAdd() ).thenReturn( true );
+
+        assertTrue( sut.hasFinalAdd() );
+    }
+
+    @Test
+    public void testHasFinalAdd004()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isFinalAdd() ).thenReturn( true );
+        when( s2.isFinalAdd() ).thenReturn( false );
+
+        assertTrue( sut.hasFinalAdd() );
+    }
+
+    @Test
+    public void testHasFinalAdd005()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isFinalAdd() ).thenReturn( false );
+        when( s2.isFinalAdd() ).thenReturn( false );
+
+        assertFalse( sut.hasFinalAdd() );
     }
 
     @Test

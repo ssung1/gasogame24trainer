@@ -89,7 +89,7 @@ public class SolutionTests
     {
         Solution sut = new Solution();
         sut.expression = s.parse( "16 9 * 10 4 /" );
-        assertTrue( sut.isLastOpDiv() );
+        assertTrue( sut.isFinalDiv() );
     }
 
     @Test
@@ -97,7 +97,7 @@ public class SolutionTests
     {
         Solution sut = new Solution();
         sut.expression = s.parse( "/" );
-        assertTrue( sut.isLastOpDiv() );
+        assertTrue( sut.isFinalDiv() );
     }
 
     @Test
@@ -105,7 +105,7 @@ public class SolutionTests
     {
         Solution sut = new Solution();
         sut.expression = s.parse( "16 9 * 10 4 *" );
-        assertTrue( sut.isLastOpMul() );
+        assertTrue( sut.isFinalMul() );
     }
 
     @Test
@@ -113,7 +113,7 @@ public class SolutionTests
     {
         Solution sut = new Solution();
         sut.expression = s.parse( "*" );
-        assertTrue( sut.isLastOpMul() );
+        assertTrue( sut.isFinalMul() );
     }
 
     @Test

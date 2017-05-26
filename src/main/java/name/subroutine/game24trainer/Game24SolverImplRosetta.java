@@ -136,7 +136,7 @@ public class Game24SolverImplRosetta
 //                            //System.out.println( solution.toPostfixString() );
 //                            System.out.println( solution.isTwoByTwo() );
 //                            System.out.println( Puzzle.flagToString( solution.hasFraction() ) );
-//                            System.out.println( solution.isLastOpDiv() );
+//                            System.out.println( solution.isFinalDiv() );
 //
 //                            System.out.println();
                             result.add( solution );

@@ -189,4 +189,13 @@ public class Game24SolverImplRosettaTests
     {
         SolutionSet ss = sut.solve( Game24Puzzles.lastOpDiv );
     }
+
+    @Test
+    public void test23_24_24_24()
+    {
+        Puzzle p = new Puzzle( 23, 24, 24, 24 );
+        SolutionSet ss = sut.solve( p );
+        System.out.println( ss.difficultyRank() );
+        ss.getSolutionSet().forEach( s -> System.out.println( s.toInfixString() ) );
+    }
 }

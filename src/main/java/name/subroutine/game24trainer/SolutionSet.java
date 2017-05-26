@@ -2,7 +2,8 @@ package name.subroutine.game24trainer;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Stack;
+
+import static name.subroutine.game24trainer.DiffcultyRank.*;
 
 /**
  * Difficulty ranking
@@ -75,18 +76,26 @@ public class SolutionSet
      * true if some solutions have division as last operation
      * @return
      */
-    public boolean hasLastOpDiv()
+    public boolean hasFinalDiv()
     {
-        return solutionSet.parallelStream().anyMatch( s -> s.isLastOpDiv() );
+        return solutionSet.parallelStream().anyMatch( s -> s.isFinalDiv() );
     }
 
     /**
      * true if some solutions have multiplication as last operation
      * @return
      */
-    public boolean hasLastOpMul()
+    public boolean hasFinalMul()
     {
-        return solutionSet.parallelStream().anyMatch( s -> s.isLastOpMul() );
+        return solutionSet.parallelStream().anyMatch( s -> s.isFinalMul() );
+    }
+
+    /**
+     * true if some solutions have addition or subraction as final operation
+     */
+    public boolean hasFinalAdd()
+    {
+        return solutionSet.parallelStream().anyMatch( s -> s.isFinalAdd() );
     }
 
     /**
@@ -114,24 +123,23 @@ public class SolutionSet
  *    (distributive property)
  * 7. 24+0 trick
  */
-    public String difficultyRank()
+    public DiffcultyRank difficultyRank()
     {
-        //if( hasTwoByTwo() )
-        if( hasLastOpMul() ) {
-            return "multiplication as last operation";
+        if( hasFinalMul() ) {
+            return FINAL_MUL;
         }
-        if( !hasLastOpDiv() && !hasLastOpMul() && hasSolution() ) {
-            return "addition/subtraction as last operation";
+        if( !hasFinalDiv() && !hasFinalMul() && hasSolution() ) {
+            return FINAL_ADD;
         }
-        if( hasLastOpDiv() ) {
-            return "division as last operation";
+        if( hasFinalDiv() ) {
+            return FINAL_DIV;
         }
         if( hasFraction() ) {
-            return "has fraction";
+            return FRAC;
         }
         if( !hasSolution() ) {
-            return "no solution";
+            return NO_SOLU;
         }
-        return "undefined";
+        return UNDEF;
     }
 }

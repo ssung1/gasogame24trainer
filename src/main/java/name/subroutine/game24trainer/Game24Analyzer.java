@@ -39,7 +39,7 @@ public class Game24Analyzer
                         SolutionSet ss = solver.solve( p );
                         System.out.print( ss.getPuzzle() );
                         System.out.print( " -- " );
-                        System.out.println( ss.difficultyRank() );
+                        System.out.println( ss.difficultyRank().getSymbol() );
                     }
                 }
             }

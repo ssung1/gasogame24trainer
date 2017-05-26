@@ -63,4 +63,13 @@ public class Puzzle
     {
         return this.numbers;
     }
+
+    public String toString()
+    {
+        return String.format( "%2d %2d %2d %2d",
+            numbers.get( 0 ),
+            numbers.get( 1 ),
+            numbers.get( 2 ),
+            numbers.get( 3 ) );
+    }
 }

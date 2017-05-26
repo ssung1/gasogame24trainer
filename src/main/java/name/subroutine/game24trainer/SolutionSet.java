@@ -41,6 +41,11 @@ public class SolutionSet
         return this.puzzle;
     }
 
+    public Set<Solution> getSolutionSet()
+    {
+        return solutionSet;
+    }
+
     /**
      * exclude solutions that use fraction as intermediate
      *
@@ -115,7 +120,7 @@ public class SolutionSet
         if( hasLastOpMul() ) {
             return "multiplication as last operation";
         }
-        if( !hasLastOpDiv() && !hasLastOpMul() ) {
+        if( !hasLastOpDiv() && !hasLastOpMul() && hasSolution() ) {
             return "addition/subtraction as last operation";
         }
         if( hasLastOpDiv() ) {
@@ -124,6 +129,9 @@ public class SolutionSet
         if( hasFraction() ) {
             return "has fraction";
         }
-        return "difficult solution";
+        if( !hasSolution() ) {
+            return "no solution";
+        }
+        return "undefined";
     }
 }

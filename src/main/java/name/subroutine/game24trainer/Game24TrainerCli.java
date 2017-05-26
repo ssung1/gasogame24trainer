@@ -10,11 +10,7 @@ public class Game24TrainerCli
     public static void main( String[] args ) throws Exception
     {
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-
-        Game24SolverImplRosetta solver = (Game24SolverImplRosetta)context.getBean( "solver-rosetta" );
-
-//        Puzzle p = new Puzzle( Lists.newA() );
-//        p.
-//        solver.solve();
+        Game24Analyzer analyzer = (Game24Analyzer)context.getBean( "analyzer" );
+        analyzer.analyze();
     }
 }

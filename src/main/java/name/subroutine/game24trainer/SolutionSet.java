@@ -14,7 +14,7 @@ import java.util.Stack;
  * 5. Multiplication as last operation
  * 6. Two by Two, with addition/subtraction as last operation
  *    (distributive property)
- * 7. 0-trick
+ * 7. 24+0 trick
  */
 public class SolutionSet
 {
@@ -63,7 +63,7 @@ public class SolutionSet
      */
     public boolean hasTwoByTwo()
     {
-        return true;
+        return solutionSet.parallelStream().anyMatch( s -> s.isTwoByTwo() );
     }
 
     /**
@@ -72,7 +72,7 @@ public class SolutionSet
      */
     public boolean hasLastOpDiv()
     {
-        return true;
+        return solutionSet.parallelStream().anyMatch( s -> s.isLastOpDiv() );
     }
 
     /**
@@ -81,25 +81,49 @@ public class SolutionSet
      */
     public boolean hasLastOpMul()
     {
-        return true;
+        return solutionSet.parallelStream().anyMatch( s -> s.isLastOpMul() );
     }
 
     /**
      * true if some solutions have fraction
      * @return
      */
-    public boolean hasFraction()
-    {
-        for( Solution s : solutionSet ) {
-            if( s.hasFraction() == Puzzle.YES ) {
-                return true;
-            }
-        }
-        return false;
+    public boolean hasFraction() {
+        return solutionSet.parallelStream().anyMatch( s -> s.hasFraction() == Puzzle.YES );
     }
 
     public boolean hasSolution()
     {
         return !solutionSet.isEmpty();
+    }
+
+/**
+ * Difficulty ranking
+ *
+ * 1. Fraction required
+ * 2. Division as last operation (?)
+ * 3. Addition/Subtraction as last operation
+ * 4. Two by Two, with multiplication as last operation
+ * 5. Multiplication as last operation
+ * 6. Two by Two, with addition/subtraction as last operation
+ *    (distributive property)
+ * 7. 24+0 trick
+ */
+    public String difficultyRank()
+    {
+        //if( hasTwoByTwo() )
+        if( hasLastOpMul() ) {
+            return "multiplication as last operation";
+        }
+        if( !hasLastOpDiv() && !hasLastOpMul() ) {
+            return "addition/subtraction as last operation";
+        }
+        if( hasLastOpDiv() ) {
+            return "division as last operation";
+        }
+        if( hasFraction() ) {
+            return "has fraction";
+        }
+        return "difficult solution";
     }
 }

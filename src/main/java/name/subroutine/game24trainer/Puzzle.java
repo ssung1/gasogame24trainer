@@ -1,5 +1,6 @@
 package name.subroutine.game24trainer;
 
+import java.util.Arrays;
 import java.util.IdentityHashMap;
 import java.util.List;
 
@@ -51,6 +52,11 @@ public class Puzzle
     public Puzzle( List<Integer> numbers )
     {
         this.numbers = numbers;
+    }
+
+    public Puzzle( int a, int b, int c, int d )
+    {
+        this.numbers = Arrays.asList( a, b, c, d );
     }
 
     public List<Integer> getNumbers()

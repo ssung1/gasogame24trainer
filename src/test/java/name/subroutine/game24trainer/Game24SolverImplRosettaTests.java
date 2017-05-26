@@ -162,7 +162,8 @@ public class Game24SolverImplRosettaTests
     @Test
     public void testSolveSimple()
     {
-        sut.solve( Game24Puzzles.simple );
+        SolutionSet ss = sut.solve( Game24Puzzles.simple );
+        System.out.println( ss.difficultyRank() );
     }
 
     @Test
@@ -186,6 +187,6 @@ public class Game24SolverImplRosettaTests
     @Test
     public void testSolveLastOpDiv()
     {
-        sut.solve( Game24Puzzles.lastOpDiv );
+        SolutionSet ss = sut.solve( Game24Puzzles.lastOpDiv );
     }
 }

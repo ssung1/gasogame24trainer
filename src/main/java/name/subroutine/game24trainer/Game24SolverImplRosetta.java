@@ -80,8 +80,11 @@ public class Game24SolverImplRosetta
         }
     }
 
-    public boolean solve( Puzzle puzzle )
+    public SolutionSet solve( Puzzle puzzle )
     {
+        SolutionSet result = new SolutionSet();
+        result.setPuzzle( puzzle );
+
         List<Integer> numbers = puzzle.getNumbers();
         Operator[] ops = {
             Operator.ADD, Operator.SUB, Operator.MUL, Operator.DIV
@@ -128,21 +131,23 @@ public class Game24SolverImplRosetta
                             else {
                                 solution.fraction = Puzzle.NO;
                             }
-                            System.out.println( solution.toInfixString() );
-                            System.out.println( "cost: " + String.valueOf( solution.cost ) );
-                            //System.out.println( solution.toPostfixString() );
-                            System.out.println( solution.isTwoByTwo() );
-                            System.out.println( Puzzle.flagToString( solution.hasFraction() ) );
-                            System.out.println( solution.isLastOpDiv() );
-
-                            System.out.println();
+//                            System.out.println( solution.toInfixString() );
+//                            System.out.println( "cost: " + String.valueOf( solution.cost ) );
+//                            //System.out.println( solution.toPostfixString() );
+//                            System.out.println( solution.isTwoByTwo() );
+//                            System.out.println( Puzzle.flagToString( solution.hasFraction() ) );
+//                            System.out.println( solution.isLastOpDiv() );
+//
+//                            System.out.println();
+                            result.add( solution );
                             //return true;
                         }
-                    } catch (Exception ignored) {
+                    }
+                    catch (Exception ignored) {
                     }
                 }
             }
         }
-        return false;
+        return result;
     }
 }

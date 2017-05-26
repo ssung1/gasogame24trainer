@@ -15,14 +15,14 @@ import static org.junit.Assert.assertThat;
 public class SolutionSetTests
 {
     @Test
-    public void testNoSolution000()
+    public void testHasSolution000()
     {
         SolutionSet sut = new SolutionSet();
         assertFalse( sut.hasSolution() );
     }
 
     @Test
-    public void testNoSolution001()
+    public void testHasSolution001()
     {
         SolutionSet sut = new SolutionSet();
         Solution s1 = mock( Solution.class );
@@ -124,7 +124,7 @@ public class SolutionSetTests
         when( s1.isTwoByTwo() ).thenReturn( true );
         when( s2.isTwoByTwo() ).thenReturn( false );
 
-        assertFalse( sut.hasTwoByTwo() );
+        assertTrue( sut.hasTwoByTwo() );
     }
 
     @Test
@@ -160,13 +160,161 @@ public class SolutionSetTests
     @Test
     public void testHasLastOpDiv000()
     {
-        assertTrue( false );
+        SolutionSet sut = new SolutionSet();
+
+        assertFalse( sut.hasLastOpDiv() );
+    }
+
+    @Test
+    public void testHasLastOpDiv001()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        sut.add( s1 );
+
+        when( s1.isLastOpDiv() ).thenReturn( true );
+
+        assertTrue( sut.hasLastOpDiv() );
+    }
+
+    @Test
+    public void testHasLastOpDiv002()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isLastOpDiv() ).thenReturn( true );
+        when( s2.isLastOpDiv() ).thenReturn( true );
+
+        assertTrue( sut.hasLastOpDiv() );
+    }
+
+    @Test
+    public void testHasLastOpDiv003()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isLastOpDiv() ).thenReturn( false );
+        when( s2.isLastOpDiv() ).thenReturn( true );
+
+        assertTrue( sut.hasLastOpDiv() );
+    }
+
+    @Test
+    public void testHasLastOpDiv004()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isLastOpDiv() ).thenReturn( true );
+        when( s2.isLastOpDiv() ).thenReturn( false );
+
+        assertTrue( sut.hasLastOpDiv() );
+    }
+
+    @Test
+    public void testHasLastOpDiv005()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isLastOpDiv() ).thenReturn( false );
+        when( s2.isLastOpDiv() ).thenReturn( false );
+
+        assertFalse( sut.hasLastOpDiv() );
     }
 
     @Test
     public void testHasLastOpMul000()
     {
-        assertTrue( false );
+        SolutionSet sut = new SolutionSet();
+
+        assertFalse( sut.hasLastOpMul() );
+    }
+
+    @Test
+    public void testHasLastOpMul001()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        sut.add( s1 );
+
+        when( s1.isLastOpMul() ).thenReturn( true );
+
+        assertTrue( sut.hasLastOpMul() );
+    }
+
+    @Test
+    public void testHasLastOpMul002()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isLastOpMul() ).thenReturn( true );
+        when( s2.isLastOpMul() ).thenReturn( true );
+
+        assertTrue( sut.hasLastOpMul() );
+    }
+
+    @Test
+    public void testHasLastOpMul003()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isLastOpMul() ).thenReturn( false );
+        when( s2.isLastOpMul() ).thenReturn( true );
+
+        assertTrue( sut.hasLastOpMul() );
+    }
+
+    @Test
+    public void testHasLastOpMul004()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isLastOpMul() ).thenReturn( true );
+        when( s2.isLastOpMul() ).thenReturn( false );
+
+        assertTrue( sut.hasLastOpMul() );
+    }
+
+    @Test
+    public void testHasLastOpMul005()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isLastOpMul() ).thenReturn( false );
+        when( s2.isLastOpMul() ).thenReturn( false );
+
+        assertFalse( sut.hasLastOpMul() );
     }
 
     @Test

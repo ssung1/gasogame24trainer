@@ -28,6 +28,7 @@ public class Operator extends Symbol
         return this.prec;
     }
 
+    @Override
     public boolean equals( Object o )
     {
         if( o == null ) {

@@ -14,6 +14,7 @@ public class Number extends Symbol
         return value;
     }
 
+    @Override
     public boolean equals( Object o )
     {
         if( o == null ) {

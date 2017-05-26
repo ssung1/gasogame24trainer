@@ -133,4 +133,19 @@ public class Solution
     {
         return this.fraction;
     }
+
+    @Override
+    public boolean equals( Object o )
+    {
+        if( !(o instanceof Solution) ) return false;
+        Solution s = (Solution)o;
+        return this.toInfixString().equals( s.toInfixString() );
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return toInfixString().hashCode();
+    }
+
 }

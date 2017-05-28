@@ -1,6 +1,5 @@
 package name.subroutine.game24trainer;
 
-
 import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +9,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertFalse;
 
 public class Game24SolverImplRosettaTests
 {
@@ -182,6 +182,55 @@ public class Game24SolverImplRosettaTests
     }
 
     @Test
+    public void testZeroTrick()
+    {
+        SolutionSet ss = sut.solve( Game24Puzzles.zeroTrick );
+        assertThat( ss.difficultyRank(), is( DiffcultyRank.FINAL_ADD ) );
+    }
+
+    @Test
+    public void testSolveFinalMul()
+    {
+        SolutionSet ss = sut.solve( Game24Puzzles.finalMul );
+        assertThat( ss.difficultyRank(), is( DiffcultyRank.FINAL_MUL ) );
+    }
+
+    @Test
+    public void testSolveFinalMulTwoByTwo()
+    {
+        SolutionSet ss = sut.solve( Game24Puzzles.finalMulTwoByTwo );
+        assertThat( ss.difficultyRank(), is( DiffcultyRank.FINAL_MUL_2 ) );
+    }
+
+    @Test
+    public void testSolveFinalAdd()
+    {
+        SolutionSet ss = sut.solve( Game24Puzzles.finalAdd );
+        assertThat( ss.difficultyRank(), is( DiffcultyRank.FINAL_ADD ) );
+    }
+
+    @Test
+    public void testSolveFinalAddTwoByTwo()
+    {
+        SolutionSet ss = sut.solve( Game24Puzzles.finalAddTwoByTwo );
+        assertThat( ss.difficultyRank(), is( DiffcultyRank.FINAL_ADD_2 ) );
+    }
+
+    @Test
+    public void testSolveFinalDiv()
+    {
+        SolutionSet ss = sut.solve( Game24Puzzles.finalDiv );
+        assertThat( ss.difficultyRank(), is( DiffcultyRank.FINAL_DIV ) );
+    }
+
+    @Test
+    public void testSolveFinalDivTwoByTwo()
+    {
+        SolutionSet ss = sut.solve( Game24Puzzles.finalDivTwoByTwo );
+        assertThat( ss.difficultyRank(), is( DiffcultyRank.FINAL_DIV_2 ) );
+    }
+
+    @Test
     public void testSolveFraction()
     {
         SolutionSet ss = sut.solve( Game24Puzzles.fraction );
@@ -189,16 +238,10 @@ public class Game24SolverImplRosettaTests
     }
 
     @Test
-    public void testSolveFinalDiv()
+    public void testSolveNoSolution()
     {
-        SolutionSet ss = sut.solve( Game24Puzzles.finalDiv );
-        assertThat( ss.difficultyRank(), is( DiffcultyRank.FINAL_DIV_2 ) );
-    }
-
-    @Test
-    public void testZeroTrick()
-    {
-        SolutionSet ss = sut.solve( Game24Puzzles.zeroTrick );
-        assertThat( ss.difficultyRank(), is( DiffcultyRank.FINAL_ADD ) );
+        SolutionSet ss = sut.solve( Game24Puzzles.noSolution );
+        assertThat( ss.difficultyRank(), is( DiffcultyRank.NO_SOLU ) );
+        assertFalse( ss.hasSolution() );
     }
 }

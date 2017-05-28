@@ -21,6 +21,7 @@ public class SolutionSet
 {
     private Set<Solution> solutionSet = new HashSet<>();
     private Puzzle puzzle;
+    private String algorithm;
 
     public void add( Solution s )
     {
@@ -45,6 +46,16 @@ public class SolutionSet
     public Set<Solution> getSolutionSet()
     {
         return solutionSet;
+    }
+
+    public void setAlgorithm( String algorithm )
+    {
+        this.algorithm = algorithm;
+    }
+
+    public String getAlgorithm()
+    {
+        return this.algorithm;
     }
 
     /**

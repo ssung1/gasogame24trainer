@@ -50,7 +50,7 @@ public class Game24SolverImplRosetta
                     float ans = applyOperator( s.pop(), s.pop(),
                         op.getValue() );
 
-                    if( Math.round( ans ) - ans > .001f ) {
+                    if( Math.abs( Math.round( ans ) - ans ) > .001f ) {
                         result.hasFraction = true;
                     }
 
@@ -84,6 +84,7 @@ public class Game24SolverImplRosetta
     {
         SolutionSet result = new SolutionSet();
         result.setPuzzle( puzzle );
+        result.setAlgorithm( "Rosetta: brute force" );
 
         List<Integer> numbers = puzzle.getNumbers();
         Operator[] ops = {
@@ -123,7 +124,6 @@ public class Game24SolverImplRosetta
                         if( retval.is24 ){
                             Solution solution = new Solution();
                             solution.cost = cost;
-                            solution.algorithm = "Rosetta: brute force";
                             solution.expression = candidate;
                             if( retval.hasFraction ) {
                                 solution.fraction = Puzzle.YES;
@@ -131,16 +131,7 @@ public class Game24SolverImplRosetta
                             else {
                                 solution.fraction = Puzzle.NO;
                             }
-//                            System.out.println( solution.toInfixString() );
-//                            System.out.println( "cost: " + String.valueOf( solution.cost ) );
-//                            //System.out.println( solution.toPostfixString() );
-//                            System.out.println( solution.isTwoByTwo() );
-//                            System.out.println( Puzzle.flagToString( solution.hasFraction() ) );
-//                            System.out.println( solution.isFinalDiv() );
-//
-//                            System.out.println();
                             result.add( solution );
-                            //return true;
                         }
                     }
                     catch (Exception ignored) {

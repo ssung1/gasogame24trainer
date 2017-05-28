@@ -30,7 +30,7 @@ public class Game24Puzzles
     /**
      * requires division as the last operation
      */
-    public static Puzzle finalOpDiv = new Puzzle( 16, 9, 10, 4 );
+    public static Puzzle finalDiv = new Puzzle( 16, 9, 10, 4 );
 
     /**
      * 23 24 24 24

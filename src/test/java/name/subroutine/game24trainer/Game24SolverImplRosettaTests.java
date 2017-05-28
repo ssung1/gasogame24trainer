@@ -191,8 +191,8 @@ public class Game24SolverImplRosettaTests
     @Test
     public void testSolveFinalDiv()
     {
-        SolutionSet ss = sut.solve( Game24Puzzles.finalOpDiv );
-        assertThat( ss.difficultyRank(), is( DiffcultyRank.FINAL_DIV ) );
+        SolutionSet ss = sut.solve( Game24Puzzles.finalDiv );
+        assertThat( ss.difficultyRank(), is( DiffcultyRank.FINAL_DIV_2 ) );
     }
 
     @Test

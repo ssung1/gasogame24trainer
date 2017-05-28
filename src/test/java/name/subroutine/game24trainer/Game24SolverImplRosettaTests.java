@@ -114,7 +114,6 @@ public class Game24SolverImplRosettaTests
         List<List<Integer>> result = new ArrayList<>();
         sut.permuteOperators( result, 2 );
 
-
         assertThat( result, hasSize( 8 ) );
         assertThat( result,
             hasItem( Lists.newArrayList( 0, 0, 0 ) ) );
@@ -163,39 +162,43 @@ public class Game24SolverImplRosettaTests
     public void testSolveSimple()
     {
         SolutionSet ss = sut.solve( Game24Puzzles.simple );
-        System.out.println( ss.difficultyRank() );
+        assertThat( ss.difficultyRank(), is( DiffcultyRank.FINAL_MUL ) );
     }
 
     @Test
     public void testSolveTwoByTwo()
     {
-        sut.solve( Game24Puzzles.twoByTwo );
+        SolutionSet ss = sut.solve( Game24Puzzles.twoByTwo );
+        assertThat( ss.difficultyRank(), is( DiffcultyRank.FINAL_ADD_2 ) );
     }
 
     @Test
     public void testSolveAddSub()
     {
-        sut.solve( Game24Puzzles.addSub );
+        // can be solved with only + and -
+        // also can be solved with * as final operation
+        SolutionSet ss = sut.solve( Game24Puzzles.addSub );
+        assertThat( ss.difficultyRank(), is( DiffcultyRank.FINAL_MUL ) );
     }
 
     @Test
     public void testSolveFraction()
     {
-        sut.solve( Game24Puzzles.fraction );
+        SolutionSet ss = sut.solve( Game24Puzzles.fraction );
+        assertThat( ss.difficultyRank(), is( DiffcultyRank.FRAC ) );
     }
 
     @Test
-    public void testSolveLastOpDiv()
+    public void testSolveFinalDiv()
     {
-        SolutionSet ss = sut.solve( Game24Puzzles.lastOpDiv );
+        SolutionSet ss = sut.solve( Game24Puzzles.finalOpDiv );
+        assertThat( ss.difficultyRank(), is( DiffcultyRank.FINAL_DIV ) );
     }
 
     @Test
-    public void test23_24_24_24()
+    public void testZeroTrick()
     {
-        Puzzle p = new Puzzle( 23, 24, 24, 24 );
-        SolutionSet ss = sut.solve( p );
-        System.out.println( ss.difficultyRank() );
-        ss.getSolutionSet().forEach( s -> System.out.println( s.toInfixString() ) );
+        SolutionSet ss = sut.solve( Game24Puzzles.zeroTrick );
+        assertThat( ss.difficultyRank(), is( DiffcultyRank.FINAL_ADD ) );
     }
 }

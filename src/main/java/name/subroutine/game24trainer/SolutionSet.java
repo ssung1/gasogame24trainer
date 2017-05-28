@@ -69,7 +69,8 @@ public class SolutionSet
      */
     public boolean hasTwoByTwo()
     {
-        return solutionSet.parallelStream().anyMatch( s -> s.isTwoByTwo() );
+        return excludeFraction().parallelStream().anyMatch(
+            s -> s.isTwoByTwo() );
     }
 
     /**
@@ -78,7 +79,18 @@ public class SolutionSet
      */
     public boolean hasFinalDiv()
     {
-        return solutionSet.parallelStream().anyMatch( s -> s.isFinalDiv() );
+        return excludeFraction().parallelStream().anyMatch(
+            s -> s.isFinalDiv() );
+    }
+
+    /**
+     * true if some solutions has a two by two pattern with division
+     * as final operation
+     */
+    public boolean hasFinalDivTwoByTwo()
+    {
+        return excludeFraction().parallelStream().anyMatch(
+            Solution::isFinalDivTwoByTwo );
     }
 
     /**
@@ -87,7 +99,18 @@ public class SolutionSet
      */
     public boolean hasFinalMul()
     {
-        return solutionSet.parallelStream().anyMatch( s -> s.isFinalMul() );
+        return excludeFraction().parallelStream().anyMatch(
+            s -> s.isFinalMul() );
+    }
+
+    /**
+     * true if some solutions has a two by two pattern with multiplication
+     * as final operation
+     */
+    public boolean hasFinalMulTwoByTwo()
+    {
+        return excludeFraction().parallelStream().anyMatch(
+            Solution::isFinalMulTwoByTwo );
     }
 
     /**
@@ -95,7 +118,18 @@ public class SolutionSet
      */
     public boolean hasFinalAdd()
     {
-        return solutionSet.parallelStream().anyMatch( s -> s.isFinalAdd() );
+        return excludeFraction().parallelStream().anyMatch(
+            s -> s.isFinalAdd() );
+    }
+
+    /**
+     * true if some solutions has a two by two pattern with addition or
+     * subtraction as final operation
+     */
+    public boolean hasFinalAddTwoByTwo()
+    {
+        return excludeFraction().parallelStream().anyMatch(
+            Solution::isFinalAddTwoByTwo );
     }
 
     /**
@@ -103,7 +137,8 @@ public class SolutionSet
      * @return
      */
     public boolean hasFraction() {
-        return solutionSet.parallelStream().anyMatch( s -> s.hasFraction() == Puzzle.YES );
+        return solutionSet.parallelStream().anyMatch(
+            s -> s.hasFraction() == Puzzle.YES );
     }
 
     public boolean hasSolution()
@@ -112,27 +147,45 @@ public class SolutionSet
     }
 
 /**
- * Difficulty ranking
+ * Difficulty ranking, from the easiest:
  *
- * 1. Fraction required
- * 2. Division as last operation (?)
- * 3. Addition/Subtraction as last operation
- * 4. Two by Two, with multiplication as last operation
- * 5. Multiplication as last operation
- * 6. Two by Two, with addition/subtraction as last operation
- *    (distributive property)
- * 7. 24+0 trick
+ * 24+0 trick, (a - a) * b + 24, optional
+ *
+ * Distributive property, (a * b) + (a * c), optional
+ *
+ * Multiplication as last operation
+ *
+ * Two by two, with multiplication as last operation
+ *
+ * Addition/subtraction as last operation
+ *
+ * Two by two, with addition/subtraction as final operation
+ *
+ * Division as last operation
+ *
+ * Two by two, with division as final operation
+ *
+ * Fraction required
  */
     public DiffcultyRank difficultyRank()
     {
         if( hasFinalMul() ) {
             return FINAL_MUL;
         }
-        if( !hasFinalDiv() && !hasFinalMul() && hasSolution() ) {
+        if( hasFinalMulTwoByTwo() ) {
+            return FINAL_MUL_2;
+        }
+        if( hasFinalAdd() ) {
             return FINAL_ADD;
+        }
+        if( hasFinalAddTwoByTwo() ) {
+            return FINAL_ADD_2;
         }
         if( hasFinalDiv() ) {
             return FINAL_DIV;
+        }
+        if( hasFinalDivTwoByTwo() ) {
+            return FINAL_DIV_2;
         }
         if( hasFraction() ) {
             return FRAC;

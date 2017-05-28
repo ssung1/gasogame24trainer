@@ -85,15 +85,33 @@ public class SolutionTests
     }
 
     @Test
-    public void testIsLastOpDiv000()
+    public void testTwoByTwo008()
     {
         Solution sut = new Solution();
-        sut.expression = s.parse( "16 9 * 10 4 /" );
+        sut.expression = s.parse( "" );
+
+        assertFalse( sut.isTwoByTwo() );
+    }
+
+    @Test
+    public void testTwoByTwo009()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "1 1 + 1 + 1 + 1 + 1 + 1 +" );
+
+        assertFalse( sut.isTwoByTwo() );
+    }
+
+    @Test
+    public void testIsFinalDiv000()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "16 9 * 10 + 4 /" );
         assertTrue( sut.isFinalDiv() );
     }
 
     @Test
-    public void testIsLastOpDiv001()
+    public void testIsFinalDiv001()
     {
         Solution sut = new Solution();
         sut.expression = s.parse( "/" );
@@ -101,19 +119,131 @@ public class SolutionTests
     }
 
     @Test
-    public void testIsLastOpMul000()
+    public void testIsFinalDiv002()
     {
         Solution sut = new Solution();
-        sut.expression = s.parse( "16 9 * 10 4 *" );
+        sut.expression = s.parse( "16 9 * 10 4 - /" );
+        assertFalse( sut.isFinalDiv() );
+    }
+
+    @Test
+    public void testIsFinalDivTwoByTwo000()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "16 9 * 10 4 * /" );
+        assertTrue( sut.isFinalDivTwoByTwo() );
+    }
+
+    @Test
+    public void testIsFinalDivTwoByTwo001()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "16 9 * 10 * 4 /" );
+        assertFalse( sut.isFinalDivTwoByTwo() );
+    }
+
+    @Test
+    public void testIsFinalDivTwoByTwo002()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "16 9 * 10 4 / +" );
+        assertFalse( sut.isFinalDivTwoByTwo() );
+    }
+
+    @Test
+    public void testIsFinalMul000()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "16 9 * 10 + 4 *" );
         assertTrue( sut.isFinalMul() );
     }
 
     @Test
-    public void testIsLastOpMul001()
+    public void testIsFinalMul001()
     {
         Solution sut = new Solution();
         sut.expression = s.parse( "*" );
         assertTrue( sut.isFinalMul() );
+    }
+
+    @Test
+    public void testIsFinalMul002()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "3 1 + 3 3 + *" );
+        assertFalse( sut.isFinalMul() );
+    }
+
+    @Test
+    public void testIsFinalMulTwoByTwo000()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "16 9 * 10 4 * *" );
+        assertTrue( sut.isFinalMulTwoByTwo() );
+    }
+
+    @Test
+    public void testIsFinalMulTwoByTwo001()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "16 9 * 10 * 4 *" );
+        assertFalse( sut.isFinalMulTwoByTwo() );
+    }
+
+    @Test
+    public void testIsFinalMulTwoByTwo002()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "16 9 * 10 4 * +" );
+        assertFalse( sut.isFinalMulTwoByTwo() );
+    }
+
+    @Test
+    public void testIsFinalAdd000()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "16 9 * 10 + 4 +" );
+        assertTrue( sut.isFinalAdd() );
+    }
+
+    @Test
+    public void testIsFinalAdd001()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "+" );
+        assertTrue( sut.isFinalAdd() );
+    }
+
+    @Test
+    public void testIsFinalAdd002()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "16 9 * 10 4 + +" );
+        assertFalse( sut.isFinalAdd() );
+    }
+
+    @Test
+    public void testIsFinalAddTwoByTwo000()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "16 9 * 10 4 * +" );
+        assertTrue( sut.isFinalAddTwoByTwo() );
+    }
+
+    @Test
+    public void testIsFinalAddTwoByTwo001()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "16 9 * 10 * 4 +" );
+        assertFalse( sut.isFinalAddTwoByTwo() );
+    }
+
+    @Test
+    public void testIsFinalAddTwoByTwo002()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "16 9 * 10 4 + *" );
+        assertFalse( sut.isFinalAddTwoByTwo() );
     }
 
     @Test

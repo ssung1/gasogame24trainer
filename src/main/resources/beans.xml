@@ -5,6 +5,6 @@
        xsi:schemaLocation = "http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
     <bean id="solver-rosetta" class="name.subroutine.game24trainer.Game24SolverImplRosetta">
     </bean>
-    <bean id="analyzer" class="name.subroutine.game24trainer.Game24Analyzer" autowire="byType">
+    <bean id="analyzer" class="name.subroutine.game24trainer.Game24Analyzer" autowire="constructor">
     </bean>
 </beans>

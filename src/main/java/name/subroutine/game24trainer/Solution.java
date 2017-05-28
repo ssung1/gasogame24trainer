@@ -102,6 +102,7 @@ public class Solution
      */
     public boolean isTwoByTwo()
     {
+        if( expression.length != 7 ) return false;
         // n n o n n o o
         if( !(expression[0] instanceof Number) ) return false;
         if( !(expression[1] instanceof Number) ) return false;
@@ -114,11 +115,19 @@ public class Solution
     }
 
     /**
-     * the last operation is division
+     * the final operation is division, not two-by-two
      */
     public boolean isFinalDiv()
     {
-        return getFinalOp().equals( Operator.DIV );
+        return !isTwoByTwo() && getFinalOp().equals( Operator.DIV );
+    }
+
+    /**
+     * the final operation is division, and the solution is two-by-two
+     */
+    public boolean isFinalDivTwoByTwo()
+    {
+        return isTwoByTwo() && getFinalOp().equals( Operator.DIV );
     }
 
     /**
@@ -126,7 +135,16 @@ public class Solution
      */
     public boolean isFinalMul()
     {
-        return getFinalOp().equals( Operator.MUL );
+        return !isTwoByTwo() && getFinalOp().equals( Operator.MUL );
+    }
+
+    /**
+     * final operation is multiplication
+     * solution is a two-by-two
+     */
+    public boolean isFinalMulTwoByTwo()
+    {
+        return isTwoByTwo() && getFinalOp().equals( Operator.MUL );
     }
 
     /**
@@ -135,8 +153,21 @@ public class Solution
      */
     public boolean isFinalAdd()
     {
-        return getFinalOp().equals( Operator.ADD )
-            || getFinalOp().equals( Operator.SUB );
+        boolean addSub = getFinalOp().equals( Operator.ADD )
+                      || getFinalOp().equals( Operator.SUB );
+
+        return !isTwoByTwo() && addSub;
+    }
+
+    /**
+     * final operation is addition or subtraction
+     * @return
+     */
+    public boolean isFinalAddTwoByTwo()
+    {
+        boolean addSub = getFinalOp().equals( Operator.ADD )
+                      || getFinalOp().equals( Operator.SUB );
+        return isTwoByTwo() && addSub;
     }
 
     public int hasFraction()

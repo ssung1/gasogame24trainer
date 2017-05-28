@@ -238,6 +238,86 @@ public class SolutionSetTests
     }
 
     @Test
+    public void testHasFinalDivTwoByTwo000()
+    {
+        SolutionSet sut = new SolutionSet();
+
+        assertFalse( sut.hasFinalDivTwoByTwo() );
+    }
+
+    @Test
+    public void testHasFinalDivTwoByTwo001()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        sut.add( s1 );
+
+        when( s1.isFinalDivTwoByTwo() ).thenReturn( true );
+
+        assertTrue( sut.hasFinalDivTwoByTwo() );
+    }
+
+    @Test
+    public void testHasFinalDivTwoByTwo002()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isFinalDivTwoByTwo() ).thenReturn( true );
+        when( s2.isFinalDivTwoByTwo() ).thenReturn( true );
+
+        assertTrue( sut.hasFinalDivTwoByTwo() );
+    }
+
+    @Test
+    public void testHasFinalDivTwoByTwo003()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isFinalDivTwoByTwo() ).thenReturn( false );
+        when( s2.isFinalDivTwoByTwo() ).thenReturn( true );
+
+        assertTrue( sut.hasFinalDivTwoByTwo() );
+    }
+
+    @Test
+    public void testHasFinalDivTwoByTwo004()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isFinalDivTwoByTwo() ).thenReturn( true );
+        when( s2.isFinalDivTwoByTwo() ).thenReturn( false );
+
+        assertTrue( sut.hasFinalDivTwoByTwo() );
+    }
+
+    @Test
+    public void testHasFinalDivTwoByTwo005()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isFinalDivTwoByTwo() ).thenReturn( false );
+        when( s2.isFinalDivTwoByTwo() ).thenReturn( false );
+
+        assertFalse( sut.hasFinalDivTwoByTwo() );
+    }
+
+    @Test
     public void testHasFinalMul000()
     {
         SolutionSet sut = new SolutionSet();
@@ -318,6 +398,86 @@ public class SolutionSetTests
     }
 
     @Test
+    public void testHasFinalMulTwoByTwo000()
+    {
+        SolutionSet sut = new SolutionSet();
+
+        assertFalse( sut.hasFinalMulTwoByTwo() );
+    }
+
+    @Test
+    public void testHasFinalMulTwoByTwo001()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        sut.add( s1 );
+
+        when( s1.isFinalMulTwoByTwo() ).thenReturn( true );
+
+        assertTrue( sut.hasFinalMulTwoByTwo() );
+    }
+
+    @Test
+    public void testHasFinalMulTwoByTwo002()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isFinalMulTwoByTwo() ).thenReturn( true );
+        when( s2.isFinalMulTwoByTwo() ).thenReturn( true );
+
+        assertTrue( sut.hasFinalMulTwoByTwo() );
+    }
+
+    @Test
+    public void testHasFinalMulTwoByTwo003()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isFinalMulTwoByTwo() ).thenReturn( false );
+        when( s2.isFinalMulTwoByTwo() ).thenReturn( true );
+
+        assertTrue( sut.hasFinalMulTwoByTwo() );
+    }
+
+    @Test
+    public void testHasFinalMulTwoByTwo004()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isFinalMulTwoByTwo() ).thenReturn( true );
+        when( s2.isFinalMulTwoByTwo() ).thenReturn( false );
+
+        assertTrue( sut.hasFinalMulTwoByTwo() );
+    }
+
+    @Test
+    public void testHasFinalMulTwoByTwo005()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isFinalMulTwoByTwo() ).thenReturn( false );
+        when( s2.isFinalMulTwoByTwo() ).thenReturn( false );
+
+        assertFalse( sut.hasFinalMulTwoByTwo() );
+    }
+
+    @Test
     public void testHasFinalAdd000()
     {
         SolutionSet sut = new SolutionSet();
@@ -395,6 +555,86 @@ public class SolutionSetTests
         when( s2.isFinalAdd() ).thenReturn( false );
 
         assertFalse( sut.hasFinalAdd() );
+    }
+
+    @Test
+    public void testHasFinalAddTwoByTwo000()
+    {
+        SolutionSet sut = new SolutionSet();
+
+        assertFalse( sut.hasFinalAddTwoByTwo() );
+    }
+
+    @Test
+    public void testHasFinalAddTwoByTwo001()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        sut.add( s1 );
+
+        when( s1.isFinalAddTwoByTwo() ).thenReturn( true );
+
+        assertTrue( sut.hasFinalAddTwoByTwo() );
+    }
+
+    @Test
+    public void testHasFinalAddTwoByTwo002()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isFinalAddTwoByTwo() ).thenReturn( true );
+        when( s2.isFinalAddTwoByTwo() ).thenReturn( true );
+
+        assertTrue( sut.hasFinalAddTwoByTwo() );
+    }
+
+    @Test
+    public void testHasFinalAddTwoByTwo003()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isFinalAddTwoByTwo() ).thenReturn( false );
+        when( s2.isFinalAddTwoByTwo() ).thenReturn( true );
+
+        assertTrue( sut.hasFinalAddTwoByTwo() );
+    }
+
+    @Test
+    public void testHasFinalAddTwoByTwo004()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isFinalAddTwoByTwo() ).thenReturn( true );
+        when( s2.isFinalAddTwoByTwo() ).thenReturn( false );
+
+        assertTrue( sut.hasFinalAddTwoByTwo() );
+    }
+
+    @Test
+    public void testHasFinalAddTwoByTwo005()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isFinalAddTwoByTwo() ).thenReturn( false );
+        when( s2.isFinalAddTwoByTwo() ).thenReturn( false );
+
+        assertFalse( sut.hasFinalAddTwoByTwo() );
     }
 
     @Test

@@ -1,13 +1,13 @@
 package name.subroutine.game24trainer;
 
-import name.subroutine.game24trainer.solverimpl.Game24SolverImplRosetta;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.annotation
-    .AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -15,47 +15,25 @@ import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@Configuration
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class Game24AnalyzerTests
 {
-    AnnotationConfigApplicationContext context;
+    @Autowired
+    @Qualifier( "analyzer" )
     Game24Analyzer sut;
-    Game24SolverImplRosetta mockSolver;
+
+    @MockBean
+    @Qualifier( "solver" )
+    Game24Solver mockSolver;
+
     Symbol symbol = new Symbol();
-
-    @Bean( name = "analyzer" )
-    public Game24Analyzer getAnalyzer()
-    {
-        Game24Analyzer result = new Game24Analyzer();
-        result.setMaxNumber( 5 );
-        return result;
-    }
-
-    @Bean( name = "solver" )
-    public Game24SolverImplRosetta getMockSolver()
-    {
-        return mock( Game24SolverImplRosetta.class );
-    }
-
-    @Before
-    public void setUp()
-    {
-        context = new AnnotationConfigApplicationContext(
-            Game24AnalyzerTests.class );
-        sut = (Game24Analyzer)context.getBean( "analyzer" );
-        mockSolver = sut.getSolver();
-    }
-
-    @After
-    public void tearDown()
-    {
-        context.close();
-    }
 
     @Test
     public void testInjection()
     {
         assertNotNull( sut.getSolver() );
+        assertTrue( sut.getSolver() == mockSolver );
     }
 
     @Test
@@ -76,7 +54,6 @@ public class Game24AnalyzerTests
         sol.expression = symbol.parse( "1 1 1 1 * * *" );
         sample.add( sol );
 
-        Game24SolverImplRosetta ms = sut.getSolver();
         when( mockSolver.solve( anyObject() ) ).thenReturn( sample );
         sut.analyze();
 

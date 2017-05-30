@@ -18,7 +18,7 @@ public class Game24TrainerCliNoSpring
         ApplicationContext context = new AnnotationConfigApplicationContext( Game24TrainerConfig.class );
         //Game24Analyzer analyzer = context.getBean( Game24Analyzer.class );
 
-        Game24SolverImplRosetta solver = new Game24SolverImplRosetta();
+        Game24Solver solver = new Game24SolverImplRosetta();
         Game24Analyzer analyzer = new Game24Analyzer();
         //analyzer.
 

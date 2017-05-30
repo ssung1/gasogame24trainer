@@ -8,8 +8,7 @@ import java.util.*;
 /**
  * Taken from rosettacode.org
  */
-public class Game24SolverImplRosetta
-{
+public class Game24SolverImplRosetta implements Game24Solver {
     final String[] patterns = { "nnonnoo", "nnonono", "nnnoono", "nnnonoo",
         "nnnnooo" };
 
@@ -83,6 +82,7 @@ public class Game24SolverImplRosetta
         }
     }
 
+    @Override
     public SolutionSet solve( Puzzle puzzle )
     {
         SolutionSet result = new SolutionSet();

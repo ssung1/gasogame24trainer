@@ -1,7 +1,6 @@
 package name.subroutine.game24trainer.web;
 
 import name.subroutine.game24trainer.*;
-import name.subroutine.game24trainer.solverimpl.Game24SolverImplRosetta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +17,7 @@ public class ServiceSolution
 {
     Symbol symbol = new Symbol();
     @Autowired
-    Game24SolverImplRosetta solver;
+    Game24Solver solver;
 
     @RequestMapping(
         value = "/v0/solution",

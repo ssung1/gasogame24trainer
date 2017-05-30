@@ -1,6 +1,5 @@
 package name.subroutine.game24trainer;
 
-import name.subroutine.game24trainer.solverimpl.Game24SolverImplRosetta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -15,14 +14,20 @@ import java.util.stream.Stream;
 public class Game24Analyzer
 {
     @Autowired
-    @Qualifier( "solver" )
-    private Game24SolverImplRosetta solver;
+    private Game24Solver solver;
 
     public Game24Analyzer()
     {
     }
 
-    public Game24SolverImplRosetta getSolver()
+    @Autowired
+    public Game24Analyzer(
+        @Qualifier( "solver" ) Game24Solver solver )
+    {
+        this.solver = solver;
+    }
+
+    public Game24Solver getSolver()
     {
         return this.solver;
     }

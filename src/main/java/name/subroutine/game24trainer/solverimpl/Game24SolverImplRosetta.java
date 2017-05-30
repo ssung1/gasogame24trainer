@@ -1,4 +1,7 @@
-package name.subroutine.game24trainer;
+package name.subroutine.game24trainer.solverimpl;
+
+import name.subroutine.game24trainer.*;
+import name.subroutine.game24trainer.Number;
 
 import java.util.*;
 
@@ -41,7 +44,7 @@ public class Game24SolverImplRosetta
         Stack<Float> s = new Stack<>();
         try {
             for( Symbol sym : line ){
-                if( sym instanceof Number ) {
+                if( sym instanceof name.subroutine.game24trainer.Number ) {
                     Number num = (Number)sym;
                     s.push( num.getValue() );
                 }

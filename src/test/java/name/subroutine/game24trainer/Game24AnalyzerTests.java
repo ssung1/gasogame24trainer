@@ -1,10 +1,9 @@
 package name.subroutine.game24trainer;
 
+import name.subroutine.game24trainer.solverimpl.Game24SolverImplRosetta;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation
     .AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.refEq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -61,6 +59,15 @@ public class Game24AnalyzerTests
     }
 
     @Test
+    public void testNoSpringNoInjection()
+    {
+        Game24Analyzer sut = new Game24Analyzer();
+        assertNull( sut.getSolver() );
+        // 24 is the default max number
+        assertThat( sut.getMaxNumber(), is( 24 ) );
+    }
+
+    @Test
     public void testAnalyze() throws Exception
     {
         SolutionSet sample = new SolutionSet();
@@ -72,5 +79,7 @@ public class Game24AnalyzerTests
         Game24SolverImplRosetta ms = sut.getSolver();
         when( mockSolver.solve( anyObject() ) ).thenReturn( sample );
         sut.analyze();
+
+        System.out.println( sut.getMaxNumber() );
     }
 }

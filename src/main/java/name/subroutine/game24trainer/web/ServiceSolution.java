@@ -1,6 +1,7 @@
 package name.subroutine.game24trainer.web;
 
 import name.subroutine.game24trainer.*;
+import name.subroutine.game24trainer.solverimpl.Game24SolverImplRosetta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RestController
 public class ServiceSolution

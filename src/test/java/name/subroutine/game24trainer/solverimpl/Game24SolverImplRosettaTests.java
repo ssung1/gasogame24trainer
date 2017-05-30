@@ -1,6 +1,8 @@
-package name.subroutine.game24trainer;
+package name.subroutine.game24trainer.solverimpl;
 
+import name.subroutine.game24trainer.*;
 import org.assertj.core.util.Lists;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -162,7 +164,7 @@ public class Game24SolverImplRosettaTests
     public void testSolveSimple()
     {
         SolutionSet ss = sut.solve( Game24Puzzles.simple );
-        assertThat( ss.getDifficultyRank(), is( DiffcultyRank.FINAL_MUL ) );
+        assertThat( ss.getDifficultyRank(), Matchers.is( DiffcultyRank.FINAL_MUL ) );
     }
 
     @Test

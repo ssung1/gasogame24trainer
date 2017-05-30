@@ -1,5 +1,8 @@
 package name.subroutine.game24trainer;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -88,6 +91,7 @@ public class SolutionSet
      * true if some solutions have division as last operation
      * @return
      */
+    @JsonProperty
     public boolean hasFinalDiv()
     {
         return excludeFraction().parallelStream().anyMatch(
@@ -98,6 +102,7 @@ public class SolutionSet
      * true if some solutions has a two by two pattern with division
      * as final operation
      */
+    @JsonProperty
     public boolean hasFinalDivTwoByTwo()
     {
         return excludeFraction().parallelStream().anyMatch(
@@ -108,6 +113,7 @@ public class SolutionSet
      * true if some solutions have multiplication as last operation
      * @return
      */
+    @JsonProperty
     public boolean hasFinalMul()
     {
         return excludeFraction().parallelStream().anyMatch(
@@ -118,6 +124,7 @@ public class SolutionSet
      * true if some solutions has a two by two pattern with multiplication
      * as final operation
      */
+    @JsonProperty
     public boolean hasFinalMulTwoByTwo()
     {
         return excludeFraction().parallelStream().anyMatch(
@@ -127,6 +134,7 @@ public class SolutionSet
     /**
      * true if some solutions have addition or subraction as final operation
      */
+    @JsonProperty
     public boolean hasFinalAdd()
     {
         return excludeFraction().parallelStream().anyMatch(
@@ -137,6 +145,7 @@ public class SolutionSet
      * true if some solutions has a two by two pattern with addition or
      * subtraction as final operation
      */
+    @JsonProperty
     public boolean hasFinalAddTwoByTwo()
     {
         return excludeFraction().parallelStream().anyMatch(
@@ -147,6 +156,7 @@ public class SolutionSet
      * true if some solutions have fraction
      * @return
      */
+    @JsonProperty
     public boolean hasFraction() {
         return solutionSet.parallelStream().anyMatch(
             s -> s.hasFraction() == Puzzle.YES );
@@ -157,28 +167,28 @@ public class SolutionSet
         return !solutionSet.isEmpty();
     }
 
-/**
- * Difficulty ranking, from the easiest:
- *
- * 24+0 trick, (a - a) * b + 24, optional
- *
- * Distributive property, (a * b) + (a * c), optional
- *
- * Multiplication as last operation
- *
- * Two by two, with multiplication as last operation
- *
- * Addition/subtraction as last operation
- *
- * Two by two, with addition/subtraction as final operation
- *
- * Division as last operation
- *
- * Two by two, with division as final operation
- *
- * Fraction required
- */
-    public DiffcultyRank difficultyRank()
+    /**
+     * Difficulty ranking, from the easiest:
+     *
+     * 24+0 trick, (a - a) * b + 24, optional
+     *
+     * Distributive property, (a * b) + (a * c), optional
+     *
+     * Multiplication as last operation
+     *
+     * Two by two, with multiplication as last operation
+     *
+     * Addition/subtraction as last operation
+     *
+     * Two by two, with addition/subtraction as final operation
+     *
+     * Division as last operation
+     *
+     * Two by two, with division as final operation
+     *
+     * Fraction required
+     */
+    public DiffcultyRank getDifficultyRank()
     {
         if( hasFinalMul() ) {
             return FINAL_MUL;

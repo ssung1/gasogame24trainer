@@ -76,7 +76,7 @@ public class Game24Analyzer
                 sb.append( ss.hasSolution() );
                 sb.append( "," );
 
-                String rank = ss.difficultyRank().getSymbol();
+                String rank = ss.getDifficultyRank().getSymbol();
                 if( "+".equals( rank ) ) {
                     rank = "\"+\"";
                 }

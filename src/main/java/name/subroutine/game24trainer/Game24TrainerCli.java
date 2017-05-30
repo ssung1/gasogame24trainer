@@ -15,7 +15,7 @@ public class Game24TrainerCli
         //Game24Analyzer analyzer = (Game24Analyzer)context.getBean( "analyzer" );
         ApplicationContext context = new AnnotationConfigApplicationContext( Game24TrainerConfig.class );
         //Game24Analyzer analyzer = context.getBean( Game24Analyzer.class );
-        Game24Analyzer analyzer = (Game24Analyzer)context.getBean( "sdf" );
+        Game24Analyzer analyzer = (Game24Analyzer)context.getBean( "analyzer" );
         analyzer.analyze();
     }
 }

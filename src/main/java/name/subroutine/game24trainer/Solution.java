@@ -23,7 +23,7 @@ public class Solution
      * the cost of arriving at this solution
      */
     public int cost = 0;
-    public String algorithm = "none";
+    public String trick = "none";
 
     public String toPostfixString()
     {

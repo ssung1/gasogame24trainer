@@ -17,6 +17,8 @@ import static org.springframework.test.web.servlet.request
     .MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result
     .MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result
+    .MockMvcResultMatchers.jsonPath;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -29,13 +31,32 @@ public class ServiceSolutionTests
     @Test
     public void v0SolutionText() throws Exception
     {
-        // N.B. jsoup can be useful for asserting HTML content
         mockMvc.perform(
             get( "/v0/solution" )
                 .accept( MediaType.TEXT_PLAIN )
                 .param( "puzzle", "1 1 1 1" ) )
 
-            .andExpect( content().contentTypeCompatibleWith( MediaType.TEXT_PLAIN ) )
-            .andExpect( content().string( containsString( "1  1  1  1" ) ) );
+            .andExpect(
+                content().contentTypeCompatibleWith( MediaType.TEXT_PLAIN ) )
+            .andExpect(
+                content().string( containsString( "1  1  1  1" ) ) );
+    }
+
+    @Test
+    public void v0SolutionJson() throws Exception
+    {
+        mockMvc.perform(
+            get( "/v0/solution" )
+                .accept( MediaType.APPLICATION_JSON_VALUE )
+                .param( "puzzle", "1 1 1 1" ) )
+
+            .andExpect(
+                content().contentTypeCompatibleWith(
+                    MediaType.APPLICATION_JSON ) )
+            .andExpect(
+                jsonPath( "$.puzzle" ).value(
+                    containsString( "1  1  1  1" ) ) )
+            .andExpect(
+                jsonPath( "$.difficultyRank" ).value( "N" ) );
     }
 }

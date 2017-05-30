@@ -1,9 +1,6 @@
 package name.subroutine.game24trainer.web;
 
-import name.subroutine.game24trainer.Game24SolverImplRosetta;
-import name.subroutine.game24trainer.Puzzle;
-import name.subroutine.game24trainer.SolutionSet;
-import name.subroutine.game24trainer.Symbol;
+import name.subroutine.game24trainer.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 public class ServiceSolution
@@ -51,18 +52,15 @@ public class ServiceSolution
         value = "/v0/solution",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE )
-    public SolutionSet solutionJson(
+    public SolutionSetJson solutionJson(
         @RequestParam( name = "puzzle", required = true ) String puzzle )
         throws Exception
     {
-        Symbol[] symbols = symbol.parse( puzzle );
-        ArrayList<Integer> numbers = new ArrayList<>();
-        for( Symbol s : symbols ) {
-            name.subroutine.game24trainer.Number n =
-                (name.subroutine.game24trainer.Number)s;
-            numbers.add( Math.round( n.getValue() ) );
-        }
-        SolutionSet ss = solver.solve( new Puzzle( numbers ) );
-        return ss;
+        List<Integer> ss = Arrays.stream( symbol.parse( puzzle ) )
+            .map( s -> (name.subroutine.game24trainer.Number)s )
+            .map( s -> Math.round( s.getValue() ) )
+            .collect( Collectors.toList() );
+
+        return new SolutionSetJson( solver.solve( new Puzzle( ss ) ) );
     }
 }

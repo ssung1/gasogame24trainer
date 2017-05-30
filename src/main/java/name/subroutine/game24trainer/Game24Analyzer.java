@@ -2,6 +2,7 @@ package name.subroutine.game24trainer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -9,24 +10,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+@Component
 public class Game24Analyzer
 {
     @Autowired
     @Qualifier( "solver" )
-    Game24SolverImplRosetta solver;
-
-    public Game24Analyzer( Game24SolverImplRosetta solver )
-    {
-        this.solver = solver;
-    }
+    private Game24SolverImplRosetta solver;
 
     public Game24Analyzer()
     {
-    }
-
-    public void setSolver( Game24SolverImplRosetta solver )
-    {
-        this.solver = solver;
     }
 
     public Game24SolverImplRosetta getSolver()
@@ -34,12 +26,14 @@ public class Game24Analyzer
         return this.solver;
     }
 
+    private int maxNumber = 24;
+
     public void analyze() throws Exception
     {
         OutputStream os = new FileOutputStream( "c:/tmp/game24solutions.csv" );
         PrintStream ps = new PrintStream( os );
 
-        int max = 5;
+        int max = this.getMaxNumber();
         List<Puzzle> puzzleList = new ArrayList<>( 17550 );
         long timeStart = System.currentTimeMillis();
         for( int a = 1; a <= max; ++a ) {
@@ -94,5 +88,15 @@ public class Game24Analyzer
         System.out.println( "Time: " + (timeStop - timeStart) );
 
         os.close();
+    }
+
+    public int getMaxNumber()
+    {
+        return maxNumber;
+    }
+
+    public void setMaxNumber( int maxNumber )
+    {
+        this.maxNumber = maxNumber;
     }
 }

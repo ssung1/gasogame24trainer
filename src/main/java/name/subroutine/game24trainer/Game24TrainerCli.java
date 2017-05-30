@@ -17,5 +17,7 @@ public class Game24TrainerCli
         //Game24Analyzer analyzer = context.getBean( Game24Analyzer.class );
         Game24Analyzer analyzer = (Game24Analyzer)context.getBean( "analyzer" );
         analyzer.analyze();
+
+        System.out.println( analyzer.getMaxNumber() );
     }
 }

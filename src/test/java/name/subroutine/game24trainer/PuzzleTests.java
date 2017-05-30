@@ -1,0 +1,128 @@
+package name.subroutine.game24trainer;
+
+import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+
+public class PuzzleTests
+{
+    @Test
+    public void testEqualitySameObject()
+    {
+        Puzzle a = new Puzzle( 1, 2, 3, 4 );
+        assertThat( a, is( a ) );
+    }
+
+    @Test
+    public void testEqualitySameNumbersSameOrder000()
+    {
+        Puzzle a = new Puzzle( 1, 2, 3, 4 );
+        Puzzle b = new Puzzle( 1, 2, 3, 4 );
+        assertThat( a, is( b ) );
+    }
+
+    @Test
+    public void testEqualitySameNumbersSameOrder001()
+    {
+        Puzzle a = new Puzzle( 2, 2, 3, 4 );
+        Puzzle b = new Puzzle( 2, 2, 3, 4 );
+        assertThat( a, is( b ) );
+    }
+
+    @Test
+    public void testEqualitySameNumbersSameOrder002()
+    {
+        Puzzle a = new Puzzle( 8, 2, 8, 8 );
+        Puzzle b = new Puzzle( 8, 2, 8, 8 );
+        assertThat( a, is( b ) );
+    }
+
+    @Test
+    public void testEqualitySameNumbersDifferentOrder000()
+    {
+        Puzzle a = new Puzzle( 1, 2, 3, 4 );
+        Puzzle b = new Puzzle( 2, 3, 4, 1 );
+        assertThat( a, is( b ) );
+    }
+
+    @Test
+    public void testEqualitySameNumbersDifferentOrder001()
+    {
+        Puzzle a = new Puzzle( 1, 2, 4, 4 );
+        Puzzle b = new Puzzle( 2, 4, 4, 1 );
+        assertThat( a, is( b ) );
+    }
+
+    @Test
+    public void testEqualitySameNumbersDifferentOrder002()
+    {
+        Puzzle a = new Puzzle( 10, 10, 10, 4 );
+        Puzzle b = new Puzzle( 10, 10, 4, 10 );
+        assertThat( a, is( b ) );
+    }
+
+    @Test
+    public void testEqualityDifferentNumbers()
+    {
+        Puzzle a = new Puzzle( 10, 10, 10, 4 );
+        Puzzle b = new Puzzle( 10, 10, 4, 11 );
+        assertThat( a, not( b ) );
+    }
+
+    @Test
+    public void testHashSameNumbersSameOrder000()
+    {
+        Puzzle a = new Puzzle( 1, 2, 3, 4 );
+        Puzzle b = new Puzzle( 1, 2, 3, 4 );
+        assertThat( a.hashCode(), is( b.hashCode() ) );
+    }
+
+    @Test
+    public void testHashSameNumbersSameOrder001()
+    {
+        Puzzle a = new Puzzle( 2, 2, 3, 4 );
+        Puzzle b = new Puzzle( 2, 2, 3, 4 );
+        assertThat( a.hashCode(), is( b.hashCode() ) );
+    }
+
+    @Test
+    public void testHashSameNumbersSameOrder002()
+    {
+        Puzzle a = new Puzzle( 8, 2, 8, 8 );
+        Puzzle b = new Puzzle( 8, 2, 8, 8 );
+        assertThat( a.hashCode(), is( b.hashCode() ) );
+    }
+
+    @Test
+    public void testHashSameNumbersDifferentOrder000()
+    {
+        Puzzle a = new Puzzle( 1, 2, 3, 4 );
+        Puzzle b = new Puzzle( 2, 3, 4, 1 );
+        assertThat( a.hashCode(), is( b.hashCode() ) );
+    }
+
+    @Test
+    public void testHashSameNumbersDifferentOrder001()
+    {
+        Puzzle a = new Puzzle( 1, 2, 4, 4 );
+        Puzzle b = new Puzzle( 2, 4, 4, 1 );
+        assertThat( a.hashCode(), is( b.hashCode() ) );
+    }
+
+    @Test
+    public void testHashSameNumbersDifferentOrder002()
+    {
+        Puzzle a = new Puzzle( 10, 10, 10, 4 );
+        Puzzle b = new Puzzle( 10, 10, 4, 10 );
+        assertThat( a.hashCode(), is( b.hashCode() ) );
+    }
+
+    @Test
+    public void testHashDifferentNumbers()
+    {
+        Puzzle a = new Puzzle( 10, 10, 10, 4 );
+        Puzzle b = new Puzzle( 10, 10, 4, 11 );
+        assertThat( a.hashCode(), is( b.hashCode() ) );
+    }
+}

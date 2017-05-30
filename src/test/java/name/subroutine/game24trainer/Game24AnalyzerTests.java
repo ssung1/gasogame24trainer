@@ -1,5 +1,6 @@
 package name.subroutine.game24trainer;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -19,6 +20,7 @@ import static org.mockito.Mockito.when;
 @Configuration
 public class Game24AnalyzerTests
 {
+    AnnotationConfigApplicationContext context;
     Game24Analyzer sut;
     Game24SolverImplRosetta mockSolver;
     Symbol symbol = new Symbol();
@@ -26,7 +28,9 @@ public class Game24AnalyzerTests
     @Bean( name = "analyzer" )
     public Game24Analyzer getAnalyzer()
     {
-        return new Game24Analyzer();
+        Game24Analyzer result = new Game24Analyzer();
+        result.setMaxNumber( 5 );
+        return result;
     }
 
     @Bean( name = "solver" )
@@ -38,10 +42,16 @@ public class Game24AnalyzerTests
     @Before
     public void setUp()
     {
-        ApplicationContext context =
-            new AnnotationConfigApplicationContext( Game24AnalyzerTests.class );
+        context = new AnnotationConfigApplicationContext(
+            Game24AnalyzerTests.class );
         sut = (Game24Analyzer)context.getBean( "analyzer" );
         mockSolver = sut.getSolver();
+    }
+
+    @After
+    public void tearDown()
+    {
+        context.close();
     }
 
     @Test

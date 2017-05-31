@@ -123,6 +123,24 @@ public class PuzzleTests
     {
         Puzzle a = new Puzzle( 10, 10, 10, 4 );
         Puzzle b = new Puzzle( 10, 10, 4, 11 );
-        assertThat( a.hashCode(), is( b.hashCode() ) );
+        assertThat( a.hashCode(), not( b.hashCode() ) );
+    }
+
+    @Test
+    public void testCanonicalStringIsInCorrectOrder()
+    {
+        Puzzle a = new Puzzle( 4, 3, 2, 1 );
+        assertThat( a.toCanonicalString(), is( " 1  2  3  4" ) );
+    }
+
+    @Test
+    public void testCanonicalStringDoesNotAlterList()
+    {
+        Puzzle a = new Puzzle( 4, 3, 2, 1 );
+        a.toCanonicalString();
+        assertThat( a.getNumbers().get( 0 ), is( 4 ) );
+        assertThat( a.getNumbers().get( 1 ), is( 3 ) );
+        assertThat( a.getNumbers().get( 2 ), is( 2 ) );
+        assertThat( a.getNumbers().get( 3 ), is( 1 ) );
     }
 }

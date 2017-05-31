@@ -1,8 +1,10 @@
 package name.subroutine.game24trainer;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Puzzle
 {
@@ -64,12 +66,40 @@ public class Puzzle
         return this.numbers;
     }
 
-    public String toString()
+    String mkString( List<Integer> numbers )
     {
         return String.format( "%2d %2d %2d %2d",
             numbers.get( 0 ),
             numbers.get( 1 ),
             numbers.get( 2 ),
             numbers.get( 3 ) );
+    }
+
+    public String toString()
+    {
+        return this.mkString( this.numbers );
+    }
+
+    public String toCanonicalString()
+    {
+        // make a copy first
+        List<Integer> sorted = numbers.stream()
+            .sorted().collect( Collectors.toList() );
+        return mkString( sorted );
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return this.toCanonicalString().hashCode();
+    }
+
+    @Override
+    public boolean equals( Object o )
+    {
+        if( !(o instanceof Puzzle) ) return false;
+        Puzzle p = (Puzzle)o;
+        return this.toCanonicalString().equals(
+            p.toCanonicalString() );
     }
 }

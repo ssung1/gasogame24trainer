@@ -1,7 +1,6 @@
 package name.subroutine.game24trainer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.HashSet;
 import java.util.Set;

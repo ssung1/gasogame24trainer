@@ -1,5 +1,8 @@
 package name.subroutine.game24trainer;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@JsonFormat( shape = JsonFormat.Shape.OBJECT )
 public enum DiffcultyRank
 {
     ZERO( "0", "(a - a) * b + 24 trick" ),

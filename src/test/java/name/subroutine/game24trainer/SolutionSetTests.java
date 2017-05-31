@@ -1,5 +1,7 @@
 package name.subroutine.game24trainer;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 
 import static org.mockito.Mockito.*;
@@ -703,5 +705,12 @@ public class SolutionSetTests
         when( s2.hasFraction() ).thenReturn( Puzzle.YES );
 
         assertTrue( sut.hasFraction() );
+    }
+
+    @Test
+    public void testSerializeToJson() throws JsonProcessingException
+    {
+//        ObjectMapper mapper = new ObjectMapper();
+//        return mapper.writeValueAsString(this);
     }
 }

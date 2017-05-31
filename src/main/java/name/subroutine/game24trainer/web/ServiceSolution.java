@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping( "/rest" )
 public class ServiceSolution
 {
     Symbol symbol = new Symbol();
@@ -51,15 +52,23 @@ public class ServiceSolution
         value = "/v0/solution",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE )
-    public SolutionSetJson solutionJson(
-        @RequestParam( name = "puzzle", required = true ) String puzzle )
+    public Object solutionJson(
+        @RequestParam( name = "p", required = true ) String puzzle,
+        // set plumbing = t to use plumbing (machine friendly) output
+        @RequestParam( name = "plumbing", required = false ) String plumbing )
         throws Exception
     {
-        List<Integer> ss = Arrays.stream( symbol.parse( puzzle ) )
+        List<Integer> puz = Arrays.stream( symbol.parse( puzzle ) )
             .map( s -> (name.subroutine.game24trainer.Number)s )
             .map( s -> Math.round( s.getValue() ) )
             .collect( Collectors.toList() );
 
-        return new SolutionSetJson( solver.solve( new Puzzle( ss ) ) );
+        SolutionSet ss = solver.solve( new Puzzle( puz ) );
+        if( "t".equals( plumbing ) ) {
+            return ss;
+        }
+        else {
+            return new SolutionSetJson( ss );
+        }
     }
 }

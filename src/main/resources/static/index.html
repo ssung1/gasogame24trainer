@@ -1,0 +1,70 @@
+<!doctype html>
+<html ng-app="demo">
+<head>
+    <title>Hello AngularJS</title>
+
+    <!-- just different URLs for the same library -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+    <script src="hello.js"></script>
+    <style>
+        .puzzle {
+            font-size: 36pt;
+            text-align: center;
+            padding-left: 1ex;
+            padding-right: 1ex;
+        }
+        .solu-flag-table {
+            width: 100%;
+            table-layout: fixed;
+            font-family: monospace;
+        }
+        .solu-flag-cell {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<div ng-controller="Hello">
+    <p>The ID is {{greeting.id}}</p>
+    <p>The content is {{greeting.content}}</p>
+</div>
+<div ng-controller="game24analyzer"
+     style="width: 50ex; height: 400px;">
+    <table align="center">
+        <td class="puzzle" ng-repeat="n in solution.puzzle.numbers">
+            {{n}}
+        </td>
+    </table>
+    <p align="center">{{solution.difficultyRank.description}}</p>
+    <!--<div ng-repeat="s in solution.solutionSet">-->
+        <!--<p>Solution top: {{s.expression}}</p>-->
+        <!--<p ng-repeat="e in s.expression">-->
+            <!--The solution is {{e.value}}-->
+        <!--</p>-->
+    <!--</div>-->
+    <table class="solu-flag-table">
+        <td class="solu-flag-cell" style="background-color: {{colorZero}}">0</td>
+        <td class="solu-flag-cell" style="background-color: {{colorDistProp}}">Dis</td>
+        <td class="solu-flag-cell" style="background-color: {{colorFinalMul}}">x</td>
+        <td class="solu-flag-cell" style="background-color: {{colorFinalMul2}}">2x2</td>
+        <td class="solu-flag-cell" style="background-color: {{colorFinalAdd}}">+</td>
+        <td class="solu-flag-cell" style="background-color: {{colorFinalAdd2}}">2+2</td>
+        <td class="solu-flag-cell" style="background-color: {{colorFinalDiv}}">/</td>
+        <td class="solu-flag-cell" style="background-color: {{colorFinalDiv2}}">2/2</td>
+        <td class="solu-flag-cell" style="background-color: {{colorFraction}}">f</td>
+    </table>
+    <div style="overflow: scroll; height: 100px; border: solid 1pt;">
+        <p style="margin: 0;"
+           ng-repeat="s in solution.solutionSet">
+            {{s.expression}}
+        </p>
+    </div>
+
+    <div align="center">(grid goes here)</div>
+
+    <div>{{solution}}</div>
+</div>
+</body>
+</html>

@@ -6,13 +6,39 @@
     <!-- just different URLs for the same library -->
     <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
-    <script src="hello.js"></script>
+    <!-- <script src="hello.js"></script> -->
     <style>
+        .screen {
+            font-family: calibri, verdana, sans-serif;
+            padding: 1ex;
+            margin: auto;
+            text-align: center;
+            border-width: 1ex;
+            border-color: #4747d1;
+            border-style: double;
+            display: table;
+            background-color: #ecedba;
+        }
+        h1.main-title {
+            color: maroon;
+            margin-bottom: 0;
+        }
+        p.info {
+            margin-top: 0;
+        }
         .puzzle {
+            margin: auto;
+        }
+        .puzzle td {
+            font-family: times, serif;
             font-size: 36pt;
+            font-weight: bold;
             text-align: center;
             padding-left: 1ex;
             padding-right: 1ex;
+        }
+        .puzzle td.middle {
+            background-color: #ad161b;
         }
         .solu-flag-table {
             width: 100%;
@@ -22,16 +48,62 @@
         .solu-flag-cell {
             text-align: center;
         }
+        table.menuButton {
+            margin: auto;
+            border-spacing: .2ex;
+        }
+        table.menuButton td {
+            border-radius: 1ex;
+            width: 15ex;
+            padding: .1ex;
+            text-align: center;
+            background-color: #ff9966;
+        }
     </style>
 </head>
 
 <body>
-<div ng-controller="Hello">
-    <p>The ID is {{greeting.id}}</p>
-    <p>The content is {{greeting.content}}</p>
+
+<!-- initial screen -->
+<div class="screen">
+    <h1 class="main-title">Game 24 Trainer</h1>
+    <p class="info">Select a puzzle from these categories</p>
+
+    <table class="menuButton">
+        <tr>
+            <td>0 TRICK</td>
+            <td>DIST PROP</td>
+        </tr>
+        <tr>
+            <td>FINAL MUL</td>
+            <td>FINAL MUL2</td>
+        </tr>
+        <tr>
+            <td>FINAL ADD</td>
+            <td>FINAL ADD2</td>
+        </tr>
+        <tr>
+            <td>FINAL MUL</td>
+            <td>FINAL MUL2</td>
+        </tr>
+        <tr>
+            <td>FINAL DIV</td>
+            <td>FINAL DIV2</td>
+        </tr>
+    </table>
+
+    <!-- puzzle panel: only show if user clicks button -->
+    <table class="puzzle">
+        <tr><td> </td><td               >1</td><td> </td></tr>
+        <tr><td>2</td><td class="middle"> </td><td>3</td></tr>
+        <tr><td> </td><td               >4</td><td> </td></tr>
+    </table>
+    </div>
 </div>
+
+
 <div ng-controller="game24analyzer"
-     style="width: 50ex; height: 400px;">
+     style="width: 50ex; height: 400px; visibility: visible;">
     <table align="center">
         <td class="puzzle" ng-repeat="n in solution.puzzle.numbers">
             {{n}}

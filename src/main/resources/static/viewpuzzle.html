@@ -1,0 +1,190 @@
+<!doctype html>
+<html ng-app="gasogame24trainer">
+<head>
+    <title>Hello AngularJS</title>
+
+    <!-- just different URLs for the same library -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+    <script src="hello.js"></script>
+    <script src="modal.js"></script>
+    <style>
+        .screen {
+            font-family: calibri, verdana, sans-serif;
+            padding: 1ex;
+            margin: auto;
+            text-align: center;
+            border-width: 1ex;
+            border-color: #4747d1;
+            border-style: double;
+            display: table;
+            background-color: #ecedba;
+        }
+        h1.main-title {
+            color: maroon;
+            margin-bottom: 0;
+        }
+        p.info {
+            margin-top: 0;
+        }
+        .puzzle {
+            margin: auto;
+        }
+        .puzzle td {
+            font-family: times, serif;
+            font-size: 36pt;
+            font-weight: bold;
+            text-align: center;
+            padding-left: 1ex;
+            padding-right: 1ex;
+        }
+        .puzzle td.middle {
+            background-color: #ad161b;
+            font-size: 12pt;
+            font-family: calibri, sans-serif;
+        }
+        .solu-flag-table {
+            table-layout: fixed;
+            margin: auto;
+            font-family: monospace;
+        }
+        .solu-flag-table td {
+            padding: 1ex;
+            text-align: center;
+        }
+        table.menuButton {
+            margin: auto;
+            border-spacing: .2ex;
+        }
+        table.menuButton td {
+            border-radius: 1ex;
+            width: 15ex;
+            padding: .1ex;
+            text-align: center;
+            background-color: #ff9966;
+        }
+        table.menuButton td:hover {
+            background-color: #ffaa77;
+        }
+
+        .solution-screen {
+            display: table;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            margin: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgb(0, 0, 0, 0.4);
+        }
+        .solution-box {
+            background-color: #ecedba;
+            margin: auto;
+            display: table;
+            padding: 1ex;
+        }
+        .close-x {
+            font-family: calibri, sans-serif;
+            text-align: right;
+            width: 100%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div ng-controller="modal">
+    <!-- initial screen -->
+    <div ng-controller="game24puzzler" class="screen">
+    <!-- <div class="screen"> -->
+        <!-- main content -->
+        <h1 class="main-title">Game 24 Trainer</h1>
+        <p class="info">Select a puzzle from these categories</p>
+    
+        <table class="menuButton">
+            <tr>
+                <td ng-click="anotherPuzzle()">0 TRICK</td>
+                <td>DIST PROP</td>
+            </tr>
+            <tr>
+                <td>FINAL MUL</td>
+                <td>FINAL MUL2</td>
+            </tr>
+            <tr>
+                <td>FINAL ADD</td>
+                <td>FINAL ADD2</td>
+            </tr>
+            <tr>
+                <td>FINAL MUL</td>
+                <td>FINAL MUL2</td>
+            </tr>
+            <tr>
+                <td>FINAL DIV</td>
+                <td>FINAL DIV2</td>
+            </tr>
+        </table>
+    
+        <!-- puzzle panel: only show if user clicks button -->
+        <table class="puzzle">
+            <tr><td></td><td>{{number1}}</td><td></td></tr>
+            <tr>
+                <td>2</td>
+                <td class="middle" ng-click="show()">
+                    SOLVE
+                </td>
+                <td>3</td>
+            </tr>
+            <tr><td></td><td>4</td><td></td></tr>
+        </table>
+    </div>
+    
+    <!-- modal solution screen: only show if user clicks center box -->
+    <!-- <div ng-controller="game24analyzer" -->
+    <div class="solution-screen"
+         ng-hide="isHidden">
+       <div class="solution-box">
+            <div class="close-x" ng-click="hide()">X</div>
+            <table align="center">
+                <td class="puzzle" ng-repeat="n in solution.puzzle.numbers">
+                    {{n}}
+                </td>
+            </table>
+            <p align="center">{{solution.difficultyRank.description}}</p>
+            <!--<div ng-repeat="s in solution.solutionSet">-->
+                <!--<p>Solution top: {{s.expression}}</p>-->
+                <!--<p ng-repeat="e in s.expression">-->
+                    <!--The solution is {{e.value}}-->
+                <!--</p>-->
+            <!--</div>-->
+            <table class="solu-flag-table">
+                <td style="background-color: {{colorZero}}">0</td>
+                <td style="background-color: {{colorDistProp}}">Dis</td>
+                <td style="background-color: {{colorFinalMul}}">x</td>
+                <td style="background-color: {{colorFinalMul2}}">2x2</td>
+                <td style="background-color: {{colorFinalAdd}}">+</td>
+                <td style="background-color: {{colorFinalAdd2}}">2+2</td>
+                <td style="background-color: {{colorFinalDiv}}">/</td>
+                <td style="background-color: {{colorFinalDiv2}}">2/2</td>
+                <td style="background-color: {{colorFraction}}">f</td>
+            </table>
+            <div style="overflow: scroll; height: 100px; border: solid 1pt;">
+                <p style="margin: 0;"
+                   ng-repeat="s in solution.solutionSet">
+                    {{s.expression}}
+                </p>
+            </div>
+        
+            <div align="center">(grid goes here)</div>
+        
+            <div>{{solution}}</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

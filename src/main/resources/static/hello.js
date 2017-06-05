@@ -7,12 +7,8 @@ function selectColor( flag ){
     }
 }
 
-angular.module('demo', [])
-.controller('Hello', function($scope, $http) {
-    $http.get('http://rest-service.guides.spring.io/greeting').
-        then(function(response) {
-            $scope.greeting = response.data
-        });
+angular.module('gasogame24trainer', [])
+.controller('game24puzzler', function($scope, $http) {
 })
 .controller('game24analyzer', function($scope, $http) {
     $http.get('http://localhost:8080/rest/v0/solution?p=1 2 3 4&plumbing=t').

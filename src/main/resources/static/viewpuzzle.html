@@ -6,8 +6,9 @@
     <!-- just different URLs for the same library -->
     <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
-    <script src="hello.js"></script>
-    <script src="modal.js"></script>
+    <script src="trainer.module.js"></script>
+    <script src="trainer.controller.modal.js"></script>
+    <script src="trainer.controller.puzzler.js"></script>
     <style>
         .screen {
             font-family: calibri, verdana, sans-serif;
@@ -37,6 +38,7 @@
             text-align: center;
             padding-left: 1ex;
             padding-right: 1ex;
+            width: 3ex;
         }
         .puzzle td.middle {
             background-color: #ad161b;
@@ -69,7 +71,7 @@
 
         .solution-screen {
             display: table;
-            position: fixed;
+            //position: fixed;
             z-index: 1;
             padding-top: 100px;
             left: 0;
@@ -98,10 +100,13 @@
 
 <body>
 
-<div ng-controller="modal">
+<div ng-controller="modal as m">
     <!-- initial screen -->
-    <div ng-controller="game24puzzler" class="screen">
-    <!-- <div class="screen"> -->
+    <div ng-controller="game24puzzler" class="screen" ng-click="m.show()">
+        {{m.isHidden}}
+    </div>
+    
+    <div class="screen">
         <!-- main content -->
         <h1 class="main-title">Game 24 Trainer</h1>
         <p class="info">Select a puzzle from these categories</p>
@@ -131,24 +136,24 @@
     
         <!-- puzzle panel: only show if user clicks button -->
         <table class="puzzle">
-            <tr><td></td><td>{{number1}}</td><td></td></tr>
+            <tr><td></td><td>{{numbers[0]}}</td><td></td></tr>
             <tr>
-                <td>2</td>
+                <td>{{numbers[1]}}</td>
                 <td class="middle" ng-click="show()">
-                    SOLVE
+                    SOLVE{{isHidden}}
                 </td>
-                <td>3</td>
+                <td>{{numbers[2]}}</td>
             </tr>
-            <tr><td></td><td>4</td><td></td></tr>
+            <tr><td></td><td>{{numbers[3]}}</td><td></td></tr>
         </table>
     </div>
     
     <!-- modal solution screen: only show if user clicks center box -->
     <!-- <div ng-controller="game24analyzer" -->
-    <div class="solution-screen"
-         ng-hide="isHidden">
+    <div class="solution-screen" ng-controller="modal">
        <div class="solution-box">
             <div class="close-x" ng-click="hide()">X</div>
+            <p>{{isHidden}}</p>
             <table align="center">
                 <td class="puzzle" ng-repeat="n in solution.puzzle.numbers">
                     {{n}}

@@ -1,4 +1,4 @@
-angular.module('gasogame24trainer', [])
+angular.module('gasogame24trainer')
 .controller('modal', function($scope, $http) {
     $scope.isHidden = true
     $scope.test = "test"
@@ -9,7 +9,3 @@ angular.module('gasogame24trainer', [])
         this.isHidden = true
     }
 });
-angular.module('gasogame24trainer', [])
-.controller('game24puzzler', function($scope, $http) {
-})
-

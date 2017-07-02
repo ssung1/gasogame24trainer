@@ -7,7 +7,6 @@
     <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
     <script src="trainer.module.js"></script>
-    <script src="trainer.controller.modal.js"></script>
     <script src="trainer.controller.puzzler.js"></script>
     <style>
         .screen {
@@ -98,96 +97,74 @@
     </style>
 </head>
 
-<body>
+<body ng-controller="game24puzzler">
 
-<div ng-controller="modal as m">
-    <!-- initial screen -->
-    <div ng-controller="game24puzzler" class="screen" ng-click="m.show()">
-        {{m.isHidden}}
-    </div>
-    
-    <div class="screen">
-        <!-- main content -->
-        <h1 class="main-title">Game 24 Trainer</h1>
-        <p class="info">Select a puzzle from these categories</p>
-    
-        <table class="menuButton">
-            <tr>
-                <td ng-click="anotherPuzzle()">0 TRICK</td>
-                <td>DIST PROP</td>
-            </tr>
-            <tr>
-                <td>FINAL MUL</td>
-                <td>FINAL MUL2</td>
-            </tr>
-            <tr>
-                <td>FINAL ADD</td>
-                <td>FINAL ADD2</td>
-            </tr>
-            <tr>
-                <td>FINAL MUL</td>
-                <td>FINAL MUL2</td>
-            </tr>
-            <tr>
-                <td>FINAL DIV</td>
-                <td>FINAL DIV2</td>
-            </tr>
+<div class="screen">
+    <!-- main content -->
+    <h1 class="main-title">Game 24 Trainer</h1>
+    <p class="info">Select a puzzle from these categories</p>
+
+    <table class="menuButton">
+        <tr>
+            <td ng-click="anotherPuzzle()">0 TRICK</td>
+            <td>DIST PROP</td>
+        </tr>
+        <tr>
+            <td>FINAL MUL</td>
+            <td>FINAL MUL2</td>
+        </tr>
+        <tr>
+            <td>FINAL ADD</td>
+            <td>FINAL ADD2</td>
+        </tr>
+        <tr>
+            <td>FINAL MUL</td>
+            <td>FINAL MUL2</td>
+        </tr>
+        <tr>
+            <td>FINAL DIV</td>
+            <td>FINAL DIV2</td>
+        </tr>
+    </table>
+
+    <!-- puzzle panel: only show if user clicks button -->
+    <table class="puzzle">
+        <tr><td></td><td>{{numbers[0]}}</td><td></td></tr>
+        <tr>
+            <td>{{numbers[1]}}</td>
+            <td class="middle" ng-click="showSolution()">
+                SOLVE
+            </td>
+            <td>{{numbers[2]}}</td>
+        </tr>
+        <tr><td></td><td>{{numbers[3]}}</td><td></td></tr>
+    </table>
+</div>
+
+<!-- modal solution screen: only show if user clicks center box -->
+<!-- <div ng-controller="game24analyzer" -->
+<div class="solution-screen" ng-hide="isSolutionHidden">
+   <div class="solution-box">
+        <div class="close-x" ng-click="hideSolution()">X</div>
+        <table class="solu-flag-table">
+            <td style="background-color: {{colorZero}}">0</td>
+            <td style="background-color: {{colorDistProp}}">Dis</td>
+            <td style="background-color: {{colorFinalMul}}">x</td>
+            <td style="background-color: {{colorFinalMul2}}">2x2</td>
+            <td style="background-color: {{colorFinalAdd}}">+</td>
+            <td style="background-color: {{colorFinalAdd2}}">2+2</td>
+            <td style="background-color: {{colorFinalDiv}}">/</td>
+            <td style="background-color: {{colorFinalDiv2}}">2/2</td>
+            <td style="background-color: {{colorFraction}}">f</td>
         </table>
-    
-        <!-- puzzle panel: only show if user clicks button -->
-        <table class="puzzle">
-            <tr><td></td><td>{{numbers[0]}}</td><td></td></tr>
-            <tr>
-                <td>{{numbers[1]}}</td>
-                <td class="middle" ng-click="show()">
-                    SOLVE{{isHidden}}
-                </td>
-                <td>{{numbers[2]}}</td>
-            </tr>
-            <tr><td></td><td>{{numbers[3]}}</td><td></td></tr>
-        </table>
-    </div>
-    
-    <!-- modal solution screen: only show if user clicks center box -->
-    <!-- <div ng-controller="game24analyzer" -->
-    <div class="solution-screen" ng-controller="modal">
-       <div class="solution-box">
-            <div class="close-x" ng-click="hide()">X</div>
-            <p>{{isHidden}}</p>
-            <table align="center">
-                <td class="puzzle" ng-repeat="n in solution.puzzle.numbers">
-                    {{n}}
-                </td>
-            </table>
-            <p align="center">{{solution.difficultyRank.description}}</p>
-            <!--<div ng-repeat="s in solution.solutionSet">-->
-                <!--<p>Solution top: {{s.expression}}</p>-->
-                <!--<p ng-repeat="e in s.expression">-->
-                    <!--The solution is {{e.value}}-->
-                <!--</p>-->
-            <!--</div>-->
-            <table class="solu-flag-table">
-                <td style="background-color: {{colorZero}}">0</td>
-                <td style="background-color: {{colorDistProp}}">Dis</td>
-                <td style="background-color: {{colorFinalMul}}">x</td>
-                <td style="background-color: {{colorFinalMul2}}">2x2</td>
-                <td style="background-color: {{colorFinalAdd}}">+</td>
-                <td style="background-color: {{colorFinalAdd2}}">2+2</td>
-                <td style="background-color: {{colorFinalDiv}}">/</td>
-                <td style="background-color: {{colorFinalDiv2}}">2/2</td>
-                <td style="background-color: {{colorFraction}}">f</td>
-            </table>
-            <div style="overflow: scroll; height: 100px; border: solid 1pt;">
-                <p style="margin: 0;"
-                   ng-repeat="s in solution.solutionSet">
-                    {{s.expression}}
-                </p>
-            </div>
-        
-            <div align="center">(grid goes here)</div>
-        
-            <div>{{solution}}</div>
+        <div style="overflow: scroll; height: 100px; border: solid 1pt;">
+            <p style="margin: 0;"
+               ng-repeat="s in solution.solutionSet">
+                {{s}}
+            </p>
         </div>
+
+        <div align="center">(grid goes here)</div>
     </div>
 </div>
 

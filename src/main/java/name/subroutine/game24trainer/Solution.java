@@ -62,7 +62,7 @@ public class Solution
             Ex( String e1, String e2, Operator o )
             {
                 String opVal = String.valueOf( o.getValue() );
-                ex = String.format( "%s %s %s", e1, opVal, e2 );
+                ex = String.format( "%s %s %s", e1, opVal, e2 );
                 op = o;
                 prec = o.getPrec();
             }

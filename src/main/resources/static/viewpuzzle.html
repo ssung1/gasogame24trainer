@@ -70,7 +70,7 @@
 
         .solution-screen {
             display: table;
-            //position: fixed;
+            position: fixed;
             z-index: 1;
             padding-top: 100px;
             left: 0;
@@ -158,12 +158,11 @@
             <td style="background-color: {{colorFraction}}">f</td>
         </table>
         <div style="overflow: scroll; height: 100px; border: solid 1pt;">
-            <p style="margin: 0;"
+            <p style="margin: 0 0 0 1ex;"
                ng-repeat="s in solution.solutionSet">
                 {{s}}
             </p>
         </div>
-
         <div align="center">(grid goes here)</div>
     </div>
 </div>

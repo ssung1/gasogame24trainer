@@ -10,6 +10,15 @@ angular.module('gasogame24trainer')
 
     $scope.isSolutionHidden = true
 
+    $scope.highlightDifficulty = function( rank, colorField ) {
+        if( $scope.solution[ rank ] == "X" ){
+            $scope[ colorField ] = "red"
+        }
+        else{
+            $scope[ colorField ] = "#ecedba"
+        }
+    }
+
     $scope.solve = function() {
         var numberParam = $scope.numbers.join( "%20" )
         $scope.solution = "moloading..."
@@ -63,7 +72,15 @@ angular.module('gasogame24trainer')
                     }
                 },
                 function( error ) {
-                    $scope.solution = error
+                    // for testing UI
+                    $scope.solution = {"puzzle":" 2  9 11 22","solutionSet":["2 * 22 - (11 + 9)","2 * 22 - 11 - 9","22 * 2 - (11 + 9)","22 * 2 - 11 - 9","2 * 22 - (9 + 11)","22 * 2 - 9 - 11","22 * 2 - (9 + 11)","2 * 22 - 9 - 11"],"algorithm":"Rosetta: brute force","count":8,"hasFinalDiv":"","hasFinalDivTwoByTwo":"","hasFinalMul":"","hasFinalMulTwoByTwo":"","hasFinalAdd":"X","hasFinalAddTwoByTwo":"X","hasFraction":"","difficultyRank":"+"}
+                    $scope.highlightDifficulty( "hasFinalMul", "colorFinalMul" )
+                    $scope.highlightDifficulty( "hasFinalMulTwoByTwo", "colorFinalMul2" )
+                    $scope.highlightDifficulty( "hasFinalAdd", "colorFinalAdd" )
+                    $scope.highlightDifficulty( "hasFinalAddTwoByTwo", "colorFinalAdd2" )
+                    $scope.highlightDifficulty( "hasFinalDiv", "colorFinalDiv" )
+                    $scope.highlightDifficulty( "hasFinalDivTwoByTwo", "colorFinalDiv2" )
+
                     console.log( "fail", error )
                 }
             )

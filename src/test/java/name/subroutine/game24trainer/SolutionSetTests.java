@@ -4,15 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertThat;
 
 public class SolutionSetTests
 {
@@ -708,9 +706,139 @@ public class SolutionSetTests
     }
 
     @Test
+    public void testHasZeroTrick000()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isZeroTrick() ).thenReturn( true );
+        when( s2.isZeroTrick() ).thenReturn( false );
+
+        assertTrue( sut.hasZeroTrick() );
+    }
+
+    @Test
+    public void testHasZeroTrick001()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isZeroTrick() ).thenReturn( false );
+        when( s2.isZeroTrick() ).thenReturn( false );
+
+        assertFalse( sut.hasZeroTrick() );
+    }
+
+    @Test
+    public void testHasDistProp000()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isDistProp() ).thenReturn( true );
+        when( s2.isDistProp() ).thenReturn( false );
+
+        assertTrue( sut.hasDistProp() );
+    }
+
+    @Test
+    public void testHasDistProp001()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isDistProp() ).thenReturn( false );
+        when( s2.isDistProp() ).thenReturn( false );
+
+        assertFalse( sut.hasDistProp() );
+    }
+
+    @Test
+    public void testHasAlmostDistProp000()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isAlmostDistProp() ).thenReturn( true );
+        when( s2.isAlmostDistProp() ).thenReturn( false );
+
+        assertTrue( sut.hasAlmostDistProp() );
+    }
+
+    @Test
+    public void testHasAlmostDistProp001()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isAlmostDistProp() ).thenReturn( false );
+        when( s2.isAlmostDistProp() ).thenReturn( false );
+
+        assertFalse( sut.hasAlmostDistProp() );
+    }
+
+    @Test
+    public void testHasAddSub000()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isAddSub() ).thenReturn( true );
+        when( s2.isAddSub() ).thenReturn( false );
+
+        assertTrue( sut.hasAddSub() );
+    }
+
+    @Test
+    public void testHasAddSub001()
+    {
+        SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isAddSub() ).thenReturn( false );
+        when( s2.isAddSub() ).thenReturn( false );
+
+        assertFalse( sut.hasAddSub() );
+    }
+
+    @Test
     public void testSerializeToJson() throws JsonProcessingException
     {
-//        ObjectMapper mapper = new ObjectMapper();
-//        return mapper.writeValueAsString(this);
+        SolutionSet sut = new SolutionSet();
+
+        ObjectMapper mapper = new ObjectMapper();
+        System.out.println( mapper.writeValueAsString( sut ) );
+        fail( "finish later" );
+    }
+
+    @Test
+    public void testGetDifficultyRank()
+    {
+        SolutionSet sut = new SolutionSet();
+        fail( "finish later" );
     }
 }

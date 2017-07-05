@@ -31,6 +31,8 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request
@@ -158,10 +160,26 @@ public class ServiceSolutionTests
     @Test
     public void v0Puzzle() throws Exception
     {
+        SolutionSet zeroTrick = mock( SolutionSet.class );
+        Puzzle zeroTrickPuzzle = new Puzzle( 24, 18, 18, 9 );
+        when( zeroTrick.getDifficultyRank() ).thenReturn( DifficultyRank
+            .ZERO_TRICK );
+        when( zeroTrick.getPuzzle() ).thenReturn( zeroTrickPuzzle );
+
+        SolutionSet noSolution = mock( SolutionSet.class );
+        when( noSolution.getPuzzle() ).thenReturn( new Puzzle( 0, 0, 0, 0 ) );
+        when( noSolution.getDifficultyRank() ).thenReturn(
+            DifficultyRank.NO_SOLU );
+
+        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution );
+        when( mockSolver.solve( eq( zeroTrickPuzzle ) ) ).thenReturn(
+            zeroTrick );
+
+
         mockMvc.perform(
             get( "/rest/v0/puzzle" )
                 .accept( MediaType.APPLICATION_JSON_VALUE )
-                .param( "d", "!!!TODO!!!" )
+                .param( "d", "ZERO_TRICK" )
                 .param( "page", "1" )
                 .param( "size", "10" ) )
 

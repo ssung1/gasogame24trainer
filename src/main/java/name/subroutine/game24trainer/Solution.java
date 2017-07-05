@@ -175,6 +175,26 @@ public class Solution
         return this.fraction;
     }
 
+    public boolean isZeroTrick()
+    {
+        return false;
+    }
+
+    public boolean isDistProp()
+    {
+        return true;
+    }
+
+    public boolean isAlmostDistProp()
+    {
+        return true;
+    }
+
+    public boolean isAddSub()
+    {
+        return true;
+    }
+
     @Override
     public boolean equals( Object o )
     {

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashSet;
 import java.util.Set;
 
-import static name.subroutine.game24trainer.DiffcultyRank.*;
+import static name.subroutine.game24trainer.DifficultyRank.*;
 
 /**
  * Difficulty ranking
@@ -156,7 +156,8 @@ public class SolutionSet
      * @return
      */
     @JsonProperty
-    public boolean hasFraction() {
+    public boolean hasFraction()
+    {
         return solutionSet.parallelStream().anyMatch(
             s -> s.hasFraction() == Puzzle.YES );
     }
@@ -164,6 +165,26 @@ public class SolutionSet
     public boolean hasSolution()
     {
         return !solutionSet.isEmpty();
+    }
+
+    public boolean hasZeroTrick()
+    {
+        return false;
+    }
+
+    public boolean hasDistProp()
+    {
+        return true;
+    }
+
+    public boolean hasAlmostDistProp()
+    {
+        return true;
+    }
+
+    public boolean hasAddSub()
+    {
+        return true;
     }
 
     /**
@@ -187,8 +208,17 @@ public class SolutionSet
      *
      * Fraction required
      */
-    public DiffcultyRank getDifficultyRank()
+    public DifficultyRank getDifficultyRank()
     {
+        if( hasZeroTrick() ) {
+            return ZERO_TRICK;
+        }
+        if( hasDistProp() ) {
+            return DIST_PROP;
+        }
+        if( hasAlmostDistProp() ) {
+            return ALMOST_DIST_PROP;
+        }
         if( hasFinalMul() ) {
             return FINAL_MUL;
         }

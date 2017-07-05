@@ -8,9 +8,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Game24TrainerConfig
 {
-    @Value( "${max.number}" )
-    String maxNumber;
-
     @Bean( name = "analyzer" )
     public Game24Analyzer getAnalyzer()
     {
@@ -21,13 +18,6 @@ public class Game24TrainerConfig
     public Game24Analyzer getAnotherAnalyzer()
     {
         Game24Analyzer result = new Game24Analyzer();
-        try {
-            result.setMaxNumber( Integer.parseInt( this.maxNumber ) );
-        }
-        catch( Exception ex ) {
-            // oh wells
-        }
-
         return result;
     }
 

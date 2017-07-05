@@ -103,6 +103,142 @@ public class SolutionTests
     }
 
     @Test
+    public void testIsZeroTrick000()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "6 6 - 5 * 24 +" );
+        assertTrue( sut.isZeroTrick() );
+    }
+
+    @Test
+    public void testIsZeroTrick001()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "5 6 6 - * 24 +" );
+        assertTrue( sut.isZeroTrick() );
+    }
+
+    @Test
+    public void testIsZeroTrick002()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "13 13 - 7 * 24 +" );
+        assertTrue( sut.isZeroTrick() );
+    }
+
+    @Test
+    public void testIsZeroTrick003()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "7 13 13 - * 24 +" );
+        assertTrue( sut.isZeroTrick() );
+    }
+
+    @Test
+    public void testIsZeroTrick004()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "5 24 6 / * 4 +" );
+        assertFalse( sut.isZeroTrick() );
+    }
+
+    @Test
+    public void testIsDistProp000()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "8 6 * 4 6 * -" );
+        assertTrue( sut.isDistProp() );
+    }
+
+    @Test
+    public void testIsDistProp001()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "8 6 - 2 + 6 *" );
+        assertFalse( sut.isDistProp() );
+    }
+
+    @Test
+    public void testIsDistProp002()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "2 6 * 2 6 * +" );
+        assertTrue( sut.isDistProp() );
+    }
+
+    @Test
+    public void testIsDistProp003()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "3 4 * 1 2 * *" );
+        assertFalse( sut.isDistProp() );
+    }
+
+    @Test
+    public void testIsDistProp004()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "6 2 * 2 6 * +" );
+        assertTrue( sut.isDistProp() );
+    }
+
+    @Test
+    public void testIsDistProp005()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "2 6 * 3 4 * +" );
+        assertFalse( sut.isDistProp() );
+    }
+
+    @Test
+    public void testIsDistProp006()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "6 7 * 6 3 * -" );
+        assertTrue( sut.isDistProp() );
+    }
+
+    @Test
+    public void testIsDistProp007()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "6 6 * 3 4 * -" );
+        assertFalse( sut.isDistProp() );
+    }
+
+    @Test
+    public void testIsAlmostDistProp000()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "6 8 3 - * 6 -" );
+        assertTrue( sut.isAlmostDistProp() );
+    }
+
+    @Test
+    public void testIsAlmostDistProp001()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "7 8 3 - * 11 -" );
+        assertFalse( sut.isAlmostDistProp() );
+    }
+
+    @Test
+    public void testIsAddSub000()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "6 6 6 + + 6 +" );
+        assertTrue( sut.isAddSub() );
+    }
+
+    @Test
+    public void testIsAddSub001()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "6 6 6 * - 6 -" );
+        assertFalse( sut.isAddSub() );
+    }
+
+    @Test
     public void testIsFinalDiv000()
     {
         Solution sut = new Solution();

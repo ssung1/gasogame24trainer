@@ -29,6 +29,16 @@ public class Game24Puzzles
     public static Puzzle zeroTrick = new Puzzle( 23, 24, 24, 24 );
 
     /**
+     * distributive property
+     */
+    public static Puzzle distProp = new Puzzle( 8, 8, 11, 14 );
+
+    /**
+     * almost distributive property
+     */
+    public static Puzzle almostDistProp = new Puzzle( 6, 2, 3, 6 );
+
+    /**
      * multiplication as final operation
      *
      * 3978 puzzles are like this

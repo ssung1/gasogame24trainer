@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -19,6 +20,9 @@ public class ServiceSolution
     Symbol symbol = new Symbol();
     @Autowired
     Game24Solver solver;
+
+    @Autowired
+    Game24Analyzer analyzer;
 
     @RequestMapping(
         value = "/v0/solution",
@@ -69,6 +73,26 @@ public class ServiceSolution
         }
         else {
             return new SolutionSetJson( ss );
+        }
+    }
+
+    @RequestMapping(
+        value = "/v0/puzzle",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE )
+    public Object puzzle(
+        @RequestParam( name = "d", required = false ) String difficulty )
+        throws Exception
+    {
+        DifficultyRank df = null;
+        if( difficulty != null ) {
+            df = DifficultyRank.valueOf( difficulty );
+        }
+        if( df != null ) {
+            return analyzer.getSolutionSetByDifficulty( df );
+        }
+        else {
+            return analyzer.getSolutionSet();
         }
     }
 }

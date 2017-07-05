@@ -1,12 +1,5 @@
 package name.subroutine.game24trainer;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import static name.subroutine.game24trainer.DiffcultyRank.*;
-
 public class SolutionSetJson
 {
     private final String puzzle;

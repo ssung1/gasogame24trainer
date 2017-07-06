@@ -89,7 +89,9 @@ public class ServiceSolution
             df = DifficultyRank.valueOf( difficulty );
         }
         if( df != null ) {
-            return analyzer.getSolutionSetByDifficulty( df );
+            //return analyzer.getSolutionSetByDifficulty( df );
+            Object o = analyzer.getSolutionSetByDifficulty( df );
+            return null;
         }
         else {
             return analyzer.getSolutionSet();

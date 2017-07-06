@@ -1,9 +1,6 @@
 package name.subroutine.game24trainer;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.IdentityHashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Puzzle
@@ -59,6 +56,23 @@ public class Puzzle
     public Puzzle( int a, int b, int c, int d )
     {
         this.numbers = Arrays.asList( a, b, c, d );
+    }
+
+    public Puzzle( String p )
+    {
+        String tokenList[] = p.split( "\\s+" );
+        this.numbers = new ArrayList<>();
+
+        for( String token: tokenList ) {
+            if( !token.isEmpty() ) {
+                try {
+                    int num = Integer.parseInt( token );
+                    numbers.add( num );
+                } catch( NumberFormatException ex ) {
+                    throw new RuntimeException( ex );
+                }
+            }
+        }
     }
 
     public List<Integer> getNumbers()

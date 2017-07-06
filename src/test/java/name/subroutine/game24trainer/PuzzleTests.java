@@ -2,6 +2,8 @@ package name.subroutine.game24trainer;
 
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
@@ -142,5 +144,16 @@ public class PuzzleTests
         assertThat( a.getNumbers().get( 1 ), is( 3 ) );
         assertThat( a.getNumbers().get( 2 ), is( 2 ) );
         assertThat( a.getNumbers().get( 3 ), is( 1 ) );
+    }
+
+    @Test
+    public void testConstructionByString()
+    {
+        Puzzle a = new Puzzle( "2 3 4 5" );
+        List<Integer> n = a.getNumbers();
+        assertThat( n.get( 0 ), is( 2 ) );
+        assertThat( n.get( 1 ), is( 3 ) );
+        assertThat( n.get( 2 ), is( 4 ) );
+        assertThat( n.get( 3 ), is( 5 ) );
     }
 }

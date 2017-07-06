@@ -1,6 +1,6 @@
 package name.subroutine.game24trainer;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 
@@ -41,8 +41,8 @@ public class SolutionSetTests
         sut.add( s1 );
         sut.add( s2 );
 
-        when( s1.hasFraction() ).thenReturn( Puzzle.YES );
-        when( s2.hasFraction() ).thenReturn( Puzzle.YES );
+        when( s1.isFraction() ).thenReturn( Puzzle.YES );
+        when( s2.isFraction() ).thenReturn( Puzzle.YES );
 
         assertTrue( sut.excludeFraction().isEmpty() );
     }
@@ -64,8 +64,8 @@ public class SolutionSetTests
         sut.add( s1 );
         sut.add( s2 );
 
-        when( s1.hasFraction() ).thenReturn( Puzzle.YES );
-        when( s2.hasFraction() ).thenReturn( Puzzle.NO );
+        when( s1.isFraction() ).thenReturn( Puzzle.YES );
+        when( s2.isFraction() ).thenReturn( Puzzle.NO );
 
         assertThat( sut.excludeFraction(), hasSize( 1 ) );
         assertThat( sut.excludeFraction(), hasItem( s2 ) );
@@ -80,8 +80,8 @@ public class SolutionSetTests
         sut.add( s1 );
         sut.add( s2 );
 
-        when( s1.hasFraction() ).thenReturn( Puzzle.UNKNOWN );
-        when( s2.hasFraction() ).thenReturn( Puzzle.NO );
+        when( s1.isFraction() ).thenReturn( Puzzle.UNKNOWN );
+        when( s2.isFraction() ).thenReturn( Puzzle.NO );
 
         assertThat( sut.excludeFraction(), hasSize( 2 ) );
         assertThat( sut.excludeFraction(), hasItem( s1 ) );
@@ -97,8 +97,8 @@ public class SolutionSetTests
         sut.add( s1 );
         sut.add( s2 );
 
-        when( s1.hasFraction() ).thenReturn( Puzzle.UNKNOWN );
-        when( s2.hasFraction() ).thenReturn( Puzzle.YES );
+        when( s1.isFraction() ).thenReturn( Puzzle.UNKNOWN );
+        when( s2.isFraction() ).thenReturn( Puzzle.YES );
 
         assertThat( sut.excludeFraction(), hasSize( 1 ) );
         assertThat( sut.excludeFraction(), hasItem( s1 ) );
@@ -646,8 +646,8 @@ public class SolutionSetTests
         sut.add( s1 );
         sut.add( s2 );
 
-        when( s1.hasFraction() ).thenReturn( Puzzle.YES );
-        when( s2.hasFraction() ).thenReturn( Puzzle.YES );
+        when( s1.isFraction() ).thenReturn( Puzzle.YES );
+        when( s2.isFraction() ).thenReturn( Puzzle.YES );
 
         assertTrue( sut.hasFraction() );
     }
@@ -669,8 +669,8 @@ public class SolutionSetTests
         sut.add( s1 );
         sut.add( s2 );
 
-        when( s1.hasFraction() ).thenReturn( Puzzle.YES );
-        when( s2.hasFraction() ).thenReturn( Puzzle.NO );
+        when( s1.isFraction() ).thenReturn( Puzzle.YES );
+        when( s2.isFraction() ).thenReturn( Puzzle.NO );
 
         assertTrue( sut.hasFraction() );
     }
@@ -684,8 +684,8 @@ public class SolutionSetTests
         sut.add( s1 );
         sut.add( s2 );
 
-        when( s1.hasFraction() ).thenReturn( Puzzle.UNKNOWN );
-        when( s2.hasFraction() ).thenReturn( Puzzle.NO );
+        when( s1.isFraction() ).thenReturn( Puzzle.UNKNOWN );
+        when( s2.isFraction() ).thenReturn( Puzzle.NO );
 
         assertFalse( sut.hasFraction() );
     }
@@ -699,8 +699,8 @@ public class SolutionSetTests
         sut.add( s1 );
         sut.add( s2 );
 
-        when( s1.hasFraction() ).thenReturn( Puzzle.UNKNOWN );
-        when( s2.hasFraction() ).thenReturn( Puzzle.YES );
+        when( s1.isFraction() ).thenReturn( Puzzle.UNKNOWN );
+        when( s2.isFraction() ).thenReturn( Puzzle.YES );
 
         assertTrue( sut.hasFraction() );
     }
@@ -826,19 +826,57 @@ public class SolutionSetTests
     }
 
     @Test
-    public void testSerializeToJson() throws JsonProcessingException
+    public void testSerializeToJson() throws Exception
     {
         SolutionSet sut = new SolutionSet();
+        Puzzle p = new Puzzle( "1 2 3 4" );
+        Solution s = new Solution();
+
 
         ObjectMapper mapper = new ObjectMapper();
-        System.out.println( mapper.writeValueAsString( sut ) );
-        fail( "finish later" );
+        String json = mapper.writeValueAsString( sut );
+
+        JsonNode root = mapper.readTree( json );
+
+        //{"solutionSet":[],"puzzle":null,"algorithm":null,
+        // "hasFraction":false,"hasFinalAdd":false,"hasFinalDiv":false,isFraction "hasFinalMul":false,"hasFinalDivTwoByTwo":false,
+        // "hasFinalMulTwoByTwo":false,"hasFinalAddTwoByTwo":false,
+        // "difficultyRank":{"symbol":"N","description":"no solution"},"count":0}
+
+        assertTrue( root.has( "solutionSet" ) );
+        assertTrue( root.has( "puzzle" ) );
+        assertTrue( root.has( "algorithm" ) );
+        assertTrue( root.has( "hasFraction" ) );
+        assertTrue( root.has( "hasFinalAdd" ) );
+        assertTrue( root.has( "hasFinalDiv" ) );
+        assertTrue( root.has( "hasFinalMul" ) );
+        assertTrue( root.has( "hasFinalDivTwoByTwo" ) );
+        assertTrue( root.has( "hasFinalMulTwoByTwo" ) );
+        assertTrue( root.has( "hasFinalAddTwoByTwo" ) );
+        assertTrue( root.has( "difficultyRank" ) );
+        //assertTrue( root.has( "description" ) );
+        assertTrue( root.has( "count" ) );
     }
 
     @Test
-    public void testGetDifficultyRank()
+    public void testGetDifficultyRankZeroTrickVsDistProp()
     {
         SolutionSet sut = new SolutionSet();
+        Solution s1 = mock( Solution.class );
+        Solution s2 = mock( Solution.class );
+        sut.add( s1 );
+        sut.add( s2 );
+
+        when( s1.isZeroTrick() ).thenReturn( true );
+        when( s2.isDistProp() ).thenReturn( true );
+        when( s2.isZeroTrick() ).thenReturn( false );
+
+        assertThat( sut.getDifficultyRank(), is( DifficultyRank.ZERO_TRICK ) );
+    }
+
+    @Test
+    public void testGetDifficultRank()
+    {
         fail( "finish later" );
     }
 }

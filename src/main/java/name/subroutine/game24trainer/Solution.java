@@ -23,7 +23,31 @@ public class Solution
      * the cost of arriving at this solution
      */
     public int cost = 0;
-    public String trick = "none";
+
+    public void setExpression( Symbol[] expression )
+    {
+        this.expression = expression;
+    }
+
+    public Symbol[] getExpression()
+    {
+        return this.expression;
+    }
+
+    public void setFraction( int fraction )
+    {
+        this.fraction = fraction;
+    }
+
+    public void setCost( int cost )
+    {
+        this.cost = cost;
+    }
+
+    public int getCost()
+    {
+        return this.cost;
+    }
 
     public String toPostfixString()
     {
@@ -170,7 +194,7 @@ public class Solution
         return isTwoByTwo() && addSub;
     }
 
-    public int hasFraction()
+    public int isFraction()
     {
         return this.fraction;
     }
@@ -182,17 +206,17 @@ public class Solution
 
     public boolean isDistProp()
     {
-        return true;
+        return false;
     }
 
     public boolean isAlmostDistProp()
     {
-        return true;
+        return false;
     }
 
     public boolean isAddSub()
     {
-        return true;
+        return false;
     }
 
     @Override

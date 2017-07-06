@@ -80,7 +80,7 @@ public class Game24Analyzer
 //                sb.append( "," );
 //                sb.append( ss.hasFinalDivTwoByTwo() );
 //                sb.append( "," );
-//                sb.append( ss.hasFraction() );
+//                sb.append( ss.isFraction() );
 //                sb.append( "," );
 //                sb.append( ss.hasSolution() );
 //                sb.append( "," );

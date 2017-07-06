@@ -69,7 +69,7 @@ public class SolutionSet
     {
         Set<Solution> result = new HashSet<>();
         for( Solution s : solutionSet ) {
-            if( s.hasFraction() != Puzzle.YES ) {
+            if( s.isFraction() != Puzzle.YES ) {
                 result.add( s );
             }
         }
@@ -159,7 +159,7 @@ public class SolutionSet
     public boolean hasFraction()
     {
         return solutionSet.parallelStream().anyMatch(
-            s -> s.hasFraction() == Puzzle.YES );
+            s -> s.isFraction() == Puzzle.YES );
     }
 
     public boolean hasSolution()
@@ -174,25 +174,27 @@ public class SolutionSet
 
     public boolean hasDistProp()
     {
-        return true;
+        return false;
     }
 
     public boolean hasAlmostDistProp()
     {
-        return true;
+        return false;
     }
 
     public boolean hasAddSub()
     {
-        return true;
+        return false;
     }
 
     /**
      * Difficulty ranking, from the easiest:
      *
-     * 24+0 trick, (a - a) * b + 24, optional
+     * 24+0 trick, (a - a) * b + 24
      *
-     * Distributive property, (a * b) + (a * c), optional
+     * Distributive property, (a * b) + (a * c)
+     *
+     * Almost Distributive property (a * b ? c) + a
      *
      * Multiplication as last operation
      *

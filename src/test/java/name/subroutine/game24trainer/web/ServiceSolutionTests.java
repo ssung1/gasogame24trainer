@@ -148,7 +148,7 @@ public class ServiceSolutionTests
             .andExpect(
                 jsonPath( "$.hasFinalDivTwoByTwo" ).value( false ) )
             .andExpect(
-                jsonPath( "$.hasFraction" ).value( false ) )
+                jsonPath( "$.isFraction" ).value( false ) )
             .andExpect(
                 jsonPath( exp, 0 ).value( 1 ) )
             .andExpect(
@@ -174,7 +174,6 @@ public class ServiceSolutionTests
         when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution );
         when( mockSolver.solve( eq( zeroTrickPuzzle ) ) ).thenReturn(
             zeroTrick );
-
 
         mockMvc.perform(
             get( "/rest/v0/puzzle" )

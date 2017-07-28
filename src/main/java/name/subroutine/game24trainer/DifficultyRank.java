@@ -33,6 +33,11 @@ public enum DifficultyRank
         return this.symbol;
     }
 
+    public String getName()
+    {
+        return this.toString();
+    }
+
     public String getDescription()
     {
         return this.description;

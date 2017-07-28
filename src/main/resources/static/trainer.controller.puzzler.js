@@ -1,10 +1,14 @@
 angular.module('gasogame24trainer')
 .controller('game24puzzler', function($scope, $http) {
     $scope.anotherPuzzle = function() {
-        $scope.numbers = []
-        for (i = 0; i < 4; i++) {
-            $scope.numbers[i] = Math.round( Math.random() * 24 ) + 1
-        }
+        $http.get('http://localhost:8080/rest/v0/puzzle?d=' + 'FINAL_ADD')
+            .then( function(response) {
+                    $scope.numbers = response.data.puzzle.numbers;
+                },
+                function(error){
+                    $scope.numbers = [0, 0, 0, 0];
+                }
+            )
     }
     $scope.anotherPuzzle()
 
@@ -25,7 +29,7 @@ angular.module('gasogame24trainer')
         // if fetching data from a different domain, browser will block
         // request; this is why it only works when this page is run from
         // Spring
-        $http.get( '/rest/v0/solution?p=' + numberParam )
+        $http.get( 'http://localhost:8080/rest/v0/solution?p=' + numberParam )
             .then(
                 function( response ) {
                     $scope.solution = response.data

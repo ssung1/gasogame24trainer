@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @RestController
 @RequestMapping( "/rest" )
 public class ServiceSolution
@@ -89,9 +90,7 @@ public class ServiceSolution
             df = DifficultyRank.valueOf( difficulty );
         }
         if( df != null ) {
-            //return analyzer.getSolutionSetByDifficulty( df );
-            Object o = analyzer.getSolutionSetByDifficulty( df );
-            return null;
+            return analyzer.getSolutionSetByDifficulty( df );
         }
         else {
             return analyzer.getSolutionSet();

@@ -7,6 +7,7 @@ import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.ReadContext;
 import name.subroutine.game24trainer.*;
 import net.minidev.json.JSONObject;
+import org.assertj.core.internal.Diff;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,11 +161,16 @@ public class ServiceSolutionTests
     @Test
     public void v0Puzzle() throws Exception
     {
-        SolutionSet zeroTrick = mock( SolutionSet.class );
-        Puzzle zeroTrickPuzzle = new Puzzle( 24, 18, 18, 9 );
-        when( zeroTrick.getDifficultyRank() ).thenReturn( DifficultyRank
-            .ZERO_TRICK );
-        when( zeroTrick.getPuzzle() ).thenReturn( zeroTrickPuzzle );
+        // cannot mock SolutionSet because it is going to be
+        // serialized into JSON later
+        SolutionSet finalAdd = new SolutionSet();
+        Puzzle finalAddPuzzle = Game24Puzzles.finalAdd;
+
+        Solution solution = new Solution();
+        solution.setExpression( s.parse( "10 11 9 - / 19 +" ) );
+
+        finalAdd.add( solution );
+        finalAdd.setPuzzle( finalAddPuzzle );
 
         SolutionSet noSolution = mock( SolutionSet.class );
         when( noSolution.getPuzzle() ).thenReturn( new Puzzle( 0, 0, 0, 0 ) );
@@ -172,23 +178,23 @@ public class ServiceSolutionTests
             DifficultyRank.NO_SOLU );
 
         when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution );
-        when( mockSolver.solve( eq( zeroTrickPuzzle ) ) ).thenReturn(
-            zeroTrick );
+        when( mockSolver.solve( eq( finalAddPuzzle ) ) ).thenReturn(
+            finalAdd );
 
         mockMvc.perform(
             get( "/rest/v0/puzzle" )
                 .accept( MediaType.APPLICATION_JSON_VALUE )
-                .param( "d", "ZERO_TRICK" )
+                .param( "d", DifficultyRank.FINAL_ADD.getName() )
                 .param( "page", "1" )
                 .param( "size", "10" ) )
-
             .andExpect(
                 content().contentTypeCompatibleWith(
                     MediaType.APPLICATION_JSON ) )
             .andExpect(
-                jsonPath( "$.puzzle" ).value(
-                    containsString( "1  1  1  1" ) ) )
+                jsonPath( "$.puzzle.numbers" ).value( is( finalAddPuzzle
+                    .getNumbers() ) ) )
             .andExpect(
-                jsonPath( "$.difficultyRank" ).value( "N" ) );
+                jsonPath( "$.difficultyRank.symbol" ).value(
+                    is( DifficultyRank.FINAL_ADD.getSymbol() ) ) );
     }
 }

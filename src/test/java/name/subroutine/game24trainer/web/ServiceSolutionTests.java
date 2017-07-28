@@ -148,7 +148,7 @@ public class ServiceSolutionTests
             .andExpect(
                 jsonPath( "$.hasFinalDivTwoByTwo" ).value( false ) )
             .andExpect(
-                jsonPath( "$.isFraction" ).value( false ) )
+                jsonPath( "$.hasFraction" ).value( false ) )
             .andExpect(
                 jsonPath( exp, 0 ).value( 1 ) )
             .andExpect(

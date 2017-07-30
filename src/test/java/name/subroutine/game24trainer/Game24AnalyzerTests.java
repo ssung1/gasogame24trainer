@@ -9,25 +9,28 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.util.ReflectionUtils;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 public class Game24AnalyzerTests
 {
-    @Autowired
-    @Qualifier( "analyzer" )
+    //@Autowired
+    //@Qualifier( "analyzer" )
     Game24Analyzer sut;
 
-    @MockBean
-    @Qualifier( "solver" )
-    Game24Solver mockSolver;
+    //@MockBean
+    //@Qualifier( "solver" )
+    Game24Solver mockSolver = mock( Game24Solver.class );
 
     Symbol symbol = new Symbol();
 
@@ -45,6 +48,10 @@ public class Game24AnalyzerTests
     @Before
     public void configureSut()
     {
+        sut = new Game24Analyzer();
+        ReflectionTestUtils.setField( sut, "solver", mockSolver );
+        sut.setMaxNumber( 24 ); // because we are testing "24 a a b" zero trick
+
         SolutionSet noSolution = mock( SolutionSet.class );
         when( noSolution.getPuzzle() ).thenReturn( new Puzzle( 0, 0, 0, 0 ) );
         when( noSolution.getDifficultyRank() ).thenReturn( DifficultyRank.NO_SOLU );
@@ -52,28 +59,14 @@ public class Game24AnalyzerTests
         this.zeroTrick = mock( SolutionSet.class );
         when( zeroTrick.getDifficultyRank() ).thenReturn( DifficultyRank
             .ZERO_TRICK );
+        when( zeroTrick.hasSolution() ).thenReturn( true );
         when( zeroTrick.getPuzzle() ).thenReturn( zeroTrickPuzzle );
 
         // order is important: start with the most generic case
         when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution );
-        when( mockSolver.solve( eq( zeroTrickPuzzle ) ) ).thenReturn( zeroTrick );
+        when( mockSolver.solve( eq( zeroTrickPuzzle ) ) ).thenReturn(
+            zeroTrick );
         sut.analyze();
-    }
-
-    @Test
-    public void testInjection()
-    {
-        assertNotNull( sut.getSolver() );
-        assertTrue( sut.getSolver() == mockSolver );
-    }
-
-    @Test
-    public void testNoSpringNoInjection()
-    {
-        Game24Analyzer sut = new Game24Analyzer();
-        assertNull( sut.getSolver() );
-        // -1 is the default max number before injection
-        assertThat( sut.getMaxNumber(), is( -1 ) );
     }
 
     @Test
@@ -83,5 +76,13 @@ public class Game24AnalyzerTests
             DifficultyRank.ZERO_TRICK );
         assertThat( ss.getDifficultyRank(), is( DifficultyRank.ZERO_TRICK ) );
         assertThat( ss, is( zeroTrick ) );
+    }
+
+    @Test
+    public void testExcludePuzzlesWithNoSolution() throws Exception
+    {
+        assertThat( sut.getSolutionSetList().parallelStream()
+            .filter( s -> !s.hasSolution() )
+            .count(), is( 0L ) );
     }
 }

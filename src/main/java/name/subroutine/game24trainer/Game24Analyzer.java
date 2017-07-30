@@ -1,21 +1,22 @@
 package name.subroutine.game24trainer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Component
 public class Game24Analyzer
 {
+    final Logger logger = LoggerFactory.getLogger( getClass() );
     @Autowired
     private Game24Solver solver;
 
@@ -39,15 +40,27 @@ public class Game24Analyzer
     private int maxNumber = -1;
 
     private List<SolutionSet> solutionSetList;
+    private final Map<DifficultyRank,List<SolutionSet>> solutionSetListByRank =
+        new HashMap<>();
+    private boolean analysisDone = false;
+
+    private SolutionSet addToMapByRank( SolutionSet sol )
+    {
+        DifficultyRank rank = sol.getDifficultyRank();
+        List<SolutionSet> ss = solutionSetListByRank.get( rank );
+        if( ss == null ) {
+            ss = new ArrayList<>();
+            solutionSetListByRank.put( rank, ss );
+        }
+        ss.add( sol );
+        return sol;
+    }
 
     public void analyze()
     {
-//        OutputStream os = new FileOutputStream( "c:/tmp/game24solutions.csv" );
-//        PrintStream ps = new PrintStream( os );
-
+        analysisDone = false;
         int max = this.getMaxNumber();
         List<Puzzle> puzzleList = new ArrayList<>( 17550 );
-        long timeStart = System.currentTimeMillis();
         for( int a = 1; a <= max; ++a ) {
             for( int b = a; b <= max; ++b ) {
                 for( int c = b; c <= max; ++c ) {
@@ -59,50 +72,11 @@ public class Game24Analyzer
             }
         }
         Stream<SolutionSet> sss =
-            puzzleList.parallelStream().map( solver::solve );
+            puzzleList.parallelStream().map( solver::solve )
+            .filter( SolutionSet::hasSolution )
+            .map( this::addToMapByRank );
         this.solutionSetList = sss.collect( Collectors.toList() );
-//        Stream<String> sst =
-//            this.solutionSetList.stream().parallel().map( ss -> {
-//                StringBuilder sb = new StringBuilder();
-//                sb.append( ss.getPuzzle() );
-//                sb.append( "," );
-//                sb.append( ss.hasZeroTrick() );
-//                sb.append( "," );
-//                sb.append( ss.hasFinalMul() );
-//                sb.append( "," );
-//                sb.append( ss.hasFinalMulTwoByTwo() );
-//                sb.append( "," );
-//                sb.append( ss.hasFinalAdd() );
-//                sb.append( "," );
-//                sb.append( ss.hasFinalAddTwoByTwo() );
-//                sb.append( "," );
-//                sb.append( ss.hasFinalDiv() );
-//                sb.append( "," );
-//                sb.append( ss.hasFinalDivTwoByTwo() );
-//                sb.append( "," );
-//                sb.append( ss.isFraction() );
-//                sb.append( "," );
-//                sb.append( ss.hasSolution() );
-//                sb.append( "," );
-//
-//                String rank = ss.getDifficultyRank().getSymbol();
-//                if( "+".equals( rank ) ) {
-//                    rank = "\"+\"";
-//                }
-//                sb.append( rank );
-//                return sb.toString();
-//            } );
-//
-//        Object[] result = sst.toArray();
-//        Arrays.sort( result );
-//        for( Object s : result ){
-//            ps.println( s );
-//        }
-//        long timeStop = System.currentTimeMillis();
-//
-//        System.out.println( "Time: " + (timeStop - timeStart) );
-//
-//        os.close();
+        analysisDone = true;
     }
 
     public int getMaxNumber()
@@ -124,20 +98,28 @@ public class Game24Analyzer
     }
 
     public SolutionSet getSolutionSetByDifficulty( DifficultyRank di )
+        throws Exception
     {
-        List<SolutionSet> list = getSolutionSetList().stream()
-            .filter( s -> s.getDifficultyRank() == di )
-            .collect( Collectors.toList() );
-        Collections.shuffle( list );
-        return list.get( 0 );
+        if( !analysisDone ) {
+            throw new Exception( "Still waiting for analysis; please try later" );
+        }
+        long start = System.currentTimeMillis();
+        List<SolutionSet> list = solutionSetListByRank.get( di );
+        int randomIndex = ThreadLocalRandom.current().nextInt( list.size() );
+        SolutionSet result = list.get( randomIndex );
+        long stop = System.currentTimeMillis();
+
+        logger.info( "Time took to get a puzzle: " + (stop - start) + "ms" );
+
+        return result;
     }
 
-    public SolutionSet getSolutionSet()
+    public SolutionSet getSolutionSet() throws Exception
     {
-        List<SolutionSet> list = getSolutionSetList().stream()
-            .filter( s -> s.getDifficultyRank() != DifficultyRank.NO_SOLU )
-            .collect( Collectors.toList() );
-        Collections.shuffle( list );
-        return list.get( 0 );
+        if( !analysisDone ) {
+            throw new Exception( "Still waiting for analysis; please try later" );
+        }
+        List<SolutionSet> list = getSolutionSetList();
+        return list.get( ThreadLocalRandom.current().nextInt( list.size() ) );
     }
 }

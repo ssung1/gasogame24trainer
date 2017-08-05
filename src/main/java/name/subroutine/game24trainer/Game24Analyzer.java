@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -29,6 +30,12 @@ public class Game24Analyzer
         @Qualifier( "solver" ) Game24Solver solver )
     {
         this.solver = solver;
+    }
+
+    @PostConstruct
+    public void init()
+    {
+        analyze();
     }
 
     public Game24Solver getSolver()

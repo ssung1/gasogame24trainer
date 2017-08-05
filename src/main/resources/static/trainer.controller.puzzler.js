@@ -1,7 +1,7 @@
 angular.module('gasogame24trainer')
 .controller('game24puzzler', function($scope, $http) {
-    $scope.anotherPuzzle = function() {
-        $http.get('http://localhost:8080/rest/v0/puzzle?d=' + 'FINAL_ADD')
+    $scope.anotherPuzzle = function( difficultyRank ) {
+        $http.get(`http://localhost:8080/rest/v0/puzzle?d=${difficultyRank}`)
             .then( function(response) {
                     $scope.numbers = response.data.puzzle.numbers;
                 },

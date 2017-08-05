@@ -80,7 +80,7 @@
             overflow: auto;
             margin: auto;
             background-color: rgb(0, 0, 0);
-            background-color: rgb(0, 0, 0, 0.4);
+            background-color: rgba(0, 0, 0, 0.4);
         }
         .solution-box {
             background-color: #ecedba;
@@ -106,20 +106,20 @@
 
     <table class="menuButton">
         <tr>
-            <td ng-click="anotherPuzzle()">0 TRICK</td>
-            <td ng-click="anotherPuzzle()">DIST PROP</td>
+            <td ng-click="anotherPuzzle('ZERO_TRICK')">0 TRICK</td>
+            <td ng-click="anotherPuzzle('DIST_PROP')">DIST PROP</td>
         </tr>
         <tr>
-            <td ng-click="anotherPuzzle()">FINAL MUL</td>
-            <td ng-click="anotherPuzzle()">FINAL MUL2</td>
+            <td ng-click="anotherPuzzle('FINAL_MUL')">FINAL MUL</td>
+            <td ng-click="anotherPuzzle('FINAL_MUL_2')">FINAL MUL2</td>
         </tr>
         <tr>
-            <td ng-click="anotherPuzzle()">FINAL ADD</td>
-            <td ng-click="anotherPuzzle()">FINAL ADD2</td>
+            <td ng-click="anotherPuzzle('FINAL_ADD')">FINAL ADD</td>
+            <td ng-click="anotherPuzzle('FINAL_ADD_2')">FINAL ADD2</td>
         </tr>
         <tr>
-            <td ng-click="anotherPuzzle()">FINAL DIV</td>
-            <td ng-click="anotherPuzzle()">FINAL DIV2</td>
+            <td ng-click="anotherPuzzle('FINAL_DIV')">FINAL DIV</td>
+            <td ng-click="anotherPuzzle('FINAL_DIV_2')">FINAL DIV2</td>
         </tr>
     </table>
 

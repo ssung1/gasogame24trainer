@@ -17,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -46,6 +47,7 @@ import static org.springframework.test.web.servlet.result
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles( "test" )
 public class ServiceSolutionTests
 {
     // just for parsing
@@ -56,9 +58,13 @@ public class ServiceSolutionTests
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    @Qualifier( "solver" )
-    Game24Solver mockSolver;
+    //@MockBean
+    //@Qualifier( "solver" )
+    Game24Solver mockSolver = mock( Game24Solver.class );
+
+    //@MockBean
+    //@Qualifier( "analyzer" )
+    Game24Analyzer mockAnalyzer;
 
     private SolutionSet getSampleSolutionSet()
     {
@@ -180,6 +186,7 @@ public class ServiceSolutionTests
         when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution );
         when( mockSolver.solve( eq( finalAddPuzzle ) ) ).thenReturn(
             finalAdd );
+        //when( mockAnalyzer
 
         mockMvc.perform(
             get( "/rest/v0/puzzle" )

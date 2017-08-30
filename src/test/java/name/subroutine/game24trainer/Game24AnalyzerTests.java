@@ -20,16 +20,10 @@ import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest
 public class Game24AnalyzerTests
 {
-    //@Autowired
-    //@Qualifier( "analyzer" )
     Game24Analyzer sut;
 
-    //@MockBean
-    //@Qualifier( "solver" )
     Game24Solver mockSolver = mock( Game24Solver.class );
 
     Symbol symbol = new Symbol();

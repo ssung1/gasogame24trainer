@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 public class Game24Analyzer
 {
     final Logger logger = LoggerFactory.getLogger( getClass() );
+
     @Autowired
     private Game24Solver solver;
 

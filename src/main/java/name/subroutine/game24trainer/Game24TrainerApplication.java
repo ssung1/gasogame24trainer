@@ -7,7 +7,8 @@ import org.springframework.context.annotation.Import;
 // Annotation shortcut for @Configuration, @EnableAutoConfiguration, and
 // @ComponentScan:
 @SpringBootApplication
-@Import( Game24TrainerConfig.class )
+// optional:
+// @Import( Game24TrainerConfig.class )
 public class Game24TrainerApplication {
 
 	public static void main(String[] args) {

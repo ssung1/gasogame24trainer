@@ -23,13 +23,13 @@ public class Game24TrainerConfig
 
     @Bean( name = "solver" )
     public Game24Solver getSolver()
-    {
+   {
         return new Game24SolverImplRosetta();
-    }
+   }
 
     @Bean( name = "anotherSolver" )
     public Game24Solver getAnotherSolver()
-    {
+   {
         return new Game24SolverImplRosetta();
-    }
+   }
 }

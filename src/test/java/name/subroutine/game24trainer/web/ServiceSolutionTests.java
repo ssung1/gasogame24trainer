@@ -58,12 +58,12 @@ public class ServiceSolutionTests
     @Autowired
     private MockMvc mockMvc;
 
-    //@MockBean
-    //@Qualifier( "solver" )
-    Game24Solver mockSolver = mock( Game24Solver.class );
+    @MockBean
+    @Qualifier( "solver" )
+    Game24Solver mockSolver;
 
-    //@MockBean
-    //@Qualifier( "analyzer" )
+    @MockBean
+    @Qualifier( "analyzer" )
     Game24Analyzer mockAnalyzer;
 
     private SolutionSet getSampleSolutionSet()

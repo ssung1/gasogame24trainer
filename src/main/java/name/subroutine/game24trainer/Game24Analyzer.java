@@ -36,7 +36,9 @@ public class Game24Analyzer
     @PostConstruct
     public void init()
     {
-        analyze();
+        if( autoAnalyze ) {
+            analyze();
+        }
     }
 
     public Game24Solver getSolver()
@@ -46,6 +48,9 @@ public class Game24Analyzer
 
     @Value( "${max.number:24}" )
     private int maxNumber = -1;
+
+    @Value( "${auto.analyze:true}" )
+    private boolean autoAnalyze = true;
 
     private List<SolutionSet> solutionSetList;
     private final Map<DifficultyRank,List<SolutionSet>> solutionSetListByRank =

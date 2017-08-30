@@ -22,11 +22,4 @@ public class Game24TrainerApplicationTests {
 	public void contextLoads() {
         assertThat( analyzer.getMaxNumber(), is( 5 ) );
 	}
-
-    @Test
-    public void analyzerHasContents() throws Exception {
-        SolutionSet sample =
-            analyzer.getSolutionSetByDifficulty( DifficultyRank.FINAL_MUL );
-        assertThat( sample, not( nullValue() ) );
-    }
 }

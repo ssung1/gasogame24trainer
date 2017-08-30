@@ -178,15 +178,9 @@ public class ServiceSolutionTests
         finalAdd.add( solution );
         finalAdd.setPuzzle( finalAddPuzzle );
 
-        SolutionSet noSolution = mock( SolutionSet.class );
-        when( noSolution.getPuzzle() ).thenReturn( new Puzzle( 0, 0, 0, 0 ) );
-        when( noSolution.getDifficultyRank() ).thenReturn(
-            DifficultyRank.NO_SOLU );
-
-        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution );
-        when( mockSolver.solve( eq( finalAddPuzzle ) ) ).thenReturn(
-            finalAdd );
-        //when( mockAnalyzer
+        when( mockAnalyzer.getSolutionSetByDifficulty(
+                DifficultyRank.FINAL_ADD ) )
+            .thenReturn( finalAdd );
 
         mockMvc.perform(
             get( "/rest/v0/puzzle" )

@@ -102,6 +102,21 @@ public class Puzzle
         return mkString( sorted );
     }
 
+    public boolean hasZeroTrick()
+    {
+        return false;
+    }
+
+    public boolean hasDistProp()
+    {
+        return false;
+    }
+
+    public boolean hasAlmostDistProp()
+    {
+        return false;
+    }
+
     @Override
     public int hashCode()
     {

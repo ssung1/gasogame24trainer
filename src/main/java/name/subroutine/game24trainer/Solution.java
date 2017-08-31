@@ -194,11 +194,19 @@ public class Solution
         return isTwoByTwo() && addSub;
     }
 
+    /**
+     * fraction is required as an intermediate
+     * @return
+     */
     public int isFraction()
     {
         return this.fraction;
     }
 
+    /**
+     * can be solved using the zero trick
+     * @return
+     */
     public boolean isZeroTrick()
     {
         return false;

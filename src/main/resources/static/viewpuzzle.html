@@ -44,6 +44,9 @@
             font-size: 12pt;
             font-family: calibri, sans-serif;
         }
+        .puzzle td.bottom {
+            //transform: rotate(0.5turn);
+        }
         .solu-flag-table {
             table-layout: fixed;
             margin: auto;
@@ -125,15 +128,15 @@
 
     <!-- puzzle panel: only show if user clicks button -->
     <table class="puzzle">
-        <tr><td></td><td>{{numbers[0]}}</td><td></td></tr>
+        <tr><td class="hello"></td><td class="top">{{numbers[0]}}</td><td></td></tr>
         <tr>
-            <td>{{numbers[1]}}</td>
+            <td class="left">{{numbers[1]}}</td>
             <td class="middle" ng-click="showSolution()">
                 SOLVE
             </td>
-            <td>{{numbers[2]}}</td>
+            <td class="right">{{numbers[2]}}</td>
         </tr>
-        <tr><td></td><td>{{numbers[3]}}</td><td></td></tr>
+        <tr><td></td><td class="bottom">{{numbers[3]}}</td><td></td></tr>
     </table>
 </div>
 

@@ -311,6 +311,19 @@ public class SolutionTests
     }
 
     @Test
+    public void testIsFinalMul003()
+    {
+        Solution sut = new Solution();
+        // this should not be considered as final multiplication
+        // because it requires a fraction as intermediate
+        sut.expression = s.parse( "6 9 / 6 * 6 *" );
+        sut.fraction = Puzzle.YES;
+        assertFalse( "Should not be considered as final multiplication " +
+                "because it requires fraction as intermediate",
+            sut.isFinalMul() );
+    }
+
+    @Test
     public void testIsFinalMulTwoByTwo000()
     {
         Solution sut = new Solution();

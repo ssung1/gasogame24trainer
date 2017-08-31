@@ -1,13 +1,7 @@
 package name.subroutine.game24trainer.web;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.DocumentContext;
-import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.ReadContext;
 import name.subroutine.game24trainer.*;
-import net.minidev.json.JSONObject;
-import org.assertj.core.internal.Diff;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +59,21 @@ public class ServiceSolutionTests
     @MockBean
     @Qualifier( "analyzer" )
     Game24Analyzer mockAnalyzer;
+
+    // instead of using springrunner, this test can be run as simple
+    // junit
+    //
+    // Game24Solver mockSolver = mock( Game24Solver.class );
+    // Game24Analyzer mockAnalyzer = mock( Game24Analyzer.class );
+    // MockMvc mockMvc;
+    // ServiceSolution sut = new ServiceSolution();
+    //
+    // @Before
+    // public void configMockMvc()
+    // {
+    //     ReflectionTestUtils.setField( sut, "solver", mockSolver );
+    //     mockMvc = MockMvcBuilders.standaloneSetup( sut ).build();
+    // }
 
     private SolutionSet getSampleSolutionSet()
     {

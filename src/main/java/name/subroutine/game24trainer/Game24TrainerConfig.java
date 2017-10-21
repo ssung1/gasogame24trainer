@@ -14,22 +14,9 @@ public class Game24TrainerConfig
         return new Game24Analyzer();
     }
 
-    @Bean( name = "anotherAnalyzer" )
-    public Game24Analyzer getAnotherAnalyzer()
-    {
-        Game24Analyzer result = new Game24Analyzer();
-        return result;
-    }
-
     @Bean( name = "solver" )
     public Game24Solver getSolver()
-   {
+    {
         return new Game24SolverImplRosetta();
-   }
-
-    @Bean( name = "anotherSolver" )
-    public Game24Solver getAnotherSolver()
-   {
-        return new Game24SolverImplRosetta();
-   }
+    }
 }

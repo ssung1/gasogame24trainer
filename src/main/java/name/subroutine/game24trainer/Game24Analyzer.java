@@ -14,7 +14,10 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Component
+// the @Component annotation is optional; it causes the object to be
+// instantiated once in addition to any of the @Bean definitions in the
+// config
+// @Component
 public class Game24Analyzer
 {
     final Logger logger = LoggerFactory.getLogger( getClass() );

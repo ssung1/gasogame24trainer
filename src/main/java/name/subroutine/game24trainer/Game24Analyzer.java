@@ -37,6 +37,8 @@ public class Game24Analyzer
     public void init()
     {
         if( autoAnalyze ) {
+            logger.info( "Starting to analyze puzzles with a max of " +
+                getMaxNumber() );
             analyze();
         }
     }

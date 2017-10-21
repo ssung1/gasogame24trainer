@@ -110,6 +110,12 @@ public class Game24Analyzer
         return this.solutionSetList;
     }
 
+    public List<SolutionSet> getAllSolutionSetsByDifficulty(
+        DifficultyRank di ) throws Exception
+    {
+        return solutionSetListByRank.get( di );
+    }
+
     public SolutionSet getSolutionSetByDifficulty( DifficultyRank di )
         throws Exception
     {
@@ -117,7 +123,7 @@ public class Game24Analyzer
             throw new Exception( "Still waiting for analysis; please try later" );
         }
         long start = System.currentTimeMillis();
-        List<SolutionSet> list = solutionSetListByRank.get( di );
+        List<SolutionSet> list = getAllSolutionSetsByDifficulty( di );
         int randomIndex = ThreadLocalRandom.current().nextInt( list.size() );
         SolutionSet result = list.get( randomIndex );
         long stop = System.currentTimeMillis();

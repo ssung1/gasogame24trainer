@@ -12,6 +12,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.util.ReflectionUtils;
 
+import java.util.List;
+
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyObject;
@@ -68,6 +71,17 @@ public class Game24AnalyzerTests
     {
         SolutionSet ss = sut.getSolutionSetByDifficulty(
             DifficultyRank.ZERO_TRICK );
+        assertThat( ss.getDifficultyRank(), is( DifficultyRank.ZERO_TRICK ) );
+        assertThat( ss, is( zeroTrick ) );
+    }
+
+    @Test
+    public void testGetAllSolutionSetsByDifficulty() throws Exception
+    {
+        List<SolutionSet> ssl = sut.getAllSolutionSetsByDifficulty(
+            DifficultyRank.ZERO_TRICK );
+        assertThat( ssl, hasSize( 1 ) );
+        SolutionSet ss = ssl.get( 0 );
         assertThat( ss.getDifficultyRank(), is( DifficultyRank.ZERO_TRICK ) );
         assertThat( ss, is( zeroTrick ) );
     }

@@ -2,6 +2,8 @@ package name.subroutine.game24trainer;
 
 import org.junit.Test;
 
+import java.util.Map;
+
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertFalse;
@@ -11,6 +13,60 @@ import static org.junit.Assert.assertThat;
 public class SolutionTests
 {
     Symbol s = new Symbol();
+
+    @Test
+    public void testGetNumberList()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "1 2 + 3 4 - * /" );
+        assertThat( sut.getNumberList(), is( s.parse( "1 2 3 4" ) ) );
+    }
+
+    // frequency map counts the appearance of a number within the solution
+    @Test
+    public void getGetFrequencyMap000()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "1 2 + 3 4 - * /" );
+        Map<Symbol, Integer> fm = sut.getFrequencyMap();
+        assertThat( fm.get( new Number( 1 ) ), is( 1 ) );
+        assertThat( fm.get( new Number( 2 ) ), is( 1 ) );
+        assertThat( fm.get( new Number( 3 ) ), is( 1 ) );
+        assertThat( fm.get( new Number( 4 ) ), is( 1 ) );
+    }
+
+    // frequency map counts the appearance of a number within the solution
+    @Test
+    public void getGetFrequencyMap001()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "11 12 + 13 11 - * /" );
+        Map<Symbol, Integer> fm = sut.getFrequencyMap();
+        assertThat( fm.get( new Number( 11 ) ), is( 2 ) );
+        assertThat( fm.get( new Number( 12 ) ), is( 1 ) );
+        assertThat( fm.get( new Number( 13 ) ), is( 1 ) );
+    }
+
+    // frequency map counts the appearance of a number within the solution
+    @Test
+    public void getGetFrequencyMap002()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "21 22 + 22 22 - * /" );
+        Map<Symbol, Integer> fm = sut.getFrequencyMap();
+        assertThat( fm.get( new Number( 21 ) ), is( 1 ) );
+        assertThat( fm.get( new Number( 22 ) ), is( 3 ) );
+    }
+
+    // frequency map counts the appearance of a number within the solution
+    @Test
+    public void getGetFrequencyMap003()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "6 6 + 6 6 + + +" );
+        Map<Symbol, Integer> fm = sut.getFrequencyMap();
+        assertThat( fm.get( new Number( 6 ) ), is( 4 ) );
+    }
 
     @Test
     public void testTwoByTwo000()
@@ -138,6 +194,38 @@ public class SolutionTests
     public void testIsZeroTrick004()
     {
         Solution sut = new Solution();
+        sut.expression = s.parse( "24 6 6 - 5 * +" );
+        assertTrue( sut.isZeroTrick() );
+    }
+
+    @Test
+    public void testIsZeroTrick005()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "24 5 6 6 - * +" );
+        assertTrue( sut.isZeroTrick() );
+    }
+
+    @Test
+    public void testIsZeroTrick006()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "24 13 13 - 7 * +" );
+        assertTrue( sut.isZeroTrick() );
+    }
+
+    @Test
+    public void testIsZeroTrick007()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "24 7 13 13 - * +" );
+        assertTrue( sut.isZeroTrick() );
+    }
+
+    @Test
+    public void testIsZeroTrick008()
+    {
+        Solution sut = new Solution();
         sut.expression = s.parse( "5 24 6 / * 4 +" );
         assertFalse( sut.isZeroTrick() );
     }
@@ -162,7 +250,7 @@ public class SolutionTests
     public void testIsDistProp002()
     {
         Solution sut = new Solution();
-        sut.expression = s.parse( "2 6 * 2 6 * +" );
+        sut.expression = s.parse( "2 6 * 6 2 * +" );
         assertTrue( sut.isDistProp() );
     }
 
@@ -178,7 +266,7 @@ public class SolutionTests
     public void testIsDistProp004()
     {
         Solution sut = new Solution();
-        sut.expression = s.parse( "6 2 * 2 6 * +" );
+        sut.expression = s.parse( "3 5 * 3 3 * +" );
         assertTrue( sut.isDistProp() );
     }
 
@@ -194,7 +282,7 @@ public class SolutionTests
     public void testIsDistProp006()
     {
         Solution sut = new Solution();
-        sut.expression = s.parse( "6 7 * 6 3 * -" );
+        sut.expression = s.parse( "6 17 * 6 13 * -" );
         assertTrue( sut.isDistProp() );
     }
 
@@ -314,13 +402,9 @@ public class SolutionTests
     public void testIsFinalMul003()
     {
         Solution sut = new Solution();
-        // this should not be considered as final multiplication
-        // because it requires a fraction as intermediate
         sut.expression = s.parse( "6 9 / 6 * 6 *" );
         sut.fraction = Puzzle.YES;
-        assertFalse( "Should not be considered as final multiplication " +
-                "because it requires fraction as intermediate",
-            sut.isFinalMul() );
+        assertTrue( sut.isFinalMul() );
     }
 
     @Test

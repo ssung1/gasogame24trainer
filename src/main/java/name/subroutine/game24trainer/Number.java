@@ -41,4 +41,20 @@ public class Number extends Symbol
             return false;
         }
     }
+
+    @Override
+    public int hashCode()
+    {
+        return (value != +0.0f ? Float.floatToIntBits( value ) : 0);
+    }
+
+    String mkString( float value )
+    {
+        return String.format( "%2.0f", value );
+    }
+
+    public String toString()
+    {
+        return mkString( this.value );
+    }
 }

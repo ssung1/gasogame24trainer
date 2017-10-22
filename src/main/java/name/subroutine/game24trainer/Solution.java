@@ -1,6 +1,7 @@
 package name.subroutine.game24trainer;
 
-import java.util.Stack;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Solution
 {
@@ -121,6 +122,28 @@ public class Solution
         return expr.peek().ex;
     }
 
+    public List<Symbol> getNumberList()
+    {
+        return Arrays.asList( expression ).stream()
+            .filter( s -> s instanceof Number )
+            .collect( Collectors.toList() );
+    }
+
+    public Map<Symbol, Integer> getFrequencyMap()
+    {
+        Map<Symbol, Integer> result = new HashMap<>( 4 );
+        getNumberList().forEach( n -> {
+            Integer count = result.get( n );
+            if( count == null ) {
+                result.put( n, 1 );
+            }
+            else {
+                result.put( n, count + 1 );
+            }
+        } );
+        return result;
+    }
+
     /**
      * the only solution must be in the form of (a ? b) ? (c ? d)
      */
@@ -208,6 +231,18 @@ public class Solution
      * @return
      */
     public boolean isZeroTrick()
+    {
+        return isZeroTrickImpl0();
+    }
+
+    public boolean isZeroTrickImpl0()
+    {
+        //Symbol[] numbers = getNumberList();
+        // must have at least 2 of the same number
+        return false;
+    }
+
+    public boolean isZeroTrickImpl1()
     {
         return false;
     }

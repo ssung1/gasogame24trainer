@@ -47,5 +47,15 @@ public class Operator extends Symbol
             return false;
         }
     }
+
+    String mkString( char value )
+    {
+        return String.format( "%c", value );
+    }
+
+    public String toString()
+    {
+        return mkString( this.value );
+    }
 }
 

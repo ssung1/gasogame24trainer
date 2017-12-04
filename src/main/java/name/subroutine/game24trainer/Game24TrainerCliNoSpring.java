@@ -5,6 +5,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation
     .AnnotationConfigApplicationContext;
 
+import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -15,17 +17,35 @@ public class Game24TrainerCliNoSpring
 {
     public static void main( String[] args ) throws Exception
     {
+        final int max = 4;
+        PrintWriter pw = new PrintWriter( System.out, true );
+
         Game24Solver solver = new Game24SolverImplRosetta();
         Game24Analyzer analyzer = new Game24Analyzer( solver );
-        analyzer.setMaxNumber( 24 );
+        analyzer.setMaxNumber( max );
 
         analyzer.analyze();
 
-        List<SolutionSet> ssl = analyzer.getAllSolutionSetsByDifficulty( DifficultyRank.FINAL_DIV_2 );
+        List<DifficultyRank> dl = Arrays.asList(
+            DifficultyRank.ZERO_TRICK,
+            DifficultyRank.DIST_PROP,
+            DifficultyRank.ALMOST_DIST_PROP,
+            DifficultyRank.FINAL_MUL,
+            DifficultyRank.FINAL_MUL_2,
+            DifficultyRank.ADD_SUB,
+            DifficultyRank.FINAL_ADD,
+            DifficultyRank.FINAL_ADD_2,
+            DifficultyRank.FINAL_DIV,
+            DifficultyRank.FINAL_DIV_2,
+            DifficultyRank.FRAC,
+            DifficultyRank.NO_SOLU,
+            DifficultyRank.UNDEF
+        );
+        List<SolutionSet> ssl = analyzer.getAllSolutionSetsByDifficulty( DifficultyRank.FINAL_MUL );
         for( SolutionSet ss : ssl ) {
-            System.out.println( ss.getPuzzle() );
+            pw.println( ss.getPuzzle() );
         }
-        System.out.println( ssl.size() );
-        System.out.println( analyzer.getMaxNumber() );
+        pw.println( ssl.size() );
+        pw.close();
     }
 }

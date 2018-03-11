@@ -45,7 +45,6 @@ public class Game24TrainerCliNoSpring
         for( SolutionSet ss : ssl ) {
             pw.println( ss.getPuzzle() );
         }
-        pw.println( ssl.size() );
         pw.close();
     }
 }

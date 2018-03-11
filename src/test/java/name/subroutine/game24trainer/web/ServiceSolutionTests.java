@@ -1,6 +1,5 @@
 package name.subroutine.game24trainer.web;
 
-
 import name.subroutine.game24trainer.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;

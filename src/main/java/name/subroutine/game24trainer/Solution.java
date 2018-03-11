@@ -232,18 +232,69 @@ public class Solution
      */
     public boolean isZeroTrick()
     {
-        return isZeroTrickImpl0();
+        return isZeroTrickImpl1();
     }
 
     public boolean isZeroTrickImpl0()
     {
-        //Symbol[] numbers = getNumberList();
+        // this way is not as good because it returns true if the puzzle
+        // can be solved with the zero trick even if the solution is not
+        // using the zero trick
+
         // must have at least 2 of the same number
+        // must have a 24
+        Map<Symbol, Integer> freqMap = getFrequencyMap();
+        if( freqMap.get( new Number( 24 ) ) > 2 ){
+            return true;
+        }
+        if( freqMap.get( new Number( 24 ) ) > 0 &&
+                freqMap.size() < 4 ) {
+            return true;
+        }
         return false;
     }
 
     public boolean isZeroTrickImpl1()
     {
+        // 0 24 + or 24 0 +
+
+        // b 0 * 24 + or 0 b * 24 +
+        // 24 b 0 * + or 24 0 b * +
+
+        // b a a - * 24 + or a a - b * 24 +
+        // 24 b a a - * + or 24 a a - b * +
+
+        if( expression[1].equals( expression[2] )
+        &&  expression[3].equals( Operator.SUB )
+        &&  expression[4].equals( Operator.MUL )
+        &&  expression[5].equals( 24 )
+        &&  expression[6].equals( Operator.ADD ) ) {
+            return true;
+        }
+
+        if( expression[0].equals( expression[1] )
+        &&  expression[2].equals( Operator.SUB )
+        &&  expression[4].equals( Operator.MUL )
+        &&  expression[5].equals( 24 )
+        &&  expression[6].equals( Operator.ADD ) ) {
+            return true;
+        }
+
+        if( expression[0].equals( 24 )
+        &&  expression[2].equals( expression[3] )
+        &&  expression[4].equals( Operator.SUB )
+        &&  expression[5].equals( Operator.MUL )
+        &&  expression[6].equals( Operator.ADD ) ) {
+            return true;
+        }
+
+        if( expression[0].equals( 24 )
+        &&  expression[1].equals( expression[2] )
+        &&  expression[3].equals( Operator.SUB )
+        &&  expression[5].equals( Operator.MUL )
+        &&  expression[6].equals( Operator.ADD ) ) {
+            return true;
+        }
         return false;
     }
 

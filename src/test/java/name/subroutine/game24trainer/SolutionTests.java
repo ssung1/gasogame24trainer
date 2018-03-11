@@ -2,6 +2,7 @@ package name.subroutine.game24trainer;
 
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.not;
@@ -19,7 +20,8 @@ public class SolutionTests
     {
         Solution sut = new Solution();
         sut.expression = s.parse( "1 2 + 3 4 - * /" );
-        assertThat( sut.getNumberList(), is( s.parse( "1 2 3 4" ) ) );
+        assertThat( sut.getNumberList(),
+                is( Arrays.asList( s.parse( "1 2 3 4" ) ) ) );
     }
 
     // frequency map counts the appearance of a number within the solution
@@ -227,6 +229,14 @@ public class SolutionTests
     {
         Solution sut = new Solution();
         sut.expression = s.parse( "5 24 6 / * 4 +" );
+        assertFalse( sut.isZeroTrick() );
+    }
+
+    @Test
+    public void testIsZeroTrick009()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "24 1 1 1 * * *" );
         assertFalse( sut.isZeroTrick() );
     }
 

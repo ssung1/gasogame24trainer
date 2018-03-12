@@ -1,5 +1,9 @@
-package name.subroutine.game24trainer;
+package name.subroutine.game24trainer.puzzle;
 
+import name.subroutine.game24trainer.puzzle.Number;
+import name.subroutine.game24trainer.puzzle.Puzzle;
+import name.subroutine.game24trainer.puzzle.Solution;
+import name.subroutine.game24trainer.puzzle.Symbol;
 import org.junit.Test;
 
 import java.util.Arrays;

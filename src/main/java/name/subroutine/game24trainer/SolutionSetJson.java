@@ -1,5 +1,7 @@
 package name.subroutine.game24trainer;
 
+import name.subroutine.game24trainer.puzzle.SolutionSet;
+
 public class SolutionSetJson
 {
     private final String puzzle;

@@ -1,4 +1,4 @@
-package name.subroutine.game24trainer;
+package name.subroutine.game24trainer.puzzle;
 
 import java.util.ArrayList;
 

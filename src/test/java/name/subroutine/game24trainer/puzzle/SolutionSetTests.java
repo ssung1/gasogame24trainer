@@ -1,7 +1,11 @@
-package name.subroutine.game24trainer;
+package name.subroutine.game24trainer.puzzle;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import name.subroutine.game24trainer.puzzle.DifficultyRank;
+import name.subroutine.game24trainer.puzzle.Puzzle;
+import name.subroutine.game24trainer.puzzle.Solution;
+import name.subroutine.game24trainer.puzzle.SolutionSet;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

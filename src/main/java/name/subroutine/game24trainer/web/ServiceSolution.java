@@ -1,11 +1,12 @@
 package name.subroutine.game24trainer.web;
 
 import name.subroutine.game24trainer.*;
+import name.subroutine.game24trainer.puzzle.*;
+import name.subroutine.game24trainer.puzzle.Number;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -36,8 +37,8 @@ public class ServiceSolution
         Symbol[] symbols = symbol.parse( puzzle );
         ArrayList<Integer> numbers = new ArrayList<>();
         for( Symbol s : symbols ) {
-            name.subroutine.game24trainer.Number n =
-                (name.subroutine.game24trainer.Number)s;
+            Number n =
+                (Number)s;
             numbers.add( Math.round( n.getValue() ) );
         }
         SolutionSet ss = solver.solve( new Puzzle( numbers ) );
@@ -64,7 +65,7 @@ public class ServiceSolution
         throws Exception
     {
         List<Integer> puz = Arrays.stream( symbol.parse( puzzle ) )
-            .map( s -> (name.subroutine.game24trainer.Number)s )
+            .map( s -> (Number)s )
             .map( s -> Math.round( s.getValue() ) )
             .collect( Collectors.toList() );
 

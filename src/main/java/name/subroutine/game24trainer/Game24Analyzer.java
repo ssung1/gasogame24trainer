@@ -1,14 +1,15 @@
 package name.subroutine.game24trainer;
 
+import name.subroutine.game24trainer.puzzle.DifficultyRank;
+import name.subroutine.game24trainer.puzzle.Puzzle;
+import name.subroutine.game24trainer.puzzle.SolutionSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.io.*;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;

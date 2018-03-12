@@ -1,6 +1,9 @@
 package name.subroutine.game24trainer.solverimpl;
 
-import name.subroutine.game24trainer.*;
+import name.subroutine.game24trainer.puzzle.DifficultyRank;
+import name.subroutine.game24trainer.puzzle.Game24Puzzles;
+import name.subroutine.game24trainer.puzzle.SolutionSet;
+import name.subroutine.game24trainer.puzzle.Symbol;
 import org.assertj.core.util.Lists;
 import org.hamcrest.Matchers;
 import org.junit.Before;

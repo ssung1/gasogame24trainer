@@ -1,5 +1,6 @@
-package name.subroutine.game24trainer;
+package name.subroutine.game24trainer.puzzle;
 
+import name.subroutine.game24trainer.puzzle.Symbol;
 import org.junit.Before;
 import org.junit.Test;
 

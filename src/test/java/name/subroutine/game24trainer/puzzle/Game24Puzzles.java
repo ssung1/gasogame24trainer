@@ -1,6 +1,6 @@
-package name.subroutine.game24trainer;
+package name.subroutine.game24trainer.puzzle;
 
-import java.util.Arrays;
+import name.subroutine.game24trainer.puzzle.Puzzle;
 
 /**
  * List of different types of puzzles

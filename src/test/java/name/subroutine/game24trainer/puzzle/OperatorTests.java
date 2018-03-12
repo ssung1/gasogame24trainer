@@ -1,6 +1,7 @@
-package name.subroutine.game24trainer;
+package name.subroutine.game24trainer.puzzle;
 
-import org.junit.Before;
+import name.subroutine.game24trainer.puzzle.Number;
+import name.subroutine.game24trainer.puzzle.Operator;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.*;

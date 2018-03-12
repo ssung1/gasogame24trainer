@@ -1,9 +1,8 @@
 package name.subroutine.game24trainer;
 
+import name.subroutine.game24trainer.puzzle.DifficultyRank;
+import name.subroutine.game24trainer.puzzle.SolutionSet;
 import name.subroutine.game24trainer.solverimpl.Game24SolverImplRosetta;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation
-    .AnnotationConfigApplicationContext;
 
 import java.io.PrintWriter;
 import java.util.Arrays;

@@ -2,6 +2,7 @@ package name.subroutine.game24trainer.puzzle;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Solution
 {
@@ -131,8 +132,13 @@ public class Solution
 
     public Map<Symbol, Integer> getFrequencyMap()
     {
+        return getFrequencyMap( getNumberList() );
+    }
+
+    public Map<Symbol, Integer> getFrequencyMap( List<Symbol> numberList )
+    {
         Map<Symbol, Integer> result = new HashMap<>( 4 );
-        getNumberList().forEach( n -> {
+        numberList.forEach( n -> {
             Integer count = result.get( n );
             if( count == null ) {
                 result.put( n, 1 );
@@ -298,9 +304,41 @@ public class Solution
         return false;
     }
 
+    public boolean isFactorOf24( Number n )
+    {
+        return 24 % Math.round( n.getValue() ) == 0;
+    }
+
     public boolean isDistProp()
     {
-        return false;
+        Operator finalOp = getFinalOp();
+        boolean finalOpIsAddOrSub =
+                Operator.ADD.equals( finalOp ) ||
+                Operator.SUB.equals( finalOp );
+
+        boolean firstOpsMul =
+                Operator.MUL.equals( expression[2] ) &&
+                Operator.MUL.equals( expression[5] );
+
+        Map<Symbol, Integer> firstTwo = getFrequencyMap(
+                Arrays.asList( expression[0], expression[1] ) );
+        Map<Symbol, Integer> secondTwo = getFrequencyMap(
+                Arrays.asList( expression[3], expression[4] ) );
+
+        // find common number between the first two and the
+        // second two numbers
+        Map<Symbol, Integer> both = new HashMap<>( firstTwo );
+        Set<Symbol> commonSymbol = both.keySet();
+        commonSymbol.retainAll( secondTwo.keySet() );
+
+        // this just turns Set<Symbol> to Stream<Number>
+        Stream<Number> common = commonSymbol.parallelStream().map(
+                s -> (Number)s
+        );
+
+        boolean hasFactor = common.anyMatch( this::isFactorOf24 );
+
+        return finalOpIsAddOrSub && firstOpsMul && hasFactor;
     }
 
     public boolean isAlmostDistProp()
@@ -310,7 +348,11 @@ public class Solution
 
     public boolean isAddSub()
     {
-        return false;
+        return !Arrays.stream( expression ).anyMatch( s -> {
+            if( Operator.MUL.equals( s ) ) return true;
+            if( Operator.DIV.equals( s ) ) return true;
+            return false;
+        } );
     }
 
     @Override

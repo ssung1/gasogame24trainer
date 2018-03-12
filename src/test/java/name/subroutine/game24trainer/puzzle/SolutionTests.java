@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.is;
@@ -321,6 +323,38 @@ public class SolutionTests
     {
         Solution sut = new Solution();
         sut.expression = s.parse( "7 8 3 - * 11 -" );
+        assertFalse( sut.isAlmostDistProp() );
+    }
+
+    @Test
+    public void testIsAlmostDistProp002()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "13 12 - 1 * 1 -" );
+        assertTrue( sut.isAlmostDistProp() );
+    }
+
+    @Test
+    public void testIsAlmostDistProp003()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "12 1 - 13 + 1 *" );
+        assertFalse( sut.isAlmostDistProp() );
+    }
+
+    @Test
+    public void testIsAlmostDistProp004()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "8 3 - 6 * 6 -" );
+        assertTrue( sut.isAlmostDistProp() );
+    }
+
+    @Test
+    public void testIsAlmostDistProp005()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "6 3 - 10 * 6 -" );
         assertFalse( sut.isAlmostDistProp() );
     }
 

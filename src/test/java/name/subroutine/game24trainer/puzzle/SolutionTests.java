@@ -359,6 +359,70 @@ public class SolutionTests
     }
 
     @Test
+    public void testIsAlmostDistProp006()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "6 1 2 + * 6 +" );
+        assertTrue( sut.isAlmostDistProp() );
+    }
+
+    @Test
+    public void testIsAlmostDistProp007()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "6 4 2 + + 6 +" );
+        assertFalse( sut.isAlmostDistProp() );
+    }
+
+    @Test
+    public void testIsAlmostDistProp008()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "1 2 + 6 * 6 +" );
+        assertTrue( sut.isAlmostDistProp() );
+    }
+
+    @Test
+    public void testIsAlmostDistProp009()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "2 2 + 6 * 12 -" );
+        assertFalse( sut.isAlmostDistProp() );
+    }
+
+    @Test
+    public void testIsAlmostDistProp010()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "6 1 2 + 6 * +" );
+        assertTrue( sut.isAlmostDistProp() );
+    }
+
+    @Test
+    public void testIsAlmostDistProp011()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "9 1 2 + 5 * +" );
+        assertFalse( sut.isAlmostDistProp() );
+    }
+
+    @Test
+    public void testIsAlmostDistProp012()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "6 6 1 2 + * +" );
+        assertTrue( sut.isAlmostDistProp() );
+    }
+
+    @Test
+    public void testIsAlmostDistProp013()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "6 2 7 2 + * +" );
+        assertFalse( sut.isAlmostDistProp() );
+    }
+
+    @Test
     public void testIsAddSub000()
     {
         Solution sut = new Solution();

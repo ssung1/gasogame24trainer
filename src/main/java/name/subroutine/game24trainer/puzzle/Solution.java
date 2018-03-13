@@ -1,5 +1,7 @@
 package name.subroutine.game24trainer.puzzle;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -241,6 +243,7 @@ public class Solution
         return isZeroTrickImpl1();
     }
 
+    @JsonIgnore
     public boolean isZeroTrickImpl0()
     {
         // this way is not as good because it returns true if the puzzle

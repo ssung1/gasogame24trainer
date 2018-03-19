@@ -1,9 +1,6 @@
 package name.subroutine.game24trainer.solverimpl;
 
-import name.subroutine.game24trainer.puzzle.DifficultyRank;
-import name.subroutine.game24trainer.puzzle.Game24Puzzles;
-import name.subroutine.game24trainer.puzzle.SolutionSet;
-import name.subroutine.game24trainer.puzzle.Symbol;
+import name.subroutine.game24trainer.puzzle.*;
 import org.assertj.core.util.Lists;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -15,6 +12,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class Game24SolverImplRosettaTests
 {
@@ -187,9 +185,74 @@ public class Game24SolverImplRosettaTests
     }
 
     @Test
-    public void testZeroTrick()
+    public void testSolveZeroTrick()
     {
         SolutionSet ss = sut.solve( Game24Puzzles.zeroTrick );
+        assertThat( ss.getDifficultyRank(), is( DifficultyRank.ZERO_TRICK ) );
+    }
+
+
+    @Test
+    public void testSolveZeroTrick000()
+    {
+        Puzzle a = new Puzzle( "24 13 13 5" );
+        SolutionSet ss = sut.solve( a );
+        assertThat( ss.getDifficultyRank(), is( DifficultyRank.ZERO_TRICK ) );
+    }
+
+    @Test
+    public void testSolveZeroTrick001()
+    {
+        Puzzle a = new Puzzle( "5 24 13 5" );
+        SolutionSet ss = sut.solve( a );
+        assertThat( ss.getDifficultyRank(), is( DifficultyRank.ZERO_TRICK ) );
+    }
+
+    @Test
+    public void testSolveZeroTrick002()
+    {
+        Puzzle a = new Puzzle( "6 6 24 5" );
+        SolutionSet ss = sut.solve( a );
+        assertThat( ss.getDifficultyRank(), is( DifficultyRank.ZERO_TRICK ) );
+    }
+
+    @Test
+    public void testSolveZeroTrick003()
+    {
+        Puzzle a = new Puzzle( "24 24 24 24" );
+        SolutionSet ss = sut.solve( a );
+        assertThat( ss.getDifficultyRank(), is( DifficultyRank.ZERO_TRICK ) );
+    }
+
+    @Test
+    public void testSolveZeroTrick004()
+    {
+        Puzzle a = new Puzzle( "24 13 13 5" );
+        SolutionSet ss = sut.solve( a );
+        assertThat( ss.getDifficultyRank(), is( DifficultyRank.ZERO_TRICK ) );
+    }
+
+    @Test
+    public void testSolveZeroTrick005()
+    {
+        Puzzle a = new Puzzle( "5 24 13 5" );
+        SolutionSet ss = sut.solve( a );
+        assertThat( ss.getDifficultyRank(), is( DifficultyRank.ZERO_TRICK ) );
+    }
+
+    @Test
+    public void testSolveZeroTrick006()
+    {
+        Puzzle a = new Puzzle( "6 6 24 5" );
+        SolutionSet ss = sut.solve( a );
+        assertThat( ss.getDifficultyRank(), is( DifficultyRank.ZERO_TRICK ) );
+    }
+
+    @Test
+    public void testSolveZeroTrick007()
+    {
+        Puzzle a = new Puzzle( "24 24 24 24" );
+        SolutionSet ss = sut.solve( a );
         assertThat( ss.getDifficultyRank(), is( DifficultyRank.ZERO_TRICK ) );
     }
 

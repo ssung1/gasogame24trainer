@@ -423,6 +423,46 @@ public class SolutionTests
     }
 
     @Test
+    public void testIsAlmostDistProp014()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "6 1 2 + 6 * +" );
+        assertTrue( sut.isAlmostDistProp() );
+    }
+
+    @Test
+    public void testIsAlmostDistProp015()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "6 2 6 3 + * +" );
+        assertFalse( sut.isAlmostDistProp() );
+    }
+
+    @Test
+    public void testIsAlmostDistProp016()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "6 3 - 10 * 6 -" );
+        assertFalse( sut.isAlmostDistProp() );
+    }
+
+    @Test
+    public void testIsAlmostDistProp017()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "12 24 + 1 * 12 +" );
+        assertFalse( sut.isAlmostDistProp() );
+    }
+
+    @Test
+    public void testIsAlmostDistProp018()
+    {
+        Solution sut = new Solution();
+        sut.expression = s.parse( "4 4 6 + 2 * +" );
+        assertFalse( sut.isAlmostDistProp() );
+    }
+
+    @Test
     public void testIsAddSub000()
     {
         Solution sut = new Solution();

@@ -351,30 +351,57 @@ public class Solution
 
     public boolean isAlmostDistProp()
     {
+        Operator finalOp = getFinalOp();
         // "6 8 3 - * 6 -"
         // "8 3 - 6 * 6 -"
-        // "6 1 2 + * 6 +"
-        // "1 2 + 6 * 6 +"
-        if( Operator.SUB.equals( getFinalOp() )
-        ||  Operator.ADD.equals( getFinalOp() ) ) {
-            boolean isMul = Operator.MUL.equals( expression[4] );
+        if( Operator.SUB.equals( finalOp ) ){
+            // penultimate operator must be *
+            if( !Operator.MUL.equals( expression[4] ) ) {
+                return false;
+            }
             Symbol f = expression[5];
-            if( isMul && isFactorOf24( f ) ) {
-                return f.equals( expression[0] ) ||
-                       f.equals( expression[3] );
+            if( !isFactorOf24( f ) ) {
+                return false;
+            }
+            boolean factorFirst = f.equals( expression[0] )
+                    && expression[3] instanceof Operator;
+            boolean factorSecond = f.equals( expression[3] )
+                    && expression[2] instanceof Operator;
+            return factorFirst || factorSecond;
+        }
+
+        if( Operator.ADD.equals( finalOp ) ){
+            // "1 2 + 6 * 6 +"
+            // "6 1 2 + * 6 +"
+            if( Operator.MUL.equals( expression[4] ) ) {
+                Symbol f = expression[5];
+                if( !isFactorOf24( f ) ) {
+                    return false;
+                }
+                boolean factorFirst = f.equals( expression[0] )
+                        && expression[3] instanceof Operator;
+                boolean factorSecond = f.equals( expression[3] )
+                        && expression[2] instanceof Operator;
+                return factorFirst || factorSecond;
+            }
+            // "6 1 2 + 6 * +"
+            // "6 6 1 2 + * +"
+            else if( Operator.MUL.equals( expression[5] ) ) {
+                Symbol f = expression[0];
+                if( !isFactorOf24( f ) ) {
+                    return false;
+                }
+                boolean factorFirst = f.equals( expression[1] )
+                        && expression[4] instanceof Operator;
+                boolean factorSecond = f.equals( expression[4] )
+                        && expression[3] instanceof Operator;
+                return factorFirst || factorSecond;
+            }
+            else {
+                return false;
             }
         }
 
-        // "6 1 2 + 6 * +"
-        // "6 6 1 2 + * +"
-        if( Operator.ADD.equals( getFinalOp() ) ) {
-            boolean isMul = Operator.MUL.equals( expression[5] );
-            Symbol f = expression[1];
-            if( isMul && isFactorOf24( f ) ) {
-                return f.equals( expression[1] ) ||
-                       f.equals( expression[4] );
-            }
-        }
         return false;
     }
 

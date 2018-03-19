@@ -44,6 +44,7 @@ public class Game24Puzzles
      * 3978 puzzles are like this
      */
     public static Puzzle finalMul = new Puzzle( 9, 11, 12, 22 );
+
     /**
      * (a + b) * (c + d) example
      * two-by-two, with multiplication as final operation

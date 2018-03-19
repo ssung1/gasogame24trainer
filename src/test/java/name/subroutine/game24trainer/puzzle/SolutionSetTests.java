@@ -877,10 +877,4 @@ public class SolutionSetTests
 
         assertThat( sut.getDifficultyRank(), is( DifficultyRank.ZERO_TRICK ) );
     }
-
-    @Test
-    public void testGetDifficultRank()
-    {
-        fail( "finish later" );
-    }
 }

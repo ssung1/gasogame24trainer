@@ -169,22 +169,26 @@ public class SolutionSet
 
     public boolean hasZeroTrick()
     {
-        return false;
+        return excludeFraction().parallelStream().anyMatch(
+                Solution::isZeroTrick );
     }
 
     public boolean hasDistProp()
     {
-        return false;
+        return excludeFraction().parallelStream().anyMatch(
+                Solution::isDistProp );
     }
 
     public boolean hasAlmostDistProp()
     {
-        return false;
+        return excludeFraction().parallelStream().anyMatch(
+                Solution::isAlmostDistProp );
     }
 
     public boolean hasAddSub()
     {
-        return false;
+        return excludeFraction().parallelStream().anyMatch(
+                Solution::isAddSub );
     }
 
     /**

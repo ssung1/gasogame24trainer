@@ -85,8 +85,9 @@ public class Game24Analyzer
         // So the answer is C( 4 + max - 1, max - 1 )
 
         // Calculatiing C( n, k )
+        // which is also C( n, n - k )
         int n = 4 + maxNumber - 1;
-        int k = maxNumber - 1;
+        int k = 4;
 
         int result = 1;
         // multiply n * ( n - 1 ) * ( n - 2 ) ... k times
@@ -121,18 +122,7 @@ public class Game24Analyzer
     public void analyze()
     {
         analysisDone = false;
-        int max = this.getMaxNumber();
-        List<Puzzle> puzzleList = new ArrayList<>( 17550 );
-        for( int a = 1; a <= max; ++a ) {
-            for( int b = a; b <= max; ++b ) {
-                for( int c = b; c <= max; ++c ) {
-                    for( int d = c; d <= max; ++d ) {
-                        Puzzle p = new Puzzle( a, b, c, d );
-                        puzzleList.add( p );
-                    }
-                }
-            }
-        }
+        List<Puzzle> puzzleList = getPuzzleList();
         Stream<SolutionSet> sss =
             puzzleList.parallelStream().map( solver::solve )
             .filter( SolutionSet::hasSolution )

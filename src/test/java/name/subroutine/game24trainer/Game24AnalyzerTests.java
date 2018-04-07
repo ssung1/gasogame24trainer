@@ -88,4 +88,37 @@ public class Game24AnalyzerTests
             .filter( s -> !s.hasSolution() )
             .count(), is( 0L ) );
     }
+
+    @Test
+    public void testGetPuzzleListInitSizeMax1()
+    {
+        assertThat( sut.getPuzzleListInitSize( 1 ), is( 1 ) );
+    }
+
+    @Test
+    public void testGetPuzzleListInitSizeMax2()
+    {
+        assertThat( sut.getPuzzleListInitSize( 2 ), is( 5 ) );
+    }
+
+    @Test
+    public void testGetPuzzleListInitSizeMax3()
+    {
+        assertThat( sut.getPuzzleListInitSize( 3 ), is( 15 ) );
+    }
+
+    @Test
+    public void testGetPuzzleListInitSizeMax24()
+    {
+        assertThat( sut.getPuzzleListInitSize( 24 ), is( 17550 ) );
+    }
+
+    @Test
+    public void testGetPuzzleList()
+    {
+        int maxNumber = sut.getMaxNumber();
+        int expectedSize = sut.getPuzzleListInitSize( maxNumber );
+
+        assertThat( sut.getPuzzleList().size(), is( expectedSize ) );
+    }
 }

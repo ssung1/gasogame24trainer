@@ -32,7 +32,7 @@ public class Game24Analyzer
         // use Qualifier to specify which method to get the bean from.
         // on the @Bean method, use @Bean( name = {qualifier} )
         @Qualifier( "solver" ) @Autowired Game24Solver solver,
-        @Autowired Game24PuzzleSource source )
+        @Qualifier( "cards" ) @Autowired Game24PuzzleSource source )
     {
         this.solver = solver;
         this.source = source;

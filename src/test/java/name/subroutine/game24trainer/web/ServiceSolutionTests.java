@@ -46,11 +46,9 @@ public class ServiceSolutionTests
     private MockMvc mockMvc;
 
     @MockBean
-    @Qualifier( "solver" )
     Game24Solver mockSolver;
 
     @MockBean
-    @Qualifier( "analyzer" )
     Game24Analyzer mockAnalyzer;
 
     // instead of using springrunner, this test can be run as simple

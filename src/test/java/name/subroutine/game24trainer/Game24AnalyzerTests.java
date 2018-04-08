@@ -4,6 +4,7 @@ import name.subroutine.game24trainer.puzzle.DifficultyRank;
 import name.subroutine.game24trainer.puzzle.Puzzle;
 import name.subroutine.game24trainer.puzzle.SolutionSet;
 import name.subroutine.game24trainer.puzzle.Symbol;
+import name.subroutine.game24trainer.sourceimpl.Game24PuzzleSourceImplMax;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -40,13 +41,16 @@ public class Game24AnalyzerTests
     @Before
     public void configureSut()
     {
-        sut = new Game24Analyzer();
+        Game24PuzzleSourceImplMax source = new Game24PuzzleSourceImplMax();
+        // need to set to 24 because we are testing zeroTrickPuzzle
+        source.setMaxNumber( 24 );
+        sut = new Game24Analyzer( mockSolver, source );
         ReflectionTestUtils.setField( sut, "solver", mockSolver );
-        sut.setMaxNumber( 24 ); // because we are testing "24 a a b" zero trick
 
         SolutionSet noSolution = mock( SolutionSet.class );
         when( noSolution.getPuzzle() ).thenReturn( new Puzzle( 0, 0, 0, 0 ) );
-        when( noSolution.getDifficultyRank() ).thenReturn( DifficultyRank.NO_SOLU );
+        when( noSolution.getDifficultyRank() ).thenReturn(
+            DifficultyRank.NO_SOLU );
 
         this.zeroTrick = mock( SolutionSet.class );
         when( zeroTrick.getDifficultyRank() ).thenReturn( DifficultyRank
@@ -87,38 +91,5 @@ public class Game24AnalyzerTests
         assertThat( sut.getSolutionSetList().parallelStream()
             .filter( s -> !s.hasSolution() )
             .count(), is( 0L ) );
-    }
-
-    @Test
-    public void testGetPuzzleListInitSizeMax1()
-    {
-        assertThat( sut.getPuzzleListInitSize( 1 ), is( 1 ) );
-    }
-
-    @Test
-    public void testGetPuzzleListInitSizeMax2()
-    {
-        assertThat( sut.getPuzzleListInitSize( 2 ), is( 5 ) );
-    }
-
-    @Test
-    public void testGetPuzzleListInitSizeMax3()
-    {
-        assertThat( sut.getPuzzleListInitSize( 3 ), is( 15 ) );
-    }
-
-    @Test
-    public void testGetPuzzleListInitSizeMax24()
-    {
-        assertThat( sut.getPuzzleListInitSize( 24 ), is( 17550 ) );
-    }
-
-    @Test
-    public void testGetPuzzleList()
-    {
-        int maxNumber = sut.getMaxNumber();
-        int expectedSize = sut.getPuzzleListInitSize( maxNumber );
-
-        assertThat( sut.getPuzzleList().size(), is( expectedSize ) );
     }
 }

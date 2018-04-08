@@ -18,8 +18,18 @@ public class Game24TrainerApplicationTests {
     @Autowired
     Game24Analyzer analyzer;
 
+    @Autowired
+    Game24PuzzleSource source;
+
 	@Test
-	public void contextLoads() {
-        assertThat( analyzer.getMaxNumber(), is( 5 ) );
+	public void contextLoads()
+    {
+        assertThat( analyzer, is( notNullValue() ) );
 	}
+
+	@Test
+    public void puzzleSourceLoads()
+    {
+        assertThat( analyzer.getSolver(), is( notNullValue() ) );
+    }
 }

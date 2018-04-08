@@ -8,12 +8,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Game24TrainerConfig
 {
-    @Bean( name = "analyzer" )
-    public Game24Analyzer getAnalyzer()
-    {
-        return new Game24Analyzer();
-    }
-
+    // this is an example of using a @Configuration file to build a bean.
+    // alternatively, we can add @Service or @Component to the
+    // Game24SolverImplRosetta itself.
     @Bean( name = "solver" )
     public Game24Solver getSolver()
     {

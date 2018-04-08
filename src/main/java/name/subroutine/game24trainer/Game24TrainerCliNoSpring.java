@@ -3,6 +3,7 @@ package name.subroutine.game24trainer;
 import name.subroutine.game24trainer.puzzle.DifficultyRank;
 import name.subroutine.game24trainer.puzzle.SolutionSet;
 import name.subroutine.game24trainer.solverimpl.Game24SolverImplRosetta;
+import name.subroutine.game24trainer.sourceimpl.Game24PuzzleSourceImplMax;
 
 import java.io.PrintWriter;
 import java.util.Arrays;
@@ -20,8 +21,8 @@ public class Game24TrainerCliNoSpring
         PrintWriter pw = new PrintWriter( System.out, true );
 
         Game24Solver solver = new Game24SolverImplRosetta();
-        Game24Analyzer analyzer = new Game24Analyzer( solver );
-        analyzer.setMaxNumber( max );
+        Game24PuzzleSource source = new Game24PuzzleSourceImplMax();
+        Game24Analyzer analyzer = new Game24Analyzer( solver, source );
 
         analyzer.analyze();
 

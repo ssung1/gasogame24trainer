@@ -28,6 +28,6 @@ public class Game24TrainerCli
 
         // analyzer.analyze();
 
-        System.out.println( analyzer.getMaxNumber() );
+        System.out.println( analyzer.getPuzzleList().size() );
     }
 }

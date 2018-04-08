@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
@@ -15,34 +16,34 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-// the @Component annotation is optional; it causes the object to be
-// instantiated once in addition to any of the @Bean definitions in the
-// config
-// @Component
+// the @Service annoatation (extended from @Component annotation) tells
+// Spring Boot to create a @Bean for this object so that we do not have to
+// explicitly created a @Bean method to return this object
+@Service
 public class Game24Analyzer
 {
     final Logger logger = LoggerFactory.getLogger( getClass() );
 
-    @Autowired
     private Game24Solver solver;
 
-    public Game24Analyzer()
-    {
-    }
+    public Game24PuzzleSource source;
 
-    @Autowired
     public Game24Analyzer(
-        @Qualifier( "solver" ) Game24Solver solver )
+        // use Qualifier to specify which method to get the bean from.
+        // on the @Bean method, use @Bean( name = {qualifier} )
+        @Qualifier( "solver" ) @Autowired Game24Solver solver,
+        @Autowired Game24PuzzleSource source )
     {
         this.solver = solver;
+        this.source = source;
     }
 
     @PostConstruct
     public void init()
     {
         if( autoAnalyze ) {
-            logger.info( "Starting to analyze puzzles with a max of " +
-                getMaxNumber() );
+            logger.info( "Starting to analyze {} puzzles",
+                source.getPuzzleList().size() );
             analyze();
         }
     }
@@ -51,9 +52,6 @@ public class Game24Analyzer
     {
         return this.solver;
     }
-
-    @Value( "${max.number:24}" )
-    private int maxNumber = -1;
 
     @Value( "${auto.analyze:true}" )
     private boolean autoAnalyze = true;
@@ -75,48 +73,9 @@ public class Game24Analyzer
         return sol;
     }
 
-    public int getPuzzleListInitSize( int maxNumber )
-    {
-        // Math: we are calculating the number of combinations
-        // with repeatable elements
-        //
-        // In this case, we are choosing 4 out of maxNumber
-        //
-        // So the answer is C( 4 + max - 1, max - 1 )
-
-        // Calculatiing C( n, k )
-        // which is also C( n, n - k )
-        int n = 4 + maxNumber - 1;
-        int k = 4;
-
-        int result = 1;
-        // multiply n * ( n - 1 ) * ( n - 2 ) ... k times
-        for( int i = 0; i < k; ++i ) {
-            result = result * (n - i);
-        }
-        // divide by 1 * 2 * 3 ... * k
-        // (starting at 2 because dividing by 1 has no effect)
-        for( int i = 2; i <= k; ++i ) {
-            result = result / i;
-        }
-        return result;
-    }
-    
     public List<Puzzle> getPuzzleList()
     {
-        int max = this.getMaxNumber();
-        List<Puzzle> puzzleList = new ArrayList<>( 17550 );
-        for( int a = 1; a <= max; ++a ) {
-            for( int b = a; b <= max; ++b ) {
-                for( int c = b; c <= max; ++c ) {
-                    for( int d = c; d <= max; ++d ) {
-                        Puzzle p = new Puzzle( a, b, c, d );
-                        puzzleList.add( p );
-                    }
-                }
-            }
-        }
-        return puzzleList;
+        return source.getPuzzleList();
     }
 
     public void analyze()
@@ -129,16 +88,6 @@ public class Game24Analyzer
             .map( this::addToMapByRank );
         this.solutionSetList = sss.collect( Collectors.toList() );
         analysisDone = true;
-    }
-
-    public int getMaxNumber()
-    {
-        return maxNumber;
-    }
-
-    public void setMaxNumber( int maxNumber )
-    {
-        this.maxNumber = maxNumber;
     }
 
     public List<SolutionSet> getSolutionSetList()

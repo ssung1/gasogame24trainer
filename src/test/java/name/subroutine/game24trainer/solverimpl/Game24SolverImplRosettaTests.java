@@ -4,6 +4,7 @@ import name.subroutine.game24trainer.puzzle.*;
 import org.assertj.core.util.Lists;
 import org.hamcrest.Matchers;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -168,13 +169,7 @@ public class Game24SolverImplRosettaTests
         assertThat( ss.getDifficultyRank(), Matchers.is( DifficultyRank.FINAL_MUL ) );
     }
 
-    @Test
-    public void testSolveTwoByTwo()
-    {
-        SolutionSet ss = sut.solve( Game24Puzzles.twoByTwo );
-        assertThat( ss.getDifficultyRank(), is( DifficultyRank.FINAL_ADD_2 ) );
-    }
-
+    @Ignore("ignored because ADD_SUB is not yet reported as a difficulty rank")
     @Test
     public void testSolveAddSub()
     {
@@ -190,7 +185,6 @@ public class Game24SolverImplRosettaTests
         SolutionSet ss = sut.solve( Game24Puzzles.zeroTrick );
         assertThat( ss.getDifficultyRank(), is( DifficultyRank.ZERO_TRICK ) );
     }
-
 
     @Test
     public void testSolveZeroTrick000()

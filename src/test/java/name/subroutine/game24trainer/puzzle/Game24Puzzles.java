@@ -13,14 +13,9 @@ public class Game24Puzzles
     public static Puzzle simple = new Puzzle( 1, 2, 3, 4 );
 
     /**
-     * 7 * 8 + 8 * 10 is the only solution
-     */
-    public static Puzzle twoByTwo = new Puzzle( 7, 8, 8, 10 );
-
-    /**
      * can be solved with only + and -
      */
-    public static Puzzle addSub = new Puzzle( 5, 6, 12, 13 );
+    public static Puzzle addSub = new Puzzle( 8, 18, 20, 23 );
 
     /**
      * 23 24 24 24

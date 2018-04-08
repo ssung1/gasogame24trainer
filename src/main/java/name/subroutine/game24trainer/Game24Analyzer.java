@@ -110,13 +110,9 @@ public class Game24Analyzer
         if( !analysisDone ) {
             throw new Exception( "Still waiting for analysis; please try later" );
         }
-        long start = System.currentTimeMillis();
         List<SolutionSet> list = getAllSolutionSetsByDifficulty( di );
         int randomIndex = ThreadLocalRandom.current().nextInt( list.size() );
         SolutionSet result = list.get( randomIndex );
-        long stop = System.currentTimeMillis();
-
-        logger.info( "Time took to get a puzzle: " + (stop - start) + "ms" );
 
         return result;
     }

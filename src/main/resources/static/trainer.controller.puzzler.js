@@ -1,16 +1,37 @@
 angular.module('gasogame24trainer')
 .controller('game24puzzler', function($scope, $http) {
     $scope.anotherPuzzle = function( difficultyRank ) {
-        $http.get(`http://localhost:8080/rest/v0/puzzle?d=${difficultyRank}`)
-            .then( function(response) {
-                    $scope.numbers = response.data.puzzle.numbers;
-                },
-                function(error){
-                    $scope.numbers = [0, 0, 0, 0];
-                }
-            )
+        if( difficultyRank ){
+            $http.get( `/rest/v0/puzzle?d=${difficultyRank}` )
+                .then( function( response ){
+                        $scope.numbers = response.data.puzzle.numbers;
+                    },
+                    function(error){
+                        $scope.numbers = [0, 0, 0, 0];
+                    }
+                )
+        }
+        else{
+            $http.get( `/rest/v0/puzzle` )
+                .then( function( response ){
+                        $scope.numbers = response.data.puzzle.numbers;
+                    },
+                    function(error){
+                        $scope.numbers = [0, 0, 0, 0];
+                    }
+                )
+        }
     }
     $scope.anotherPuzzle()
+
+    $scope.numberClass = function( number ) {
+        if( number === 9 ){
+            return ["nine"];
+        }
+        else{
+            return [];
+        }
+    }
 
     $scope.isSolutionHidden = true
 
@@ -29,51 +50,16 @@ angular.module('gasogame24trainer')
         // if fetching data from a different domain, browser will block
         // request; this is why it only works when this page is run from
         // Spring
-        $http.get( 'http://localhost:8080/rest/v0/solution?p=' + numberParam )
+        $http.get( `/rest/v0/solution?p=${numberParam}` )
             .then(
                 function( response ) {
                     $scope.solution = response.data
-                    if( $scope.solution.hasFinalMul == "X" ){
-                        $scope.colorFinalMul = "red"
-                    }
-                    else{
-                        $scope.colorFinalMul = "#ecedba"
-                    }
-
-                    if( $scope.solution.hasFinalMulTwoByTwo == "X" ){
-                        $scope.colorFinalMul2 = "red"
-                    }
-                    else{
-                        $scope.colorFinalMul2 = "#ecedba"
-                    }
-
-                    if( $scope.solution.hasFinalAdd == "X" ){
-                        $scope.colorFinalAdd = "red"
-                    }
-                    else{
-                        $scope.colorFinalAdd = "#ecedba"
-                    }
-
-                    if( $scope.solution.hasFinalAddTwoByTwo == "X" ){
-                        $scope.colorFinalAdd2 = "red"
-                    }
-                    else{
-                        $scope.colorFinalAdd2 = "#ecedba"
-                    }
-
-                    if( $scope.solution.hasFinalDiv == "X" ){
-                        $scope.colorFinalDiv = "red"
-                    }
-                    else{
-                        $scope.colorFinalDiv = "#ecedba"
-                    }
-
-                    if( $scope.solution.hasFinalDivTwoByTwo == "X" ){
-                        $scope.colorFinalDiv2 = "red"
-                    }
-                    else{
-                        $scope.colorFinalDiv2 = "#ecedba"
-                    }
+                    $scope.highlightDifficulty( "hasFinalMul", "colorFinalMul" )
+                    $scope.highlightDifficulty( "hasFinalMulTwoByTwo", "colorFinalMul2" )
+                    $scope.highlightDifficulty( "hasFinalAdd", "colorFinalAdd" )
+                    $scope.highlightDifficulty( "hasFinalAddTwoByTwo", "colorFinalAdd2" )
+                    $scope.highlightDifficulty( "hasFinalDiv", "colorFinalDiv" )
+                    $scope.highlightDifficulty( "hasFinalDivTwoByTwo", "colorFinalDiv2" )
                 },
                 function( error ) {
                     // for testing UI

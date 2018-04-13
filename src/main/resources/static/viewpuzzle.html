@@ -39,13 +39,22 @@
             padding-right: 1ex;
             width: 3ex;
         }
+        .puzzle td.nine {
+            background-color: crimson;
+        }
+        .puzzle td.left {
+            transform: rotate(-0.25turn);
+        }
+        .puzzle td.right {
+            transform: rotate(0.25turn);
+        }
         .puzzle td.middle {
-            background-color: #ad161b;
+            background-color: paleturquoise;
             font-size: 12pt;
             font-family: calibri, sans-serif;
         }
         .puzzle td.bottom {
-            //transform: rotate(0.5turn);
+            transform: rotate(0.5turn);
         }
         .solu-flag-table {
             table-layout: fixed;
@@ -128,15 +137,15 @@
 
     <!-- puzzle panel: only show if user clicks button -->
     <table class="puzzle">
-        <tr><td></td><td class="top">{{numbers[0]}}</td><td></td></tr>
+        <tr><td></td><td class="top" ng-class="numberClass(numbers[0])">{{numbers[0]}}</td><td></td></tr>
         <tr>
-            <td class="left">{{numbers[1]}}</td>
+            <td class="left" ng-class="numberClass(numbers[1])">{{numbers[1]}}</td>
             <td class="middle" ng-click="showSolution()">
-                SOLVE
+                SEE SOLUTION
             </td>
-            <td class="right">{{numbers[2]}}</td>
+            <td class="right" ng-class="numberClass(numbers[2])">{{numbers[2]}}</td>
         </tr>
-        <tr><td></td><td class="bottom">{{numbers[3]}}</td><td></td></tr>
+        <tr><td></td><td class="bottom" ng-class="numberClass(numbers[3])">{{numbers[3]}}</td><td></td></tr>
     </table>
 </div>
 

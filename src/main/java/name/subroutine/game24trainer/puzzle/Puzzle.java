@@ -48,6 +48,11 @@ public class Puzzle
     public static int DOUBLE = 2;
 
     private List<Integer> numbers;
+    private int digits;
+    private int dots;
+    private int pack;
+    private int player;
+
     public Puzzle( List<Integer> numbers )
     {
         this.numbers = numbers;
@@ -100,6 +105,42 @@ public class Puzzle
         List<Integer> sorted = numbers.stream()
             .sorted().collect( Collectors.toList() );
         return mkString( sorted );
+    }
+
+    public int getDigits()
+    {
+        return digits;
+    }
+
+    public void setDigits( int digits )
+    {
+        this.digits = digits;
+    }
+
+    public int getDots()
+    {
+        return dots;
+    }
+
+    public void setDots( int dots )
+    {
+        this.dots = dots;
+    }
+
+    public int getPack() {
+        return pack;
+    }
+
+    public void setPack( int pack ) {
+        this.pack = pack;
+    }
+
+    public int getPlayer() {
+        return player;
+    }
+
+    public void setPlayer( int player ) {
+        this.player = player;
     }
 
     @Override

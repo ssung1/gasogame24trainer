@@ -16,7 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-// the @Service annoatation (extended from @Component annotation) tells
+// the @Service annotation (extended from @Component annotation) tells
 // Spring Boot to create a @Bean for this object so that we do not have to
 // explicitly created a @Bean method to return this object
 @Service

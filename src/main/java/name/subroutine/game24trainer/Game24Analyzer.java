@@ -114,16 +114,17 @@ public class Game24Analyzer
     }
 
     public List<SolutionSet> getSolutionSetListByDifficulty(
-        DifficultyRank di ) throws Exception
+        DifficultyRank di ) throws IllegalStateException
     {
         return solutionSetListByRank.get( di );
     }
 
     public SolutionSet getSolutionSetByDifficulty( DifficultyRank di )
-        throws Exception
+        throws IllegalStateException
     {
         if( !analysisDone ) {
-            throw new Exception( "Still waiting for analysis; please try later" );
+            throw new IllegalStateException(
+                "Still waiting for analysis; please try later" );
         }
         List<SolutionSet> list = getSolutionSetListByDifficulty( di );
         int randomIndex = ThreadLocalRandom.current().nextInt( list.size() );
@@ -137,8 +138,12 @@ public class Game24Analyzer
         return solutionSetListByDot.get( dot );
     }
 
-    public SolutionSet getSolutionSetByDot( int dot )
+    public SolutionSet getSolutionSetByDot( int dot ) throws IllegalStateException
     {
+        if( !analysisDone ) {
+            throw new IllegalStateException(
+                "Still waiting for analysis; please try later" );
+        }
         List<SolutionSet> list = getSolutionSetListByDot( dot );
         int randomIndex = ThreadLocalRandom.current().nextInt( list.size() );
         SolutionSet result = list.get( randomIndex );
@@ -146,11 +151,8 @@ public class Game24Analyzer
         return result;
     }
 
-    public SolutionSet getSolutionSet() throws Exception
+    public SolutionSet getSolutionSet() throws IllegalStateException
     {
-        if( !analysisDone ) {
-            throw new Exception( "Still waiting for analysis; please try later" );
-        }
         List<SolutionSet> list = getSolutionSetList();
         return list.get( ThreadLocalRandom.current().nextInt( list.size() ) );
     }

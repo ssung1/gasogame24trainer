@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @CrossOrigin
@@ -96,7 +94,11 @@ public class ServicePracticeSheet {
         value = "",
         method = RequestMethod.GET,
         produces = MediaType.TEXT_HTML_VALUE )
-    public String practiceSheet() throws Exception
+    public String practiceSheet(
+        @RequestParam( required = false ) Integer oneDot,
+        @RequestParam( required = false ) Integer twoDot,
+        @RequestParam( required = false ) Integer threeDot
+        ) throws Exception
     {
         StringBuilder result = new StringBuilder();
 
@@ -142,90 +144,33 @@ public class ServicePracticeSheet {
         result.append( "</head>" );
         result.append( "<title>24 Game Practice</title>" );
 
-        Puzzle[] puzzles = {
-            // single pack 1 dot 3 player 1
-            new Puzzle( " 2  3  3  5" ),
-            new Puzzle( " 2  3  8  9" ),
-//            new Puzzle( " 2  2  5  8" ),
-//            new Puzzle( " 2  3  5  7" ),
-//            new Puzzle( " 1  4  6  8" ),
-//            new Puzzle( " 5  7  8  9" ),
-//            new Puzzle( " 3  4  7  7" ),
-//            new Puzzle( " 5  8  8  9" ),
-//            new Puzzle( " 2  5  8  8" ),
-//            new Puzzle( " 2  2  5  7" ),
-//            new Puzzle( " 2  5  7  9" ),
-//            new Puzzle( " 2  6  6  7" ),
-//            // single pack 1 dot 3 player 2
-//            new Puzzle( " 2  4  7  9" ),
-//            new Puzzle( " 4  4  7  8" ),
-//            new Puzzle( " 3  4  7  8" ),
-//            new Puzzle( " 1  2  2  8" ),
-//            new Puzzle( " 2  2  5  9" ),
-//            new Puzzle( " 4  5  5  7" ),
-//            new Puzzle( " 3  3  5  7" ),
-//            new Puzzle( " 5  6  6  9" ),
-//            new Puzzle( " 1  3  4  8" ),
-//            new Puzzle( " 1  4  6  6" ),
-//            new Puzzle( " 1  2  4  5" ),
-//            new Puzzle( " 2  2  6  9" ),
-//            // single pack 2 dot 3 player 1
-//            new Puzzle( " 1  4  6  9" ),
-//            new Puzzle( " 2  2  3  5" ),
-//            new Puzzle( " 1  4  5  8" ),
-//            new Puzzle( " 2  3  7  9" ),
-//            new Puzzle( " 2  5  5  8" ),
-//            new Puzzle( " 2  4  4  5" ),
-//            new Puzzle( " 2  4  6  8" ),
-//            new Puzzle( " 3  4  4  9" ),
-//            new Puzzle( " 4  4  6  8" ),
-//            new Puzzle( " 5  7  8  8" ),
-//            new Puzzle( " 2  7  8  9" ),
-//            new Puzzle( " 1  5  6  7" ),
-//            // single pack 2 dot 3 player 1
-//            new Puzzle( " 4  4  8  9" ),
-//            new Puzzle( " 3  5  7  8" ),
-//            new Puzzle( " 3  3  6  8" ),
-//            new Puzzle( " 2  3  6  7" ),
-//            new Puzzle( " 2  6  8  9" ),
-//            new Puzzle( " 1  3  8  8" ),
-//            new Puzzle( " 2  3  6  8" ),
-//            new Puzzle( " 2  5  6  9" ),
-//            new Puzzle( " 1  4  6  7" ),
-//            new Puzzle( " 3  3  3  5" ),
-//            new Puzzle( " 2  4  5  5" ),
-//            new Puzzle( " 3  5  8  9" ),
-
-//            // double pack 1 dot 3 player 1
-//            new Puzzle( " 5  7 10 10" ),
-//            new Puzzle( " 7  9 16 20" ),
-//            new Puzzle( " 2  2  7 10" ),
-//            new Puzzle( " 2  2 18 22" ),
-//            new Puzzle( " 6 20 21 22" ),
-//            new Puzzle( " 6  8 10 11" ),
-//            new Puzzle( "10 10 12 20" ),
-//            new Puzzle( " 5  9 15 17" ),
-//            new Puzzle( " 4  9 10 16" ),
-//            new Puzzle( "10 13 15 17" ),
-//            new Puzzle( " 6 12 15 24" ),
-//            new Puzzle( " 3  4  9 20" ),
-//            // double pack 1 dot 3 player 2
-//            new Puzzle( " 7 11 17 20" ),
-//            new Puzzle( " 9 11 20 22" ),
-//            new Puzzle( " 2  7 11 15" ),
-//            new Puzzle( " 5  7  9 12" ),
-//            new Puzzle( " 5  6  7 23" ),
-//            new Puzzle( "12 16 18 18" ),
-//            new Puzzle( " 5 11 13 18" ),
-//            new Puzzle( " 4  4  8 14" ),
-//            new Puzzle( " 2  2 21 22" ),
-//            new Puzzle( " 5  9 13 22" ),
-//            new Puzzle( " 3  8 13 15" ),
+        Integer[] dots = {
+            1, oneDot,
+            2, twoDot,
+            3, threeDot
         };
 
-        for( int i = 0; i < puzzles.length; ++i ) {
-            //result.append( card( puzzles[i] ) );
-            result.append( card( analyzer.getSolutionSet().getPuzzle() ) );
+        ArrayList<Puzzle> puzzles = new ArrayList<>();
+        for( int i = 0; i < dots.length; i += 2 ){
+            int dot = dots[i];
+            Integer countForDot = dots[i + 1];
+            if( countForDot == null ) continue;
+            for( int j = 0; j < countForDot; ++j ) {
+                puzzles.add( analyzer.getSolutionSetByDot( dot ).getPuzzle() );
+            }
+        }
+
+        // by default, just throw in some random puzzles
+        if( puzzles.isEmpty() ){
+            for( int i = 0; i < 30; ++ i ) {
+                puzzles.add( analyzer.getSolutionSet().getPuzzle() );
+            }
+        }
+
+        Collections.shuffle( puzzles );
+
+        for( int i = 0; i < puzzles.size(); ++i ) {
+            result.append( card( puzzles.get( i ) ) );
             if( i % 2 != 0 ) {
                 result.append( "<p class=\"page-break\">" );
             }

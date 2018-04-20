@@ -57,7 +57,9 @@ public class Game24Analyzer
     private boolean autoAnalyze = true;
 
     private List<SolutionSet> solutionSetList;
-    private final Map<DifficultyRank,List<SolutionSet>> solutionSetListByRank =
+    private final Map<DifficultyRank, List<SolutionSet>> solutionSetListByRank =
+        new HashMap<>();
+    private final Map<Integer, List<SolutionSet>> solutionSetListByDot =
         new HashMap<>();
     private boolean analysisDone = false;
 
@@ -68,6 +70,18 @@ public class Game24Analyzer
         if( ss == null ) {
             ss = new ArrayList<>();
             solutionSetListByRank.put( rank, ss );
+        }
+        ss.add( sol );
+        return sol;
+    }
+
+    private SolutionSet addToMapByDot( SolutionSet sol )
+    {
+        Integer dot = sol.getPuzzle().getDots();
+        List<SolutionSet> ss = solutionSetListByDot.get( dot );
+        if( ss == null ) {
+            ss = new ArrayList<>();
+            solutionSetListByDot.put( dot, ss );
         }
         ss.add( sol );
         return sol;
@@ -85,7 +99,8 @@ public class Game24Analyzer
         Stream<SolutionSet> sss =
             puzzleList.parallelStream().map( solver::solve )
             .filter( SolutionSet::hasSolution )
-            .map( this::addToMapByRank );
+            .map( this::addToMapByRank )
+            .map( this::addToMapByDot );
         this.solutionSetList = sss.collect( Collectors.toList() );
         analysisDone = true;
     }
@@ -98,7 +113,7 @@ public class Game24Analyzer
         return this.solutionSetList;
     }
 
-    public List<SolutionSet> getAllSolutionSetsByDifficulty(
+    public List<SolutionSet> getSolutionSetListByDifficulty(
         DifficultyRank di ) throws Exception
     {
         return solutionSetListByRank.get( di );
@@ -110,7 +125,21 @@ public class Game24Analyzer
         if( !analysisDone ) {
             throw new Exception( "Still waiting for analysis; please try later" );
         }
-        List<SolutionSet> list = getAllSolutionSetsByDifficulty( di );
+        List<SolutionSet> list = getSolutionSetListByDifficulty( di );
+        int randomIndex = ThreadLocalRandom.current().nextInt( list.size() );
+        SolutionSet result = list.get( randomIndex );
+
+        return result;
+    }
+
+    public List<SolutionSet> getSolutionSetListByDot( int dot )
+    {
+        return solutionSetListByDot.get( dot );
+    }
+
+    public SolutionSet getSolutionSetByDot( int dot )
+    {
+        List<SolutionSet> list = getSolutionSetListByDot( dot );
         int randomIndex = ThreadLocalRandom.current().nextInt( list.size() );
         SolutionSet result = list.get( randomIndex );
 

@@ -10,8 +10,8 @@ import java.util.*;
  * Taken from rosettacode.org
  */
 public class Game24SolverImplRosetta implements Game24Solver {
-    final String[] patterns = { "nnonnoo", "nnonono", "nnnoono", "nnnonoo",
-        "nnnnooo" };
+    final static String[] patterns = { "nnonnoo", "nnonono", "nnnoono", "nnnonoo",
+            "nnnnooo" };
 
     class EvalResult
     {

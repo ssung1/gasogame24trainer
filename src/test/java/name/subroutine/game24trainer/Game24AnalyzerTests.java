@@ -1,14 +1,10 @@
 package name.subroutine.game24trainer;
 
-import name.subroutine.game24trainer.puzzle.DifficultyRank;
-import name.subroutine.game24trainer.puzzle.Puzzle;
-import name.subroutine.game24trainer.puzzle.SolutionSet;
-import name.subroutine.game24trainer.puzzle.Symbol;
-import name.subroutine.game24trainer.sourceimpl.Game24PuzzleSourceImplMax;
+import name.subroutine.game24trainer.puzzle.*;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.test.util.ReflectionTestUtils;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -24,13 +20,9 @@ public class Game24AnalyzerTests
     Game24Analyzer sut;
 
     Game24Solver mockSolver = mock( Game24Solver.class );
+    Game24PuzzleSource mockSource = mock( Game24PuzzleSource.class );
 
-    Symbol symbol = new Symbol();
-
-    SolutionSet zeroTrick;
-    Puzzle zeroTrickPuzzle = new Puzzle( 24, 18, 18, 9 );
-
-    public SolutionSet noSolution( Puzzle p )
+    private SolutionSet noSolution( Puzzle p )
     {
         SolutionSet result = new SolutionSet();
         result.setPuzzle( p );
@@ -38,36 +30,47 @@ public class Game24AnalyzerTests
         return result;
     }
 
+    private SolutionSet noSolution()
+    {
+        return noSolution( new Puzzle( 0, 0, 0, 0 ) );
+    }
+
+    private SolutionSet solutionOfDifficulty( Puzzle p, DifficultyRank rank )
+    {
+        SolutionSet result = mock( SolutionSet.class );
+
+        when( result.getDifficultyRank() ).thenReturn( rank );
+        when( result.hasSolution() ).thenReturn( true );
+        when( result.getPuzzle() ).thenReturn( p );
+
+        return result;
+    }
+
     @Before
     public void configureSut()
     {
-        Game24PuzzleSourceImplMax source = new Game24PuzzleSourceImplMax();
-        // need to set to 24 because we are testing zeroTrickPuzzle
-        source.setMaxNumber( 24 );
-        sut = new Game24Analyzer( mockSolver, source );
-        ReflectionTestUtils.setField( sut, "solver", mockSolver );
-
-        SolutionSet noSolution = mock( SolutionSet.class );
-        when( noSolution.getPuzzle() ).thenReturn( new Puzzle( 0, 0, 0, 0 ) );
-        when( noSolution.getDifficultyRank() ).thenReturn(
-            DifficultyRank.NO_SOLU );
-
-        this.zeroTrick = mock( SolutionSet.class );
-        when( zeroTrick.getDifficultyRank() ).thenReturn( DifficultyRank
-            .ZERO_TRICK );
-        when( zeroTrick.hasSolution() ).thenReturn( true );
-        when( zeroTrick.getPuzzle() ).thenReturn( zeroTrickPuzzle );
-
-        // order is important: start with the most generic case
-        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution );
-        when( mockSolver.solve( eq( zeroTrickPuzzle ) ) ).thenReturn(
-            zeroTrick );
-        sut.analyze();
+        sut = new Game24Analyzer( mockSolver, mockSource );
     }
 
     @Test
     public void testGetSolutionSetByDifficulty() throws Exception
     {
+        when( mockSource.getPuzzleList() ).thenReturn( Arrays.asList(
+            new Puzzle( 6, 6, 6, 6 ),
+            new Puzzle( 24, 18, 18, 9 )
+        ) );
+
+        Puzzle zeroTrickPuzzle = new Puzzle( 24, 18, 18, 9 );
+        SolutionSet zeroTrick = solutionOfDifficulty( zeroTrickPuzzle,
+            DifficultyRank.ZERO_TRICK );
+
+        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+        when( mockSolver.solve( eq( zeroTrickPuzzle ) ) ).thenReturn(
+            zeroTrick
+        );
+
+        sut.analyze();
+
         SolutionSet ss = sut.getSolutionSetByDifficulty(
             DifficultyRank.ZERO_TRICK );
         assertThat( ss.getDifficultyRank(), is( DifficultyRank.ZERO_TRICK ) );
@@ -75,21 +78,110 @@ public class Game24AnalyzerTests
     }
 
     @Test
-    public void testGetAllSolutionSetsByDifficulty() throws Exception
+    public void testGetSolutionSetListByDifficulty() throws Exception
     {
-        List<SolutionSet> ssl = sut.getAllSolutionSetsByDifficulty(
+        when( mockSource.getPuzzleList() ).thenReturn( Arrays.asList(
+            new Puzzle( 6, 6, 6, 6 ),
+            new Puzzle( 24, 18, 18, 9 ),
+            new Puzzle( 24, 1, 1, 24 )
+        ) );
+
+        Puzzle zeroTrickPuzzle = new Puzzle( 24, 18, 18, 9 );
+        SolutionSet zeroTrick = mock( SolutionSet.class );
+
+        when( zeroTrick.getDifficultyRank() ).thenReturn( DifficultyRank
+            .ZERO_TRICK );
+        when( zeroTrick.hasSolution() ).thenReturn( true );
+        when( zeroTrick.getPuzzle() ).thenReturn( zeroTrickPuzzle );
+
+        Puzzle otherZeroTrickPuzzle = new Puzzle( 24, 1, 1, 24 );
+        SolutionSet otherZeroTrick = mock( SolutionSet.class );
+
+        when( otherZeroTrick.getDifficultyRank() ).thenReturn( DifficultyRank
+            .ZERO_TRICK );
+        when( otherZeroTrick.hasSolution() ).thenReturn( true );
+        when( otherZeroTrick.getPuzzle() ).thenReturn( otherZeroTrickPuzzle );
+
+        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+        when( mockSolver.solve( eq( zeroTrickPuzzle ) ) ).thenReturn(
+            zeroTrick );
+        when( mockSolver.solve( eq( otherZeroTrickPuzzle ) ) ).thenReturn(
+            otherZeroTrick );
+
+        sut.analyze();
+
+        List<SolutionSet> ssl = sut.getSolutionSetListByDifficulty(
             DifficultyRank.ZERO_TRICK );
-        assertThat( ssl, hasSize( 1 ) );
-        SolutionSet ss = ssl.get( 0 );
-        assertThat( ss.getDifficultyRank(), is( DifficultyRank.ZERO_TRICK ) );
-        assertThat( ss, is( zeroTrick ) );
+        assertThat( ssl, hasSize( 2 ) );
     }
 
     @Test
     public void testExcludePuzzlesWithNoSolution() throws Exception
     {
+        when( mockSource.getPuzzleList() ).thenReturn( Arrays.asList(
+            new Puzzle( 6, 6, 6, 6 ),
+            new Puzzle( 24, 18, 18, 9 ),
+            new Puzzle( 24, 1, 1, 24 )
+        ) );
+
+        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+
+        sut.analyze();
+
         assertThat( sut.getSolutionSetList().parallelStream()
-            .filter( s -> !s.hasSolution() )
             .count(), is( 0L ) );
+    }
+
+    @Test
+    public void testGetSolutionSetByDot() throws Exception
+    {
+        Puzzle oneDotPuzzle = new Puzzle( 1, 4, 8, 8 );
+        oneDotPuzzle.setDots( Puzzle.ONE );
+
+        when( mockSource.getPuzzleList() ).thenReturn( Arrays.asList(
+            oneDotPuzzle,          // one dot puzzle
+            new Puzzle( 2, 6, 8, 24 ),
+            new Puzzle( 3, 14, 15, 15 ),
+            oneDotPuzzle           // another one dot puzzle
+        ) );
+
+        SolutionSet oneDotSolutionSet = solutionOfDifficulty(
+            oneDotPuzzle, DifficultyRank.DIST_PROP
+        );
+
+        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+        when( mockSolver.solve( oneDotPuzzle ) ).thenReturn(
+            oneDotSolutionSet );
+        sut.analyze();
+
+        SolutionSet ss = sut.getSolutionSetByDot( Puzzle.ONE );
+        assertThat( ss, is( oneDotSolutionSet ) );
+        assertThat( ss.getPuzzle().getDots(), is( Puzzle.ONE ) );
+    }
+
+    @Test
+    public void testGetSolutionSetListByDot()
+    {
+        Puzzle oneDotPuzzle = new Puzzle( 1, 4, 8, 8 );
+        oneDotPuzzle.setDots( Puzzle.ONE );
+
+        when( mockSource.getPuzzleList() ).thenReturn( Arrays.asList(
+            oneDotPuzzle,          // one dot puzzle
+            new Puzzle( 2, 6, 8, 24 ),
+            new Puzzle( 3, 14, 15, 15 ),
+            oneDotPuzzle           // another one dot puzzle
+        ) );
+
+        SolutionSet oneDotSolutionSet = solutionOfDifficulty(
+            oneDotPuzzle, DifficultyRank.DIST_PROP
+        );
+
+        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+        when( mockSolver.solve( oneDotPuzzle ) ).thenReturn(
+            oneDotSolutionSet );
+        sut.analyze();
+
+        List<SolutionSet> ssl = sut.getSolutionSetListByDot( Puzzle.ONE );
+        assertThat( ssl, hasSize( 2 ) );
     }
 }

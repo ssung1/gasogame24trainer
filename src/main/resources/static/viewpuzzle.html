@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html ng-app="gasogame24trainer">
 <head>
     <title>Hello AngularJS</title>
@@ -112,6 +112,9 @@
             cursor: pointer;
         }
 
+        .operator {
+            margin: auto;
+        }
         .operator td {
             font-family: consolas, sans-serif;
             font-size: 36pt;
@@ -125,6 +128,23 @@
         }
         .operator td.selected {
             border-color: black;
+        }
+
+        .answerGrid {
+            margin: auto;
+            border-collapse: collapse;
+        }
+        .answerGrid td {
+            font-family: consolas, sans-serif;
+            font-size: 36pt;
+            font-weight: bold;
+            text-align: center;
+            padding-left: 1ex;
+            padding-right: 1ex;
+            width: 3ex;
+            border-style: solid;
+            border-color: black;
+            white-space: nowrap;
         }
     </style>
 </head>
@@ -161,28 +181,28 @@
             <td></td>
             <td class="top" ng-class="numberClass(0)"
                 ng-click="selectNumber(0)">
-                {{numbers[0]}}
+                {{numberAt(0)}}
             </td>
             <td></td>
         </tr>
         <tr>
             <td class="left" ng-class="numberClass(1)"
                 ng-click="selectNumber(1)">
-                {{numbers[1]}}
+                {{numberAt(1)}}
             </td>
             <td class="middle" ng-click="showSolution()">
                 SEE SOLUTION
             </td>
             <td class="right" ng-class="numberClass(2)"
                 ng-click="selectNumber(2)">
-                {{numbers[2]}}
+                {{numberAt(2)}}
             </td>
         </tr>
         <tr>
             <td></td>
             <td class="bottom" ng-class="numberClass(3)"
                 ng-click="selectNumber(3)">
-                {{numbers[3]}}
+                {{numberAt(3)}}
             </td>
             <td></td>
         </tr>
@@ -198,10 +218,27 @@
         </tr>
     </table>
 
-    <div> Debugger </div>
-    <p>{{equation(0)}}</p>
-    <p>{{equation(1)}}</p>
-    <p>{{equation(2)}}</p>
+    <div>Answer</div>
+    <table class="answerGrid">
+        <tr>
+            <td>{{answerGridValue(0, 0)}}</td>
+            <td>{{answerGridValue(0, 1)}}</td>
+            <td>{{answerGridValue(0, 2)}}</td>
+            <td> = {{answerGridValue(0, 3)}}</td>
+        </tr>
+        <tr>
+            <td>{{answerGridValue(1, 0)}}</td>
+            <td>{{answerGridValue(1, 1)}}</td>
+            <td>{{answerGridValue(1, 2)}}</td>
+            <td> = {{answerGridValue(1, 3)}}</td>
+        </tr>
+        <tr>
+            <td>{{answerGridValue(2, 0)}}</td>
+            <td>{{answerGridValue(2, 1)}}</td>
+            <td>{{answerGridValue(2, 2)}}</td>
+            <td> = {{answerGridValue(2, 3)}}</td>
+        </tr>
+    </table>
 </div>
 
 <!-- modal solution screen: only show if user clicks center box -->

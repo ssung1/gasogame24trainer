@@ -4,7 +4,7 @@
     <title>Hello AngularJS</title>
 
     <!-- just different URLs for the same library -->
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
     <script src="trainer.module.js"></script>
     <script src="trainer.controller.puzzler.js"></script>
@@ -38,6 +38,8 @@
             padding-left: 1ex;
             padding-right: 1ex;
             width: 3ex;
+            border-style: solid;
+            border-color: #ecedba;
         }
         .puzzle td.nine {
             background-color: crimson;
@@ -55,6 +57,9 @@
         }
         .puzzle td.bottom {
             transform: rotate(0.5turn);
+        }
+        .puzzle td.selected {
+            border-color: black;
         }
         .solu-flag-table {
             table-layout: fixed;
@@ -106,6 +111,21 @@
             width: 100%;
             cursor: pointer;
         }
+
+        .operator td {
+            font-family: consolas, sans-serif;
+            font-size: 36pt;
+            font-weight: bold;
+            text-align: center;
+            padding-left: 1ex;
+            padding-right: 1ex;
+            width: 3ex;
+            border-style: solid;
+            border-color: #ecedba;
+        }
+        .operator td.selected {
+            border-color: black;
+        }
     </style>
 </head>
 
@@ -137,16 +157,51 @@
 
     <!-- puzzle panel: only show if user clicks button -->
     <table class="puzzle">
-        <tr><td></td><td class="top" ng-class="numberClass(numbers[0])">{{numbers[0]}}</td><td></td></tr>
         <tr>
-            <td class="left" ng-class="numberClass(numbers[1])">{{numbers[1]}}</td>
+            <td></td>
+            <td class="top" ng-class="numberClass(0)"
+                ng-click="selectNumber(0)">
+                {{numbers[0]}}
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td class="left" ng-class="numberClass(1)"
+                ng-click="selectNumber(1)">
+                {{numbers[1]}}
+            </td>
             <td class="middle" ng-click="showSolution()">
                 SEE SOLUTION
             </td>
-            <td class="right" ng-class="numberClass(numbers[2])">{{numbers[2]}}</td>
+            <td class="right" ng-class="numberClass(2)"
+                ng-click="selectNumber(2)">
+                {{numbers[2]}}
+            </td>
         </tr>
-        <tr><td></td><td class="bottom" ng-class="numberClass(numbers[3])">{{numbers[3]}}</td><td></td></tr>
+        <tr>
+            <td></td>
+            <td class="bottom" ng-class="numberClass(3)"
+                ng-click="selectNumber(3)">
+                {{numbers[3]}}
+            </td>
+            <td></td>
+        </tr>
     </table>
+
+    <table class="operator">
+        <tr>
+            <td ng-click="selectOperator(0)" ng-class="operatorClass(0)">+</td>
+            <td ng-click="selectOperator(1)" ng-class="operatorClass(1)">-</td>
+            <td ng-click="selectOperator(2)" ng-class="operatorClass(2)">x</td>
+            <td ng-click="selectOperator(3)" ng-class="operatorClass(3)">&divide;</td>
+            <td ng-click="selectBackspace()">&#11148;</td>
+        </tr>
+    </table>
+
+    <div> Debugger </div>
+    <p>{{equation(0)}}</p>
+    <p>{{equation(1)}}</p>
+    <p>{{equation(2)}}</p>
 </div>
 
 <!-- modal solution screen: only show if user clicks center box -->

@@ -1,5 +1,7 @@
 angular.module('gasogame24trainer')
 .controller('game24puzzler', function($scope, $http) {
+    const none = 999;
+
     $scope.anotherPuzzle = function( difficultyRank ) {
         if( difficultyRank ){
             $http.get( `/rest/v0/puzzle?d=${difficultyRank}` )
@@ -7,7 +9,7 @@ angular.module('gasogame24trainer')
                         $scope.numbers = response.data.puzzle.numbers;
                     },
                     function(error){
-                        $scope.numbers = [0, 0, 0, 0];
+                        $scope.numbers = [2, 22, 11, 9];
                     }
                 )
         }
@@ -17,20 +19,35 @@ angular.module('gasogame24trainer')
                         $scope.numbers = response.data.puzzle.numbers;
                     },
                     function(error){
-                        $scope.numbers = [0, 0, 0, 0];
+                        $scope.numbers = [2, 22, 11, 9];
                     }
                 )
         }
     }
-    $scope.anotherPuzzle()
 
-    $scope.numberClass = function( number ) {
+    $scope.anotherPuzzle();
+    $scope.operators = [ "+", "-", "x", "&divide;" ];
+    $scope.selectedNumber = none;
+    $scope.selectedOperator = none;
+
+    $scope.numberClass = function( position ){
+        const number = $scope.numbers[position];
+        const result = [];
         if( number === 9 ){
-            return ["nine"];
+            result.push( "nine" );
         }
-        else{
-            return [];
+        if( position == $scope.selectedNumber ){
+            result.push( "selected" );
         }
+        return result;
+    }
+
+    $scope.operatorClass = function( position ){
+        const result = [];
+        if( position == $scope.selectedOperator ){
+            result.push( "selected" );
+        }
+        return result;
     }
 
     $scope.isSolutionHidden = true
@@ -82,5 +99,59 @@ angular.module('gasogame24trainer')
     }
     $scope.hideSolution = function() {
         $scope.isSolutionHidden = true
+    }
+
+    $scope.clicked = [];
+    $scope.selectNumber = function( n ) {
+        if( $scope.selectedOperator === none ){
+            if( $scope.selectedNumber !== n ){
+                $scope.selectedNumber = n;
+                $scope.clicked.push( $scope.numbers[n] );
+            }
+        }
+        else{
+            if( $scope.selectedNumber !== n ){
+                const prevNumber = $scope.numbers[$scope.selectedNumber];
+                const currNumber = $scope.numbers[n];
+                if( $scope.selectedOperator === 0 ){
+                    // done with one operation, so clear operator
+                    $scope.selectedOperator = none;
+                    // calculate result of this operation
+                    const result = prevNumber + currNumber;
+                    // set current number position to result
+                    $scope.numbers[n] = result;
+                    // and clear the other number
+                    $scope.numbers[selectedNumber] = "";
+
+                    //$scope.selectedNumber = n;
+                    $scope.clicked.push( currNumber );
+                    $scope.clicked.push( "=" );
+                    $scope.clicked.push( result );
+                }
+            }
+        }
+    }
+
+    $scope.selectOperator = function( n ) {
+        if( $scope.selectedNumber === none ){
+            return;
+        }
+        if( $scope.selectedOperator !== n ){
+            $scope.selectedOperator = n;
+            $scope.clicked.push( $scope.operators[n] );
+        }
+    }
+
+    $scope.equation = function( n ) {
+//        let result = "";
+//        for( int i = 0; i < 5; i = i + 1 ){
+//            if( $scope.clicked[i] ){
+//                if( i > 0 ){
+//                    result += " ";
+//                }
+//                result += $scope.clicked[i];
+//            }
+//        }
+//        return result;
     }
 })

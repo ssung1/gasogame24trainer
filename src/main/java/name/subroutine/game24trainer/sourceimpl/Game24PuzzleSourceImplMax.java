@@ -34,7 +34,7 @@ public class Game24PuzzleSourceImplMax implements
         //
         // So the answer is C( 4 + max - 1, max - 1 )
 
-        // Calculatiing C( n, k )
+        // Calculating C( n, k )
         // which is also C( n, n - k )
         int n = 4 + maxNumber - 1;
         int k = 4;

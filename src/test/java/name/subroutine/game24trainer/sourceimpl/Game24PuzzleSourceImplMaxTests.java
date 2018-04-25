@@ -11,12 +11,6 @@ public class Game24PuzzleSourceImplMaxTests
     Game24PuzzleSourceImplMax sut =
             new Game24PuzzleSourceImplMax();
 
-    @Before
-    public void setUp()
-    {
-        //sut.
-    }
-
     @Test
     public void testGetPuzzleListInitSizeMax1()
     {

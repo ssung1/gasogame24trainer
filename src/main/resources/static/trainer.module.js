@@ -1,1 +1,1 @@
-angular.module('gasogame24trainer', [])
+angular.module( 'gasogame24trainer', [] )

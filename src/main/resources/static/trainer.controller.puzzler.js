@@ -1,5 +1,21 @@
-angular.module('gasogame24trainer')
-.controller('game24puzzler', function($scope, $http) {
+angular.module( 'gasogame24trainer' )
+.controller( 'game24puzzler', [
+    "$scope", "$http", "$interval", "$timeout",
+    function( $scope, $http, $interval, $timeout ){
+
+    function round( number, precision ){
+        var shift = function( number, precision, reverseShift ){
+            if( reverseShift ){
+                precision = -precision;
+            }
+            var numArray = ("" + number).split( "e" );
+            return +(numArray[0] + "e" +
+                (numArray[1] ? (+numArray[1] + precision) : precision));
+        };
+        return shift( Math.round( shift( number, precision, false ) ),
+            precision, true );
+    }
+
     function PuzzleNumber( number ) {
         this.numberHistory = [number];
         this.used = false;
@@ -17,13 +33,26 @@ angular.module('gasogame24trainer')
             this.numberHistory = [this.numberHistory[0]];
         }
     }
+
     const none = 999;
+
+    $scope.isSolutionHidden = true;
 
     $scope.numbers = [];
     $scope.selectedNumber = none;
 
     $scope.operators = [ "+", "-", "x", "\xf7" ];
     $scope.selectedOperator = none;
+
+    let timeStart;
+    let timer;
+    $scope.timeSpent;
+
+    $scope.isTransitionHidden = true;
+
+    $scope.init = function(){
+        $scope.anotherPuzzle();
+    }
 
     $scope.setNumbers = function( numbers ) {
         $scope.numbers = [];
@@ -37,27 +66,25 @@ angular.module('gasogame24trainer')
         if( difficultyRank ){
             $http.get( `/rest/v0/puzzle?d=${difficultyRank}` )
                 .then( function( response ){
-                        $scope.numbers = response.data.puzzle.numbers;
+                        $scope.setNumbers( response.data.puzzle.numbers );
                     },
-                    function(error){
-                        $scope.numbers = [2, 22, 11, 9];
+                    function( error ){
+                        $scope.setNumbers( [2, 22, 11, 9] );
                     }
                 )
         }
         else{
             $http.get( `/rest/v0/puzzle` )
                 .then( function( response ){
-                        $scope.numbers = response.data.puzzle.numbers;
+                        $scope.setNumbers( response.data.puzzle.numbers );
                     },
-                    function(error){
-                        //$scope.numbers = [2, 22, 11, 9];
+                    function( error ){
                         $scope.setNumbers( [2, 22, 11, 9] );
                     }
                 )
         }
+        $scope.startTimer();
     }
-
-    $scope.anotherPuzzle();
 
     $scope.numberClass = function( position ){
         const number = $scope.numberAt( position );
@@ -78,8 +105,6 @@ angular.module('gasogame24trainer')
         }
         return result;
     }
-
-    $scope.isSolutionHidden = true
 
     $scope.highlightDifficulty = function( rank, colorField ) {
         if( $scope.solution[ rank ] == "X" ){
@@ -116,8 +141,6 @@ angular.module('gasogame24trainer')
                     $scope.highlightDifficulty( "hasFinalAddTwoByTwo", "colorFinalAdd2" )
                     $scope.highlightDifficulty( "hasFinalDiv", "colorFinalDiv" )
                     $scope.highlightDifficulty( "hasFinalDivTwoByTwo", "colorFinalDiv2" )
-
-                    console.log( "fail", error )
                 }
             )
     }
@@ -171,6 +194,11 @@ angular.module('gasogame24trainer')
 
                 $scope.selectedNumber = n;
                 $scope.selectedOperator = none;
+
+                if( $scope.answerGrid.length == 12 && result === 24 ){
+                    $scope.stopTimer();
+                    $scope.showTransition();
+                }
             }
         }
     }
@@ -202,8 +230,11 @@ angular.module('gasogame24trainer')
         if( $scope.answerGrid.length < index + 1 ){
             return "\xa0";
         }
-        else{
+        else if( isNaN( $scope.answerGrid[index] ) ){
             return $scope.answerGrid[index];
+        }
+        else{
+            return round( $scope.answerGrid[index], 2 );
         }
     }
 
@@ -219,7 +250,7 @@ angular.module('gasogame24trainer')
         }
 
         // will fail if there is no number, but that should not happen
-        return $scope.numbers[p].numberHistory.slice( -1 )[0];
+        return round( $scope.numbers[p].numberHistory.slice( -1 )[0], 2 );
     }
 
     $scope.selectBackspace = function(){
@@ -232,4 +263,33 @@ angular.module('gasogame24trainer')
         $scope.selectedNumber = none;
         $scope.selectedOperator = none;
     }
-})
+
+    $scope.startTimer = function(){
+        if( timer ){
+            $interval.cancel( timer );
+            timer = undefined;
+        }
+        timeStart = Date.now();
+        timer = $interval( function(){
+            const spent = timeSpent = Date.now() - timeStart;
+            $scope.timeSpent = Math.round( spent / 1000 );
+        }, 1000 );
+    }
+
+    $scope.stopTimer = function(){
+        $interval.cancel( timer );
+    }
+
+    $scope.showTransition = function() {
+        $scope.isTransitionHidden = false;
+        $timeout( function(){
+            $scope.isTransitionHidden = true;
+        }, 1000 );
+    }
+
+    $scope.$on( "$destroy", function(){
+        $scope.stopTimer
+    });
+
+    $scope.init();
+} ] );

@@ -52,6 +52,7 @@ public class Puzzle
     private int dots;
     private int pack;
     private int player;
+    private Set<PuzzleTag> tags = new HashSet<>();
 
     public Puzzle( List<Integer> numbers )
     {
@@ -78,6 +79,16 @@ public class Puzzle
                 }
             }
         }
+    }
+
+    public void tag( PuzzleTag t )
+    {
+        tags.add( t );
+    }
+
+    public boolean hasTag( PuzzleTag t )
+    {
+        return tags.contains( t );
     }
 
     public List<Integer> getNumbers()

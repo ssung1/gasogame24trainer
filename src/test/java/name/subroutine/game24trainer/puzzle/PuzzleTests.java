@@ -157,4 +157,46 @@ public class PuzzleTests
         assertThat( n.get( 2 ), is( 4 ) );
         assertThat( n.get( 3 ), is( 5 ) );
     }
+
+    @Test
+    public void testTagPuzzleOne()
+    {
+        Puzzle a = new Puzzle( "1 2 3 4" );
+        a.tag( PuzzleTag.PLAYER_ONE );
+        assertTrue( a.hasTag( PuzzleTag.PLAYER_ONE ) );
+    }
+
+    @Test
+    public void testPuzzleStartsWithNoTags()
+    {
+        Puzzle a = new Puzzle( "1 2 3 4" );
+        assertFalse( a.hasTag( PuzzleTag.PLAYER_ONE ) );
+        assertFalse( a.hasTag( PuzzleTag.PLAYER_TWO ) );
+        assertFalse( a.hasTag( PuzzleTag.ONE_DOT ) );
+        assertFalse( a.hasTag( PuzzleTag.TWO_DOT ) );
+        assertFalse( a.hasTag( PuzzleTag.THREE_DOT ) );
+        assertFalse( a.hasTag( PuzzleTag.ZERO_D ) );
+        assertFalse( a.hasTag( PuzzleTag.ONE_D ) );
+        assertFalse( a.hasTag( PuzzleTag.TWO_D ) );
+        assertFalse( a.hasTag( PuzzleTag.THREE_D ) );
+        assertFalse( a.hasTag( PuzzleTag.FOUR_D ) );
+    }
+
+    @Test
+    public void testTagPuzzleTwo()
+    {
+        Puzzle a = new Puzzle( "1 2 3 4" );
+        a.tag( PuzzleTag.PLAYER_ONE );
+        a.tag( PuzzleTag.PLAYER_TWO );
+        assertTrue( a.hasTag( PuzzleTag.PLAYER_ONE ) );
+        assertTrue( a.hasTag( PuzzleTag.PLAYER_TWO ) );
+        assertFalse( a.hasTag( PuzzleTag.ONE_DOT ) );
+        assertFalse( a.hasTag( PuzzleTag.TWO_DOT ) );
+        assertFalse( a.hasTag( PuzzleTag.THREE_DOT ) );
+        assertFalse( a.hasTag( PuzzleTag.ZERO_D ) );
+        assertFalse( a.hasTag( PuzzleTag.ONE_D ) );
+        assertFalse( a.hasTag( PuzzleTag.TWO_D ) );
+        assertFalse( a.hasTag( PuzzleTag.THREE_D ) );
+        assertFalse( a.hasTag( PuzzleTag.FOUR_D ) );
+    }
 }

@@ -199,4 +199,40 @@ public class PuzzleTests
         assertFalse( a.hasTag( PuzzleTag.THREE_D ) );
         assertFalse( a.hasTag( PuzzleTag.FOUR_D ) );
     }
+
+    @Test
+    public void testHasAllTags()
+    {
+        Puzzle a = new Puzzle( "1 2 3 4" );
+        a.tag( PuzzleTag.PLAYER_ONE );
+        a.tag( PuzzleTag.PLAYER_TWO );
+        assertTrue( a.hasTags( PuzzleTag.PLAYER_ONE, PuzzleTag.PLAYER_TWO ) );
+    }
+
+    @Test
+    public void testOnlyHasFirstTag()
+    {
+        Puzzle a = new Puzzle( "1 2 3 4" );
+        a.tag( PuzzleTag.PLAYER_ONE );
+        a.tag( PuzzleTag.PLAYER_TWO );
+        assertFalse( a.hasTags( PuzzleTag.PLAYER_ONE, PuzzleTag.ONE_DOT ) );
+    }
+
+    @Test
+    public void testOnlyHasLastTag()
+    {
+        Puzzle a = new Puzzle( "1 2 3 4" );
+        a.tag( PuzzleTag.PLAYER_ONE );
+        a.tag( PuzzleTag.PLAYER_TWO );
+        assertFalse( a.hasTags( PuzzleTag.ONE_DOT, PuzzleTag.PLAYER_TWO ) );
+    }
+
+    @Test
+    public void testOnlyHasNoneTags()
+    {
+        Puzzle a = new Puzzle( "1 2 3 4" );
+        a.tag( PuzzleTag.PLAYER_ONE );
+        a.tag( PuzzleTag.PLAYER_TWO );
+        assertFalse( a.hasTags( PuzzleTag.TWO_DOT, PuzzleTag.ONE_DOT ) );
+    }
 }

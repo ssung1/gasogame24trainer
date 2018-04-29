@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
+import static name.subroutine.game24trainer.puzzle.PuzzleTag.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -160,7 +161,7 @@ public class Game24AnalyzerTests
     }
 
     @Test
-    public void testGetSolutionSetListByDot()
+    public void testGetSolutionSetListByDotOldStyle()
     {
         Puzzle oneDotPuzzle = new Puzzle( 1, 4, 8, 8 );
         oneDotPuzzle.setDots( Puzzle.ONE );
@@ -183,5 +184,57 @@ public class Game24AnalyzerTests
 
         List<SolutionSet> ssl = sut.getSolutionSetListByDot( Puzzle.ONE );
         assertThat( ssl, hasSize( 2 ) );
+    }
+
+    @Test
+    public void testGetSolutionSetListByDotPositive()
+    {
+        Puzzle oneDotPuzzle = new Puzzle( 1, 4, 8, 8 );
+        oneDotPuzzle.tag( ONE_DOT );
+
+        when( mockSource.getPuzzleList() ).thenReturn( Arrays.asList(
+            oneDotPuzzle,          // one dot puzzle
+            new Puzzle( 2, 6, 8, 24 ),
+            new Puzzle( 3, 14, 15, 15 ),
+            oneDotPuzzle           // another one dot puzzle
+        ) );
+
+        SolutionSet oneDotSolutionSet = solutionOfDifficulty(
+            oneDotPuzzle, DifficultyRank.DIST_PROP
+        );
+
+        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+        when( mockSolver.solve( oneDotPuzzle ) ).thenReturn(
+            oneDotSolutionSet );
+        sut.analyze();
+
+        List<SolutionSet> ssl = sut.getSolutionSetListByTags( ONE_DOT );
+        assertThat( ssl, hasSize( 2 ) );
+    }
+
+    @Test
+    public void testGetSolutionSetListByDotNegative()
+    {
+        Puzzle oneDotPuzzle = new Puzzle( 1, 4, 8, 8 );
+        oneDotPuzzle.tag( ONE_DOT );
+
+        when( mockSource.getPuzzleList() ).thenReturn( Arrays.asList(
+            oneDotPuzzle,          // one dot puzzle
+            new Puzzle( 2, 6, 8, 24 ),
+            new Puzzle( 3, 14, 15, 15 ),
+            oneDotPuzzle           // another one dot puzzle
+        ) );
+
+        SolutionSet oneDotSolutionSet = solutionOfDifficulty(
+            oneDotPuzzle, DifficultyRank.DIST_PROP
+        );
+
+        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+        when( mockSolver.solve( oneDotPuzzle ) ).thenReturn(
+            oneDotSolutionSet );
+        sut.analyze();
+
+        List<SolutionSet> ssl = sut.getSolutionSetListByTags( TWO_DOT );
+        assertThat( ssl, hasSize( 0 ) );
     }
 }

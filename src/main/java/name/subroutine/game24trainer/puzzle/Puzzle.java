@@ -91,6 +91,14 @@ public class Puzzle
         return tags.contains( t );
     }
 
+    public boolean hasTags( PuzzleTag ...tags )
+    {
+        for( PuzzleTag tag : tags ) {
+            if( !hasTag( tag ) ) return false;
+        }
+        return true;
+    }
+
     public List<Integer> getNumbers()
     {
         return this.numbers;

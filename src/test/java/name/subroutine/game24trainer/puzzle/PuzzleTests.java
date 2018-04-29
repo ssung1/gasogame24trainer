@@ -1,12 +1,12 @@
 package name.subroutine.game24trainer.puzzle;
 
-import name.subroutine.game24trainer.puzzle.Puzzle;
 import org.junit.Test;
 
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+import static name.subroutine.game24trainer.puzzle.PuzzleTag.*;
 
 public class PuzzleTests
 {
@@ -170,69 +170,69 @@ public class PuzzleTests
     public void testPuzzleStartsWithNoTags()
     {
         Puzzle a = new Puzzle( "1 2 3 4" );
-        assertFalse( a.hasTag( PuzzleTag.PLAYER_ONE ) );
-        assertFalse( a.hasTag( PuzzleTag.PLAYER_TWO ) );
-        assertFalse( a.hasTag( PuzzleTag.ONE_DOT ) );
-        assertFalse( a.hasTag( PuzzleTag.TWO_DOT ) );
-        assertFalse( a.hasTag( PuzzleTag.THREE_DOT ) );
-        assertFalse( a.hasTag( PuzzleTag.ZERO_D ) );
-        assertFalse( a.hasTag( PuzzleTag.ONE_D ) );
-        assertFalse( a.hasTag( PuzzleTag.TWO_D ) );
-        assertFalse( a.hasTag( PuzzleTag.THREE_D ) );
-        assertFalse( a.hasTag( PuzzleTag.FOUR_D ) );
+        assertFalse( a.hasTag( PLAYER_ONE ) );
+        assertFalse( a.hasTag( PLAYER_TWO ) );
+        assertFalse( a.hasTag( ONE_DOT ) );
+        assertFalse( a.hasTag( TWO_DOT ) );
+        assertFalse( a.hasTag( THREE_DOT ) );
+        assertFalse( a.hasTag( SINGLE ) );
+        assertFalse( a.hasTag( DOUBLE_ONE ) );
+        assertFalse( a.hasTag( DOUBLE_TWO ) );
+        assertFalse( a.hasTag( DOUBLE_THREE ) );
+        assertFalse( a.hasTag( DOUBLE_FOUR ) );
     }
 
     @Test
     public void testTagPuzzleTwo()
     {
         Puzzle a = new Puzzle( "1 2 3 4" );
-        a.tag( PuzzleTag.PLAYER_ONE );
-        a.tag( PuzzleTag.PLAYER_TWO );
-        assertTrue( a.hasTag( PuzzleTag.PLAYER_ONE ) );
-        assertTrue( a.hasTag( PuzzleTag.PLAYER_TWO ) );
-        assertFalse( a.hasTag( PuzzleTag.ONE_DOT ) );
-        assertFalse( a.hasTag( PuzzleTag.TWO_DOT ) );
-        assertFalse( a.hasTag( PuzzleTag.THREE_DOT ) );
-        assertFalse( a.hasTag( PuzzleTag.ZERO_D ) );
-        assertFalse( a.hasTag( PuzzleTag.ONE_D ) );
-        assertFalse( a.hasTag( PuzzleTag.TWO_D ) );
-        assertFalse( a.hasTag( PuzzleTag.THREE_D ) );
-        assertFalse( a.hasTag( PuzzleTag.FOUR_D ) );
+        a.tag( PLAYER_ONE );
+        a.tag( PLAYER_TWO );
+        assertTrue( a.hasTag( PLAYER_ONE ) );
+        assertTrue( a.hasTag( PLAYER_TWO ) );
+        assertFalse( a.hasTag( ONE_DOT ) );
+        assertFalse( a.hasTag( TWO_DOT ) );
+        assertFalse( a.hasTag( THREE_DOT ) );
+        assertFalse( a.hasTag( SINGLE ) );
+        assertFalse( a.hasTag( DOUBLE_ONE ) );
+        assertFalse( a.hasTag( DOUBLE_TWO ) );
+        assertFalse( a.hasTag( DOUBLE_THREE ) );
+        assertFalse( a.hasTag( DOUBLE_FOUR ) );
     }
 
     @Test
     public void testHasAllTags()
     {
         Puzzle a = new Puzzle( "1 2 3 4" );
-        a.tag( PuzzleTag.PLAYER_ONE );
-        a.tag( PuzzleTag.PLAYER_TWO );
-        assertTrue( a.hasTags( PuzzleTag.PLAYER_ONE, PuzzleTag.PLAYER_TWO ) );
+        a.tag( PLAYER_ONE );
+        a.tag( PLAYER_TWO );
+        assertTrue( a.hasTags( PLAYER_ONE, PLAYER_TWO ) );
     }
 
     @Test
     public void testOnlyHasFirstTag()
     {
         Puzzle a = new Puzzle( "1 2 3 4" );
-        a.tag( PuzzleTag.PLAYER_ONE );
-        a.tag( PuzzleTag.PLAYER_TWO );
-        assertFalse( a.hasTags( PuzzleTag.PLAYER_ONE, PuzzleTag.ONE_DOT ) );
+        a.tag( PLAYER_ONE );
+        a.tag( PLAYER_TWO );
+        assertFalse( a.hasTags( PLAYER_ONE, ONE_DOT ) );
     }
 
     @Test
     public void testOnlyHasLastTag()
     {
         Puzzle a = new Puzzle( "1 2 3 4" );
-        a.tag( PuzzleTag.PLAYER_ONE );
-        a.tag( PuzzleTag.PLAYER_TWO );
-        assertFalse( a.hasTags( PuzzleTag.ONE_DOT, PuzzleTag.PLAYER_TWO ) );
+        a.tag( PLAYER_ONE );
+        a.tag( PLAYER_TWO );
+        assertFalse( a.hasTags( ONE_DOT, PLAYER_TWO ) );
     }
 
     @Test
     public void testOnlyHasNoneTags()
     {
         Puzzle a = new Puzzle( "1 2 3 4" );
-        a.tag( PuzzleTag.PLAYER_ONE );
-        a.tag( PuzzleTag.PLAYER_TWO );
-        assertFalse( a.hasTags( PuzzleTag.TWO_DOT, PuzzleTag.ONE_DOT ) );
+        a.tag( PLAYER_ONE );
+        a.tag( PLAYER_TWO );
+        assertFalse( a.hasTags( TWO_DOT, ONE_DOT ) );
     }
 }

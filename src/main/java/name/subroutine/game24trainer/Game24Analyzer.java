@@ -2,6 +2,7 @@ package name.subroutine.game24trainer;
 
 import name.subroutine.game24trainer.puzzle.DifficultyRank;
 import name.subroutine.game24trainer.puzzle.Puzzle;
+import name.subroutine.game24trainer.puzzle.PuzzleTag;
 import name.subroutine.game24trainer.puzzle.SolutionSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,6 +100,7 @@ public class Game24Analyzer
         Stream<SolutionSet> sss =
             puzzleList.parallelStream().map( solver::solve )
             .filter( SolutionSet::hasSolution )
+            .sequential()
             .map( this::addToMapByRank )
             .map( this::addToMapByDot );
         this.solutionSetList = sss.collect( Collectors.toList() );
@@ -136,6 +138,13 @@ public class Game24Analyzer
     public List<SolutionSet> getSolutionSetListByDot( int dot )
     {
         return solutionSetListByDot.get( dot );
+    }
+
+    public List<SolutionSet> getSolutionSetListByTags( PuzzleTag...tags )
+    {
+        return solutionSetList.parallelStream()
+          .filter( ss -> ss.getPuzzle().hasTags( tags ) )
+          .collect( Collectors.toList() );
     }
 
     public SolutionSet getSolutionSetByDot( int dot ) throws IllegalStateException

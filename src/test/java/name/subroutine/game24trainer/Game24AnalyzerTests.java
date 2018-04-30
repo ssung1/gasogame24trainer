@@ -3,6 +3,7 @@ package name.subroutine.game24trainer;
 import name.subroutine.game24trainer.puzzle.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Ignore;
 
 import java.util.Arrays;
 import java.util.List;
@@ -161,7 +162,9 @@ public class Game24AnalyzerTests
     }
 
     @Test
-    public void testGetSolutionSetListByDotOldStyle()
+    @Deprecated
+    @Ignore( "Deprecated by new tag style" )
+    public void testGetSolutionSetListByDot()
     {
         Puzzle oneDotPuzzle = new Puzzle( 1, 4, 8, 8 );
         oneDotPuzzle.setDots( Puzzle.ONE );
@@ -187,7 +190,7 @@ public class Game24AnalyzerTests
     }
 
     @Test
-    public void testGetSolutionSetListByDotPositive()
+    public void testGetSolutionSetListByTagFound()
     {
         Puzzle oneDotPuzzle = new Puzzle( 1, 4, 8, 8 );
         oneDotPuzzle.tag( ONE_DOT );
@@ -213,7 +216,7 @@ public class Game24AnalyzerTests
     }
 
     @Test
-    public void testGetSolutionSetListByDotNegative()
+    public void testGetSolutionSetListByTagNotFound()
     {
         Puzzle oneDotPuzzle = new Puzzle( 1, 4, 8, 8 );
         oneDotPuzzle.tag( ONE_DOT );
@@ -235,6 +238,58 @@ public class Game24AnalyzerTests
         sut.analyze();
 
         List<SolutionSet> ssl = sut.getSolutionSetListByTags( TWO_DOT );
+        assertThat( ssl, hasSize( 0 ) );
+    }
+
+    @Test
+    public void testGetSolutionSetListByTagWithLimitFound()
+    {
+        Puzzle twoDotPuzzle = new Puzzle( "3  7 22 23" );
+        twoDotPuzzle.tag( TWO_DOT );
+
+        when( mockSource.getPuzzleList() ).thenReturn( Arrays.asList(
+            twoDotPuzzle,          // two dot puzzle
+            new Puzzle( 2, 6, 8, 24 ),
+            new Puzzle( 3, 14, 15, 15 ),
+            twoDotPuzzle           // another two dot puzzle
+        ) );
+
+        SolutionSet oneDotSolutionSet = solutionOfDifficulty(
+            twoDotPuzzle, DifficultyRank.DIST_PROP
+        );
+
+        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+        when( mockSolver.solve( twoDotPuzzle ) ).thenReturn(
+            oneDotSolutionSet );
+        sut.analyze();
+
+        List<SolutionSet> ssl = sut.getSolutionSetListByTags( 1, TWO_DOT );
+        assertThat( ssl, hasSize( 1 ) );
+    }
+
+    @Test
+    public void testGetSolutionSetListByTagWithLimitNotFound()
+    {
+        Puzzle twoDotPuzzle = new Puzzle( "3  7 22 23" );
+        twoDotPuzzle.tag( TWO_DOT );
+
+        when( mockSource.getPuzzleList() ).thenReturn( Arrays.asList(
+            twoDotPuzzle,          // two dot puzzle
+            new Puzzle( 2, 6, 8, 24 ),
+            new Puzzle( 3, 14, 15, 15 ),
+            twoDotPuzzle           // another two dot puzzle
+        ) );
+
+        SolutionSet oneDotSolutionSet = solutionOfDifficulty(
+            twoDotPuzzle, DifficultyRank.DIST_PROP
+        );
+
+        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+        when( mockSolver.solve( twoDotPuzzle ) ).thenReturn(
+            oneDotSolutionSet );
+        sut.analyze();
+
+        List<SolutionSet> ssl = sut.getSolutionSetListByTags( 1, ONE_DOT );
         assertThat( ssl, hasSize( 0 ) );
     }
 }

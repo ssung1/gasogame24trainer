@@ -12,6 +12,7 @@ import java.io.StringWriter;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @CrossOrigin
 @RestController
@@ -95,9 +96,7 @@ public class ServicePracticeSheet {
         method = RequestMethod.GET,
         produces = MediaType.TEXT_HTML_VALUE )
     public String practiceSheet(
-        @RequestParam( required = false ) Integer oneDot,
-        @RequestParam( required = false ) Integer twoDot,
-        @RequestParam( required = false ) Integer threeDot
+        @RequestParam( required = false ) Map<String, String> params
         ) throws Exception
     {
         StringBuilder result = new StringBuilder();
@@ -144,20 +143,20 @@ public class ServicePracticeSheet {
         result.append( "</head>" );
         result.append( "<title>24 Game Practice</title>" );
 
-        Integer[] dots = {
-            1, oneDot,
-            2, twoDot,
-            3, threeDot
-        };
-
         ArrayList<Puzzle> puzzles = new ArrayList<>();
-        for( int i = 0; i < dots.length; i += 2 ){
-            int dot = dots[i];
-            Integer countForDot = dots[i + 1];
-            if( countForDot == null ) continue;
-            for( int j = 0; j < countForDot; ++j ) {
-                puzzles.add( analyzer.getSolutionSetByDot( dot ).getPuzzle() );
-            }
+        for( Map.Entry<String, String> param : params.entrySet() ){
+            PuzzleTag tag = PuzzleTag.valueOf( param.getKey() );
+            Integer count = Integer.valueOf( param.getValue() );
+
+            List<SolutionSet> ssl =
+                analyzer.getSolutionSetListByTags( count, tag );
+
+                System.out.println( ssl.size() );
+            List<Puzzle> pl = 
+                ssl.parallelStream().map( SolutionSet::getPuzzle )
+                .collect( Collectors.toList() );
+
+            puzzles.addAll( pl );
         }
 
         // by default, just throw in some random puzzles
@@ -179,4 +178,3 @@ public class ServicePracticeSheet {
         return result.toString();
     }
 }
-

@@ -160,6 +160,23 @@ public class Game24Analyzer
         return result;
     }
 
+    public List<SolutionSet> getSolutionSetListByTags( int count, PuzzleTag...tags )
+    {
+        List<SolutionSet> all = solutionSetList.parallelStream()
+            .filter( ss -> ss.getPuzzle().hasTags( tags ) )
+            .collect( Collectors.toList() );
+
+        List<SolutionSet> result = new ArrayList<>( count );
+        for( int i = 0; i < count; ++i ){
+            if( all.size() > 0 ){
+                int random = ThreadLocalRandom.current().nextInt( all.size() );
+                result.add( all.get( random ) );
+            }
+        }
+
+        return result;
+    }
+
     public SolutionSet getSolutionSet() throws IllegalStateException
     {
         List<SolutionSet> list = getSolutionSetList();

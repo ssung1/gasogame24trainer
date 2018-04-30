@@ -4,6 +4,7 @@ import name.subroutine.game24trainer.*;
 import name.subroutine.game24trainer.puzzle.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet

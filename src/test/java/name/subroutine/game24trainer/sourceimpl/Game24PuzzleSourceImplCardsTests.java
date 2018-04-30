@@ -11,6 +11,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static name.subroutine.game24trainer.puzzle.PuzzleTag.*;
 
 public class Game24PuzzleSourceImplCardsTests
 {
@@ -83,7 +84,7 @@ public class Game24PuzzleSourceImplCardsTests
             * singleAndDouble * numberOfPacks;
 
         assertThat( sut.getPuzzleList().parallelStream().filter(
-            p -> p.getDots() == Puzzle.ONE ).count(), is( expectedSize ) );
+            p -> p.hasTag( ONE_DOT ) ).count(), is( expectedSize ) );
     }
 
     @Test
@@ -98,7 +99,7 @@ public class Game24PuzzleSourceImplCardsTests
             * singleAndDouble * numberOfPacks;
 
         assertThat( sut.getPuzzleList().parallelStream().filter(
-            p -> p.getDots() == Puzzle.TWO ).count(), is( expectedSize ) );
+            p -> p.hasTag( TWO_DOT ) ).count(), is( expectedSize ) );
     }
 
     @Test
@@ -113,7 +114,7 @@ public class Game24PuzzleSourceImplCardsTests
             * singleAndDouble * numberOfPacks;
 
         assertThat( sut.getPuzzleList().parallelStream().filter(
-            p -> p.getDots() == Puzzle.THREE ).count(), is( expectedSize ) );
+            p -> p.hasTag( THREE_DOT ) ).count(), is( expectedSize ) );
     }
 
     @Test

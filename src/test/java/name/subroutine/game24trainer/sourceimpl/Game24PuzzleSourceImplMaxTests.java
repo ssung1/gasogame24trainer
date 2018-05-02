@@ -1,5 +1,6 @@
 package name.subroutine.game24trainer.sourceimpl;
 
+import name.subroutine.game24trainer.puzzle.PuzzleTag;
 import org.junit.Before;
 import org.junit.Test;
 

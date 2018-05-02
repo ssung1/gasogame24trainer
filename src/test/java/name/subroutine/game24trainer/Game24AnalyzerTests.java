@@ -162,34 +162,6 @@ public class Game24AnalyzerTests
     }
 
     @Test
-    @Deprecated
-    @Ignore( "Deprecated by new tag style" )
-    public void testGetSolutionSetListByDot()
-    {
-        Puzzle oneDotPuzzle = new Puzzle( 1, 4, 8, 8 );
-        oneDotPuzzle.setDots( Puzzle.ONE );
-
-        when( mockSource.getPuzzleList() ).thenReturn( Arrays.asList(
-            oneDotPuzzle,          // one dot puzzle
-            new Puzzle( 2, 6, 8, 24 ),
-            new Puzzle( 3, 14, 15, 15 ),
-            oneDotPuzzle           // another one dot puzzle
-        ) );
-
-        SolutionSet oneDotSolutionSet = solutionOfDifficulty(
-            oneDotPuzzle, DifficultyRank.DIST_PROP
-        );
-
-        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
-        when( mockSolver.solve( oneDotPuzzle ) ).thenReturn(
-            oneDotSolutionSet );
-        sut.analyze();
-
-        List<SolutionSet> ssl = sut.getSolutionSetListByDot( Puzzle.ONE );
-        assertThat( ssl, hasSize( 2 ) );
-    }
-
-    @Test
     public void testGetSolutionSetListByTagFound()
     {
         Puzzle oneDotPuzzle = new Puzzle( 1, 4, 8, 8 );

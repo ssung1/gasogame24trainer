@@ -48,8 +48,13 @@ public class Puzzle
     public static int DOUBLE = 2;
 
     private List<Integer> numbers;
+
+    @Deprecated
     private int digits;
+
+    @Deprecated
     private int dots;
+
     private int pack;
     private int player;
     private Set<PuzzleTag> tags = new HashSet<>();
@@ -126,21 +131,25 @@ public class Puzzle
         return mkString( sorted );
     }
 
+    @Deprecated
     public int getDigits()
     {
         return digits;
     }
 
+    @Deprecated
     public void setDigits( int digits )
     {
         this.digits = digits;
     }
 
+    @Deprecated
     public int getDots()
     {
         return dots;
     }
 
+    @Deprecated
     public void setDots( int dots )
     {
         this.dots = dots;

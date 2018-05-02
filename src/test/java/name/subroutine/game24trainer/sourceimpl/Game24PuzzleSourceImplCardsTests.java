@@ -118,6 +118,21 @@ public class Game24PuzzleSourceImplCardsTests
     }
 
     @Test
+    public void testHasOneDotSingle()
+    {
+        int cardsPerPack = 12;
+        int puzzlesPerCard = 2;
+        int single = 1;
+        int numberOfPacks = 2;
+
+        long expectedSize = cardsPerPack * puzzlesPerCard
+            * single * numberOfPacks;
+
+        assertThat( sut.getPuzzleList().parallelStream().filter(
+            p -> p.hasTags( ONE_DOT, SINGLE ) ).count(), is( expectedSize ) );
+    }
+
+    @Test
     public void testHasPack1()
     {
         int cardsPerPack = 48;

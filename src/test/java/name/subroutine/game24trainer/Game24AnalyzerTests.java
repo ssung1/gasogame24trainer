@@ -292,4 +292,60 @@ public class Game24AnalyzerTests
         List<SolutionSet> ssl = sut.getSolutionSetListByTags( 1, ONE_DOT );
         assertThat( ssl, hasSize( 0 ) );
     }
+
+    @Test
+    public void testGetSolutionSetListByMultipleTagsWithLimitFound()
+    {
+        Puzzle twoDotPuzzle = new Puzzle( "3  7 22 23" );
+        twoDotPuzzle.tag( TWO_DOT );
+        twoDotPuzzle.tag( DOUBLE );
+
+        when( mockSource.getPuzzleList() ).thenReturn( Arrays.asList(
+            twoDotPuzzle,          // two dot puzzle
+            new Puzzle( 2, 6, 8, 24 ),
+            new Puzzle( 3, 14, 15, 15 ),
+            twoDotPuzzle           // another two dot puzzle
+        ) );
+
+        SolutionSet oneDotSolutionSet = solutionOfDifficulty(
+            twoDotPuzzle, DifficultyRank.DIST_PROP
+        );
+
+        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+        when( mockSolver.solve( twoDotPuzzle ) ).thenReturn(
+            oneDotSolutionSet );
+        sut.analyze();
+
+        List<SolutionSet> ssl = sut.getSolutionSetListByTags( 1,
+            TWO_DOT, DOUBLE );
+        assertThat( ssl, hasSize( 1 ) );
+    }
+
+    @Test
+    public void testGetSolutionSetListByMultipleTagsWithLimitNotFound()
+    {
+        Puzzle twoDotPuzzle = new Puzzle( "3  7 22 23" );
+        twoDotPuzzle.tag( TWO_DOT );
+        twoDotPuzzle.tag( DOUBLE );
+
+        when( mockSource.getPuzzleList() ).thenReturn( Arrays.asList(
+            twoDotPuzzle,          // two dot puzzle
+            new Puzzle( 2, 6, 8, 24 ),
+            new Puzzle( 3, 14, 15, 15 ),
+            twoDotPuzzle           // another two dot puzzle
+        ) );
+
+        SolutionSet oneDotSolutionSet = solutionOfDifficulty(
+            twoDotPuzzle, DifficultyRank.DIST_PROP
+        );
+
+        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+        when( mockSolver.solve( twoDotPuzzle ) ).thenReturn(
+            oneDotSolutionSet );
+        sut.analyze();
+
+        List<SolutionSet> ssl = sut.getSolutionSetListByTags( 1,
+            ONE_DOT, DOUBLE );
+        assertThat( ssl, hasSize( 0 ) );
+    }
 }

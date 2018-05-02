@@ -2,7 +2,10 @@ package name.subroutine.game24trainer.sourceimpl;
 
 import name.subroutine.game24trainer.Game24PuzzleSource;
 import name.subroutine.game24trainer.puzzle.Puzzle;
+import name.subroutine.game24trainer.puzzle.PuzzleTag;
 import org.springframework.stereotype.Service;
+
+import static name.subroutine.game24trainer.puzzle.PuzzleTag.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +23,12 @@ import java.util.List;
 @Service("cards")
 public class Game24PuzzleSourceImplCards implements Game24PuzzleSource
 {
+    private final int ONE = 1;
+    private final int TWO = 2;
+    private final int THREE = 3;
+    private final int SINGLE = 1;
+    private final int DOUBLE = 2;
+
     // --- single digit ---
     private final String[] singleDot1Pack1Player1 = {
         "1 4 8 8", "32 - 8",
@@ -462,8 +471,33 @@ public class Game24PuzzleSourceImplCards implements Game24PuzzleSource
         ArrayList<Puzzle> result = new ArrayList<>();
         for( int i = 0; i < rawPuzzle.length; i += 2 ) {
             Puzzle newPuzzle = new Puzzle( rawPuzzle[i] );
+            if( digits == SINGLE ){
+                newPuzzle.tag( PuzzleTag.SINGLE );
+            }
+            else if( digits == DOUBLE ){
+                newPuzzle.tag( PuzzleTag.DOUBLE );
+            }
+            else{
+                throw new IllegalArgumentException(
+                    "Can only have SINGLE or DOUBLE digits" );
+            }
             newPuzzle.setDigits( digits );
+
+            if( dots == 1 ){
+                newPuzzle.tag( ONE_DOT );
+            }
+            else if( dots == 2 ){
+                newPuzzle.tag( TWO_DOT );
+            }
+            else if( dots == 3 ){
+                newPuzzle.tag( THREE_DOT );
+            }
+            else{
+                throw new IllegalArgumentException(
+                    "Can only have 1, 2, or 3 dots" );
+            }
             newPuzzle.setDots( dots );
+
             newPuzzle.setPack( pack );
             newPuzzle.setPlayer( player );
             result.add( newPuzzle );

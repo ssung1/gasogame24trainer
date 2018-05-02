@@ -9,6 +9,7 @@ public enum PuzzleTag
     PLAYER_ONE( "p1", "Player 1" ),
     PLAYER_TWO( "p2", "Player 2" ),
     SINGLE( "s", "Only Single Digit Numbers" ),
+    DOUBLE( "d", "At Least One Double Digit Number" ),
     DOUBLE_ONE( "1d", "One Double Digit Numbers" ),
     DOUBLE_TWO( "2d", "Two Double Digit Numbers" ),
     DOUBLE_THREE( "3d", "Three Double Digit Numbers" ),

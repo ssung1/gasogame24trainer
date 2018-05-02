@@ -145,14 +145,21 @@ public class ServicePracticeSheet {
 
         ArrayList<Puzzle> puzzles = new ArrayList<>();
         for( Map.Entry<String, String> param : params.entrySet() ){
-            PuzzleTag tag = PuzzleTag.valueOf( param.getKey() );
+            // we do not do parallel so that we maintain order of
+            // tags (multiple tags within a parameter)
+            //
+            // this makes testing (mocking) easier
+            final PuzzleTag[] tagList = Arrays.stream( param.getKey()
+                .split( "," ) )
+                .map( String::trim )
+                .map( PuzzleTag::valueOf )
+                .toArray( PuzzleTag[]::new );
             Integer count = Integer.valueOf( param.getValue() );
 
-            List<SolutionSet> ssl =
-                analyzer.getSolutionSetListByTags( count, tag );
+            final List<SolutionSet> ssl =
+                analyzer.getSolutionSetListByTags( count, tagList );
 
-                System.out.println( ssl.size() );
-            List<Puzzle> pl = 
+            final List<Puzzle> pl =
                 ssl.parallelStream().map( SolutionSet::getPuzzle )
                 .collect( Collectors.toList() );
 

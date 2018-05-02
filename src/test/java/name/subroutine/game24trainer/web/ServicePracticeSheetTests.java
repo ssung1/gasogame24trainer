@@ -53,28 +53,24 @@ public class ServicePracticeSheetTests
     }
 
     @Test
-    public void testOneDotAndTwoDot() throws Exception
+    public void testOneDotAndSingle() throws Exception
     {
         int count = 1;
         SolutionSet ss = new SolutionSet();
         Puzzle p = new Puzzle( "6 6 6 6" );
         ss.setPuzzle( p );
 
-        when( analyzer.getSolutionSetListByTags( count, ONE_DOT ) )
-            .thenReturn( Collections.singletonList( ss ) );
-        when( analyzer.getSolutionSetListByTags( count, TWO_DOT ) )
+        when( analyzer.getSolutionSetListByTags( count, ONE_DOT, SINGLE ) )
             .thenReturn( Collections.singletonList( ss ) );
 
         Map<String, String> param = new HashMap<>();
-        param.put( "ONE_DOT,TWO_DOT", String.valueOf( count ) );
+        param.put( "ONE_DOT,SINGLE", String.valueOf( count ) );
         String result = sut.practiceSheet( param );
 
         // can't really test output since it is such a long string...
         assertThat( result, not( isEmptyString() ) );
         // the best we can do is to verify we called getSolutionSetListByTags
         verify( analyzer, times( count ) )
-            .getSolutionSetListByTags( count, ONE_DOT );
-        verify( analyzer, times( count ) )
-            .getSolutionSetListByTags( count, TWO_DOT );
+            .getSolutionSetListByTags( count, ONE_DOT, SINGLE );
     }
 }

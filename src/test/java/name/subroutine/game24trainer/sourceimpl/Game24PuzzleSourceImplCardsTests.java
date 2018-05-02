@@ -57,7 +57,7 @@ public class Game24PuzzleSourceImplCardsTests
         long expectedSize = cardsPerPack * puzzlesPerCard * numberOfPacks;
 
         assertThat( sut.getPuzzleList().parallelStream().filter(
-            p -> p.getDigits() == Puzzle.SINGLE ).count(), is( expectedSize ) );
+            p -> p.hasTag( SINGLE ) ).count(), is( expectedSize ) );
     }
 
     @Test
@@ -69,7 +69,7 @@ public class Game24PuzzleSourceImplCardsTests
 
         long expectedSize = cardsPerPack * puzzlesPerCard * numberOfPacks;
         assertThat( sut.getPuzzleList().parallelStream().filter(
-            p -> p.getDigits() == Puzzle.DOUBLE ).count(), is( expectedSize ) );
+            p -> p.hasTag( DOUBLE ) ).count(), is( expectedSize ) );
     }
 
     @Test

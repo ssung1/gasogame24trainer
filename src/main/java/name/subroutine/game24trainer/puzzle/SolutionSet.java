@@ -1,9 +1,9 @@
 package name.subroutine.game24trainer.puzzle;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import static name.subroutine.game24trainer.puzzle.DifficultyRank.*;
 

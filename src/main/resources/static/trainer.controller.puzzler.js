@@ -116,7 +116,7 @@ angular.module( 'gasogame24trainer' )
     }
 
     $scope.solve = function() {
-        var numberParam = $scope.numbers.join( "%20" )
+        var numberParam = $scope.numbers.map(n => n.numberHistory[0]).join( "%20" )
         $scope.solution = "moloading..."
         // if fetching data from a different domain, browser will block
         // request; this is why it only works when this page is run from

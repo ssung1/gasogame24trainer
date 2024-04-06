@@ -1,11 +1,12 @@
 package name.subroutine.game24trainer.puzzle;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static name.subroutine.game24trainer.puzzle.PuzzleTag.*;
 
 public class PuzzleTests

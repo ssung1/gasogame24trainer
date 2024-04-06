@@ -1,11 +1,10 @@
 package name.subroutine.game24trainer.sourceimpl;
 
 import name.subroutine.game24trainer.puzzle.PuzzleTag;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.*;
 
 public class Game24PuzzleSourceImplMaxTests
 {

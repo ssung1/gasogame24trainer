@@ -1,22 +1,16 @@
 package name.subroutine.game24trainer.puzzle;
 
 import name.subroutine.game24trainer.puzzle.Symbol;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SymbolTests
 {
     Symbol sut = new Symbol();
-
-    @Before
-    public void setUp()
-    {
-    }
 
     @Test
     public void testParseBlank()

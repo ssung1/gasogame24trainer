@@ -1,12 +1,12 @@
 package name.subroutine.game24trainer.web;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.util.ReflectionUtils;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.*;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ public class ServicePracticeSheetTests
 
     Game24Analyzer analyzer = mock( Game24Analyzer.class );
 
-    @Before
+    @BeforeEach
     public void configSut()
     {
         ReflectionTestUtils.setField( sut, "analyzer", analyzer );

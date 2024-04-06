@@ -3,27 +3,21 @@ package name.subroutine.game24trainer.solverimpl;
 import name.subroutine.game24trainer.puzzle.*;
 import org.assertj.core.util.Lists;
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Game24SolverImplRosettaTests
 {
     Symbol s = new Symbol();
     Game24SolverImplRosetta sut = new Game24SolverImplRosetta();
-
-    @Before
-    public void setUp()
-    {
-    }
 
     public void printPermutation( List<List<Integer>> a )
     {
@@ -169,7 +163,7 @@ public class Game24SolverImplRosettaTests
         assertThat( ss.getDifficultyRank(), Matchers.is( DifficultyRank.FINAL_MUL ) );
     }
 
-    @Ignore("ignored because ADD_SUB is not yet reported as a difficulty rank")
+    @Disabled("disabled because ADD_SUB is not yet reported as a difficulty rank")
     @Test
     public void testSolveAddSub()
     {

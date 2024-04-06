@@ -6,15 +6,16 @@ import name.subroutine.game24trainer.puzzle.DifficultyRank;
 import name.subroutine.game24trainer.puzzle.Puzzle;
 import name.subroutine.game24trainer.puzzle.Solution;
 import name.subroutine.game24trainer.puzzle.SolutionSet;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.MatcherAssert.*;
 
 public class SolutionSetTests
 {

@@ -1,16 +1,15 @@
 package name.subroutine.game24trainer.sourceimpl;
 
 import name.subroutine.game24trainer.puzzle.Puzzle;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static name.subroutine.game24trainer.puzzle.PuzzleTag.*;
 
 public class Game24PuzzleSourceImplCardsTests

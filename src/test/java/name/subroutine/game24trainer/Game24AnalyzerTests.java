@@ -1,9 +1,9 @@
 package name.subroutine.game24trainer;
 
 import name.subroutine.game24trainer.puzzle.*;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.Ignore;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,9 +11,10 @@ import java.util.List;
 import static name.subroutine.game24trainer.puzzle.PuzzleTag.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.eq;
+import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -48,7 +49,7 @@ public class Game24AnalyzerTests
         return result;
     }
 
-    @Before
+    @BeforeEach
     public void configureSut()
     {
         sut = new Game24Analyzer( mockSolver, mockSource );
@@ -66,7 +67,7 @@ public class Game24AnalyzerTests
         SolutionSet zeroTrick = solutionOfDifficulty( zeroTrickPuzzle,
             DifficultyRank.ZERO_TRICK );
 
-        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+        when( mockSolver.solve( any() ) ).thenReturn( noSolution() );
         when( mockSolver.solve( eq( zeroTrickPuzzle ) ) ).thenReturn(
             zeroTrick
         );
@@ -104,7 +105,7 @@ public class Game24AnalyzerTests
         when( otherZeroTrick.hasSolution() ).thenReturn( true );
         when( otherZeroTrick.getPuzzle() ).thenReturn( otherZeroTrickPuzzle );
 
-        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+        when( mockSolver.solve( any() ) ).thenReturn( noSolution() );
         when( mockSolver.solve( eq( zeroTrickPuzzle ) ) ).thenReturn(
             zeroTrick );
         when( mockSolver.solve( eq( otherZeroTrickPuzzle ) ) ).thenReturn(
@@ -126,7 +127,7 @@ public class Game24AnalyzerTests
             new Puzzle( 24, 1, 1, 24 )
         ) );
 
-        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+        when( mockSolver.solve( any() ) ).thenReturn( noSolution() );
 
         sut.analyze();
 
@@ -151,7 +152,7 @@ public class Game24AnalyzerTests
             oneDotPuzzle, DifficultyRank.DIST_PROP
         );
 
-        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+        when( mockSolver.solve( any() ) ).thenReturn( noSolution() );
         when( mockSolver.solve( oneDotPuzzle ) ).thenReturn(
             oneDotSolutionSet );
         sut.analyze();
@@ -162,8 +163,7 @@ public class Game24AnalyzerTests
     }
 
     @Test
-    @Deprecated
-    @Ignore( "Deprecated by new tag style" )
+    @Disabled( "Deprecated by new tag style" )
     public void testGetSolutionSetListByDot()
     {
         Puzzle oneDotPuzzle = new Puzzle( 1, 4, 8, 8 );
@@ -180,7 +180,7 @@ public class Game24AnalyzerTests
             oneDotPuzzle, DifficultyRank.DIST_PROP
         );
 
-        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+        when( mockSolver.solve( any() ) ).thenReturn( noSolution() );
         when( mockSolver.solve( oneDotPuzzle ) ).thenReturn(
             oneDotSolutionSet );
         sut.analyze();
@@ -206,7 +206,7 @@ public class Game24AnalyzerTests
             oneDotPuzzle, DifficultyRank.DIST_PROP
         );
 
-        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+        when( mockSolver.solve( any() ) ).thenReturn( noSolution() );
         when( mockSolver.solve( oneDotPuzzle ) ).thenReturn(
             oneDotSolutionSet );
         sut.analyze();
@@ -232,7 +232,7 @@ public class Game24AnalyzerTests
             oneDotPuzzle, DifficultyRank.DIST_PROP
         );
 
-        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+        when( mockSolver.solve( any() ) ).thenReturn( noSolution() );
         when( mockSolver.solve( oneDotPuzzle ) ).thenReturn(
             oneDotSolutionSet );
         sut.analyze();
@@ -258,7 +258,7 @@ public class Game24AnalyzerTests
             twoDotPuzzle, DifficultyRank.DIST_PROP
         );
 
-        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+        when( mockSolver.solve( any() ) ).thenReturn( noSolution() );
         when( mockSolver.solve( twoDotPuzzle ) ).thenReturn(
             oneDotSolutionSet );
         sut.analyze();
@@ -284,7 +284,7 @@ public class Game24AnalyzerTests
             twoDotPuzzle, DifficultyRank.DIST_PROP
         );
 
-        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+        when( mockSolver.solve( any() ) ).thenReturn( noSolution() );
         when( mockSolver.solve( twoDotPuzzle ) ).thenReturn(
             oneDotSolutionSet );
         sut.analyze();
@@ -311,7 +311,7 @@ public class Game24AnalyzerTests
             twoDotPuzzle, DifficultyRank.DIST_PROP
         );
 
-        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+        when( mockSolver.solve( any() ) ).thenReturn( noSolution() );
         when( mockSolver.solve( twoDotPuzzle ) ).thenReturn(
             oneDotSolutionSet );
         sut.analyze();
@@ -339,7 +339,7 @@ public class Game24AnalyzerTests
             twoDotPuzzle, DifficultyRank.DIST_PROP
         );
 
-        when( mockSolver.solve( anyObject() ) ).thenReturn( noSolution() );
+        when( mockSolver.solve( any() ) ).thenReturn( noSolution() );
         when( mockSolver.solve( twoDotPuzzle ) ).thenReturn(
             oneDotSolutionSet );
         sut.analyze();

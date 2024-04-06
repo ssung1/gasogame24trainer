@@ -1,10 +1,10 @@
 package name.subroutine.game24trainer.puzzle;
 
-import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.*;
 import static name.subroutine.game24trainer.puzzle.PuzzleTag.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class PuzzleTagTests
 {

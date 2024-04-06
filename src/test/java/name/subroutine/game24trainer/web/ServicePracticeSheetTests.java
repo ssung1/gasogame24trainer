@@ -47,7 +47,7 @@ public class ServicePracticeSheetTests
         String result = sut.practiceSheet( param );
 
         // can't really test output since it is such a long string...
-        assertThat( result, not( isEmptyString() ) );
+        assertThat( result, not( is( emptyString() ) ) );
         // the best we can do is to verify we called getSolutionSetListByTags
         verify( analyzer ).getSolutionSetListByTags( count, ONE_DOT );
     }
@@ -68,9 +68,9 @@ public class ServicePracticeSheetTests
         String result = sut.practiceSheet( param );
 
         // can't really test output since it is such a long string...
-        assertThat( result, not( isEmptyString() ) );
+        assertThat( result, not( is( emptyString() ) ) );
         // the best we can do is to verify we called getSolutionSetListByTags
         verify( analyzer, times( count ) )
-            .getSolutionSetListByTags( count, ONE_DOT, SINGLE );
+            .getSolutionSetListByTags( count,  ONE_DOT, SINGLE );
     }
 }
